@@ -47,18 +47,22 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
-    // new CopyPlugin({
-    //   patterns: [{
-    //     from: 'public',
-    //     to: 'public',
-    //     noErrorOnMissing: true,
-    //   }],
-    // }),
+    new HtmlWebpackPlugin({ title: 'ecommerce application' }),
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
     new ESLintPlugin({ extensions: ['ts', 'js'] })
   ],
   resolve: {
     extensions: ['.ts', '.js'],
   },
+  output: {
+    filename: 'index.js',
+    path: path.resolve(__dirname, '../dist'),
+},
+};
+
+module.exports = ({ mode }) => {
+  const isProductionMode = mode === 'prod';
+  const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
+
+  return merge(baseConfig, envConfig);
 };
