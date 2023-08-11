@@ -1,55 +1,24 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": [
-    "airbnb-typescript/base",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/recommended"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "plugins": [
-    "prettier",
-    "import",
-    "@typescript-eslint"
-  ],
-  "rules": {
-    "no-plusplus": "off",
-    "no-console": "warn",
-    "max-len": [
-      "warn",
-      {
-        "code": 120
-      }
+    "extends": [
+      "plugin:prettier/recommended",
+      "airbnb"
     ],
-    "indent": [
-      "warn",
-      2,
-      {
-        "SwitchCase": 1
-      }
-    ],
-    "@typescript-eslint/indent": [
-      "warn",
-      2,
-      {
-        "SwitchCase": 1
-      }
-    ],
-    "import/prefer-default-export": "off",
-    "no-param-reassign": [
-      "error",
-      {
-        "props": false
-      }
-    ]
-  },
-  "ignorePatterns": [
-    "*config.js"
-  ]
-}
+    "rules": {
+      "max-len": [
+        "error",
+        {
+          "code": 140
+        }
+      ],
+      "prettier/prettier": "error",
+      "semi": ["error", "always"],
+      "quotes": ["error", "single"]
+    },
+    "parserOptions": {
+      "ecmaVersion": 2020
+    },
+    "plugins": ["prettier"],
+    "env": {
+      "es6": true
+    }
+  }
