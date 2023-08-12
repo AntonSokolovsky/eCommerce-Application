@@ -1,5 +1,5 @@
 import createElement from '../src/utilities/index';
-console.log("hello");
+
 const param = {
     tag: 'footer',
     classNames: ['a', 'aa', 'aaa'],
@@ -10,4 +10,4 @@ const param = {
 };
 
 const start = new createElement(param);
-console.log(start.getElement());
+console.log();
