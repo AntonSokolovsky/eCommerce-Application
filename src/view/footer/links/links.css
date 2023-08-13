@@ -1,0 +1,39 @@
+.links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+.tiktok,
+.vk,
+.telegram,
+.youtube {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.tiktok {
+    width: 94px;
+    height: 94px;
+}
+
+.vk {
+    width: 82px;
+    height: 74px;
+}
+
+.telegram {
+    width: 76px;
+    height: 63px;
+}
+
+.youtube {
+    width: 98px;
+    height: 87px;
+}
