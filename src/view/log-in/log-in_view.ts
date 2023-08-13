@@ -1,9 +1,10 @@
 import View from '../../view/view';
+import '../log-in/style.css';
 
 const parameters = [
     // log_in:
     {
-        tag:  'div',
+        tag:  'main',
         classNames: ['log_in_CSS'],
         textContent: '',
         callback: null,

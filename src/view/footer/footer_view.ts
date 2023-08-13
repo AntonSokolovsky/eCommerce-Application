@@ -1,4 +1,5 @@
 import View from '../../view/view';
+import '../log-in/style.css';
 
 const parameters = [
     // log_in:
