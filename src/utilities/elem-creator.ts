@@ -12,7 +12,7 @@ export default class createElement {
     constructor(parameters: {tag: string,
         classNames: Array<string>,
         textContent: string,
-        callback: Function}){
+        callback: Function | null}){
         this.element = null;
         this.elementCreator(parameters);
     }
@@ -20,7 +20,7 @@ export default class createElement {
     elementCreator(parameters: {tag: string,
             classNames: Array<string>,
             textContent: string,
-            callback: Function}){
+            callback: Function | null}){
         this.element = document.createElement(parameters.tag);
         this.setCssClasses(parameters.classNames);
         this.setTextContent(parameters.textContent);
@@ -37,8 +37,17 @@ export default class createElement {
         }
     }
 
-    setCallBack(callback: Function){
-        this.element?.addEventListener("click", (event) => callback(event));
+    setCallBack(callback: Function | null){
+        this.element?.addEventListener("click", function(event){
+            if (callback) {
+                callback(event);
+            }
+        });
+    }
+
+    insertElem(ins_element: HTMLElement){
+        this.element?.append(ins_element);
+        return this.element;
     }
 
     getElement() {

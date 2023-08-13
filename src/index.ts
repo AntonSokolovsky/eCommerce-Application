@@ -1,13 +1,4 @@
-import createElement from '../src/utilities/index';
+import App from './app/app';
 
-const param = {
-    tag: 'footer',
-    classNames: ['a', 'aa', 'aaa'],
-    textContent: 'yes',
-    callback: function() {
-        return;
-    }
-};
-
-const start = new createElement(param);
-console.log();
+/* eslint-disable */
+const app = new App();
