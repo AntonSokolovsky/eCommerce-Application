@@ -3,67 +3,67 @@ import View from '../../view/view';
 const parameters = [
     // log_in:
     {
-        tag:  'div',
-        classNames: ['log_in_CSS'],
+        tag:  'footer',
+        classNames: ['footer_CSS'],
         textContent: '',
+        callback: null,
+    },
+    {
+        tag:  'span',
+        classNames: ['catalog_f_CSS'],
+        textContent: 'Catalog',
         callback: null,
     },
     // Log_in_text:
     {
         tag: 'span',
-        classNames: ['Log_in_text_CSS'],
-        textContent: "Log In",
+        classNames: ['contacts_f_CSS'],
+        textContent: "Contacts",
         callback: null,
     },
     // mail_input:
     {
-        tag: 'input',
-        classNames: ['mail_input_CSS'],
-        textContent: '',
+        tag: 'span',
+        classNames: ['About_input_CSS'],
+        textContent: 'About Us',
         callback: null,
     },
     // password_input:
     {
-        tag: 'input',
-        classNames: ['password_input_CSS'],
-        textContent: '',
+        tag: 'Span',
+        classNames: ['AVA_logo_CSS'],
+        textContent: 'AVA',
         callback: null,
     },
     // email_text:
     {
-        tag: 'span',
-        classNames: ['email_text_CSS'],
-        textContent: "telephone or Email",
+        tag: 'div',
+        classNames: ['tik_tok_icon_CSS'],
+        textContent: "",
         callback: null,
     },
     // password_text:
     {
-        tag: 'span',
-        classNames: ['password_text_CSS'],
-        textContent: "Password",
+        tag: 'div',
+        classNames: ['vk_icon_CSS'],
+        textContent: "",
         callback: null,
     },
     // sign_in_button:
     {
-        tag: 'button',
-        classNames: ['button_CSS'],
-        textContent: "Sign In",
+        tag: 'div',
+        classNames: ['telegram_icon_CSS'],
+        textContent: "",
         callback: null,
     },
     // forgot_btn_text:
     {
-        tag: 'span',
-        classNames: ['forgot_btn_text_CSS'],
-        textContent: "forgot a password",
+        tag: 'div',
+        classNames: ['youtube_icon_CSS'],
+        textContent: "",
         callback: null,
     },
     // createAcc_btn_text:
-    {
-        tag: 'span',
-        classNames: ['createAcc_btn_text_CSS'],
-        textContent: "create an account",
-        callback: null,
-    },
 ]
 
 export default class log_in_View {
