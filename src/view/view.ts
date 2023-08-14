@@ -3,6 +3,7 @@ import { ElementCreator } from '../utilities/element-creator';
 
 export default class View {
   protected viewElementCreator:ElementCreator;
+
   
   constructor(params: ViewParams = { tag: 'section', classNames: [] }) {
     this.viewElementCreator = this.createView(params);
@@ -11,7 +12,7 @@ export default class View {
   getHtmlElement():HTMLElement {
     return this.viewElementCreator.getElement();
   }
-  
+ 
   createView(params: ViewParams):ElementCreator {
     const elementParams: ElementParams = {
       tag: params.tag,
