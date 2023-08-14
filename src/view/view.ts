@@ -1,21 +1,26 @@
-import createElement from '../utilities/elem-creator';
+import { ElementParams, ViewParams } from '../type/params-element-type';
+import { ElementCreator } from '../utilities/element-creator';
 
 export default class View {
-    viewElement: createElement | null;
-    constructor(params : { tag: string, classNames: Array<string>, textContent: string, callback: Function | null}) {
-        this.createView(params);
-        this.viewElement = null;
-    }
-
-    createView(params : { tag: string, classNames: Array<string>, textContent: string, callback: Function | null}) {
-        const elementParams = {
-            tag: params.tag,
-            classNames: params.classNames,
-            textContent: params.textContent,
-            callback: params.callback,
-        }
-        this.viewElement = new createElement(elementParams);
-        
-        return this.viewElement.getElement();
-    }
+  protected viewElementCreator:ElementCreator;
+  
+  constructor(params: ViewParams = { tag: 'section', classNames: [] }) {
+    this.viewElementCreator = this.createView(params);
+  }
+  
+  getHtmlElement():HTMLElement {
+    return this.viewElementCreator.getElement();
+  }
+  
+  createView(params: ViewParams):ElementCreator {
+    const elementParams: ElementParams = {
+      tag: params.tag,
+      classNames: params.classNames,
+      textContent: '',
+      callback: null,
+    };
+    this.viewElementCreator = new ElementCreator(elementParams);
+  
+    return this.viewElementCreator;
+  }
 }

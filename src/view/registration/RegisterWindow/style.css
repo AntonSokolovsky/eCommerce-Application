@@ -1,0 +1,60 @@
+@media (min-width: 751px) {
+    .RgVindow {
+        position: relative;
+        display: grid;
+        grid-template-rows: 79px 40px 95px 43px 95px 75px 95px 47px 43px;
+        top: 57px;
+        left: 55px;
+        margin: 0;
+        max-width: 585px;
+    }
+}
+
+@media (max-width: 750px) {
+    .RgVindow {
+        position: relative;
+        display: grid;
+        grid-template-rows: 79px 40px 95px 43px 95px 75px 47px 43px;
+        margin: auto;
+        top: 57px;
+        max-width: 585px;
+    }
+}
+
+.Reg_text{
+    font-size: 60px;
+}
+
+.Tel_text {
+    font-size: 30px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.Password_text {
+    font-size: 30px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.buttonRegSign {
+    position: relative;
+    width: 173px;
+    height: 75px;
+    margin-top: 50px;
+    font-size: 35px;
+    color: white;
+    background-color: rgba(0, 5, 48, 1);
+}
+
+.forgotPassLink {
+    font-size: 35px;
+    margin-left: 202px;
+}
+
+.logInLink {
+    font-size: 35px;
+    margin-left: 411px;
+    margin-top: 20px;
+    color: white;
+}

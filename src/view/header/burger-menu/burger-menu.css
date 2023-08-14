@@ -1,0 +1,38 @@
+.menu-burger {
+    display: block;
+    z-index: 5;
+    position: relative;
+    width: 70px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.menu-burger::before,
+.menu-burger::after {
+   content: "";
+   left: 0;
+   position: absolute;
+   height: 5px;
+   width: 100%;
+   transition: all 0.5s;
+   background-color: #000;
+}
+
+.menu-burger::before {
+   top: 0;
+}
+.menu-burger::after {
+   bottom: 0;
+}
+
+.menu-burger span {
+   position: absolute;
+   height: 5px;
+   width: 100%;
+   transition: all 0.5s;
+   background-color: #000;
+   transform: scale(1) translate(0px, -50%);
+}
+.menu-burger__line {
+   top: 50%;
+}

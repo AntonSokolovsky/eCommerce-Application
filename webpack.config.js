@@ -1,80 +1,69 @@
 const path = require('path');
-const webpack = require('webpack')
-const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { merge } = require('webpack-merge');
+const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
-module.exports = {
-  entry:
-    './src/index.ts',
+const mode = process.env.NODE_ENV || 'development';
+
+const baseConfig = {
+  entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    assetModuleFilename: 'assets/[hash][ext]',
   },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
-  },
-  mode: 'development',
   devServer: {
-    historyApiFallback: true,
     open: true,
+    port: 8080,
     compress: true,
-    hot: true,
-    port: 3000,
   },
+  mode,
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
+        test: /\.[tj]s$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
       {
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {},
-          },
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-        ],
+        test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
+        type: 'asset/resource',
       },
-      // {
-      //   test: /\.(svg|woff|woff2|ttf|eot|otf)([\?]?.*)$/,
-      //   use: [
-      //     {
-      //       loader: 'file-loader?name=assets/fonts/[name].[ext]',
-      //     },
-      //   ],
-      // },
+      {
+        test: /\.(woff(2)?|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      }
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new CleanWebpackPlugin(),
-    // new CopyWebpackPlugin({
-    //   patterns: [
-    //     {
-    //       from: '**/*',
-    //       context: path.resolve(__dirname, 'src', 'assets'),
-    //       to: './assets',
-    //     },
-    //   ],
-    // }),
-    new HtmlWebpackPlugin({
-      template: 'src/index.html',
-      filename: 'index.html',
-      minify: {
-        collapseWhitespace: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-      },
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'style.css',
-    }),
+    new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
+    new HtmlWebpackPlugin({ title: 'ecommerce application' }),
+    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+    new ESLintPlugin({ extensions: ['ts', 'js'] })
   ],
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
+  output: {
+    filename: 'index.js',
+    path: path.resolve(__dirname, '../dist'),
+},
+};
+
+module.exports = ({ mode }) => {
+  const isProductionMode = mode === 'prod';
+  const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
+
+  return merge(baseConfig, envConfig);
 };
