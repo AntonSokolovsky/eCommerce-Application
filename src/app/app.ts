@@ -5,23 +5,23 @@ import FooterView from '../view/footer/footer-view';
 
 export default class App {
   constructor() {
-    // this.createRegView();
-    this.createLogInView();
+    this.createRegView();
+    // this.createLogInView();
   }
 
-  createLogInView() {
-    const header = new HeaderView();
-    const logIn = new LogInView();
-    const footer = new FooterView();
-
-    document.body.append(/* header.getHtmlElement(),*/ logIn.getHtmlElement()/*, footer.getHtmlElement()*/);
-  }
-
-  // createRegView() {
+  // createLogInView() {
   //   const header = new HeaderView();
-  //   const registr = new RegView();
+  //   const logIn = new LogInView();
   //   const footer = new FooterView();
 
-  //   document.body.append(/*header.getHtmlElement(),*/ registr.getHtmlElement()/*, footer.getHtmlElement()*/);
+  //   document.body.append(/* header.getHtmlElement(),*/ logIn.getHtmlElement()/*, footer.getHtmlElement()*/);
   // }
+
+  createRegView() {
+    const header = new HeaderView();
+    const registr = new RegView();
+    const footer = new FooterView();
+
+    document.body.append(/*header.getHtmlElement(),*/ registr.getHtmlElement()/*, footer.getHtmlElement()*/);
+  }
 }

@@ -1,7 +1,7 @@
 import { ElementParams, ViewParams } from '../type/params-element-type';
 import { ElementCreator } from '../utilities/element-creator';
 
-export default class View {
+class View {
   protected viewElementCreator:ElementCreator;
 
   
@@ -25,3 +25,5 @@ export default class View {
     return this.viewElementCreator;
   }
 }
+
+export default View;

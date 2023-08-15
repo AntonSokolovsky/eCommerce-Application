@@ -4,6 +4,14 @@ export type ElementParams = {
   textContent: string;
   callback: null | ((event: Event) => void);
 };
+
+export type InputElementParams = {
+  tag: string;
+  classNames: string[];
+  textContent: string;
+  type: string;
+  callback: null | ((event: Event) => void);
+};
   
 export type ViewParams = {
   tag: string;

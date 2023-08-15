@@ -1,7 +1,6 @@
-import './style.css';
-import View from '../../view';
-import { ElementCreator } from '../../../utilities/element-creator';
-import { InputElementCreator } from '../../../utilities/InputFieldsCreator/InputFieldsCreator';
+
+import View from '../../../view';
+import { ElementCreator } from '../../../../utilities/element-creator';
 
 export default class LogInVindowView extends View {
   constructor() {
@@ -36,13 +35,11 @@ export default class LogInVindowView extends View {
 
     const paramsTelOrEmailInput = {
       tag: 'input',
-      classNames: ['input', 'Email_input'],
+      classNames: ['input'],
       textContent: '',
-      type: 'email',
       callback: null,
     };
-    const TelOrEmailInput = new InputElementCreator(paramsTelOrEmailInput);
-    
+    const TelOrEmailInput = new ElementCreator(paramsTelOrEmailInput);
 
     this.viewElementCreator.addInsideElement(TelOrEmailInput);
 
@@ -58,12 +55,11 @@ export default class LogInVindowView extends View {
 
     const paramsPasswordInput = {
       tag: 'input',
-      classNames: ['input', 'password_input'],
+      classNames: ['input'],
       textContent: '',
-      type: 'password',
       callback: null,
     };
-    const PasswordInput = new InputElementCreator(paramsPasswordInput);
+    const PasswordInput = new ElementCreator(paramsPasswordInput);
 
     this.viewElementCreator.addInsideElement(PasswordInput);
 

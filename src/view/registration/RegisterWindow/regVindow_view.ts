@@ -1,6 +1,7 @@
 import './style.css';
 import View from '../../view';
 import { ElementCreator } from '../../../utilities/element-creator';
+import { InputElementCreator } from '../../../utilities/InputFieldsCreator/InputFieldsCreator';
 
 export default class RgVindowView extends View {
   constructor() {
@@ -35,8 +36,9 @@ export default class RgVindowView extends View {
 
     const paramsTelOrEmailInput = {
       tag: 'input',
-      classNames: ['input'],
+      classNames: ['input', 'Email_input'],
       textContent: '',
+      value: 'email',
       callback: null,
     };
     const TelOrEmailInput = new ElementCreator(paramsTelOrEmailInput);
@@ -55,21 +57,23 @@ export default class RgVindowView extends View {
 
     const paramsPasswordInput = {
       tag: 'input',
-      classNames: ['input'],
+      classNames: ['input', 'password_input'],
       textContent: '',
+      type: 'password',
       callback: null,
     };
-    const PasswordInput = new ElementCreator(paramsPasswordInput);
+    const PasswordInput = new InputElementCreator(paramsPasswordInput);
 
     this.viewElementCreator.addInsideElement(PasswordInput);
 
     const paramsConfrimPassword = {
       tag: 'span',
-      classNames: ['Password_text'],
+      classNames: ['Password_text', 'Confrim_password_input'],
       textContent: 'Confrim Password',
+      type: 'password',
       callback: null,
     };
-    const Confrimpassword = new ElementCreator(paramsConfrimPassword);
+    const Confrimpassword = new InputElementCreator(paramsConfrimPassword);
 
     this.viewElementCreator.addInsideElement(Confrimpassword);
 
@@ -77,9 +81,10 @@ export default class RgVindowView extends View {
       tag: 'input',
       classNames: ['input'],
       textContent: '',
+      type: 'text',
       callback: null,
     };
-    const ConfrimPasswordInput = new ElementCreator(paramsConfrinPasswordInput);
+    const ConfrimPasswordInput = new InputElementCreator(paramsConfrinPasswordInput);
 
     this.viewElementCreator.addInsideElement(ConfrimPasswordInput);
 

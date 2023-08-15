@@ -47,14 +47,30 @@
     background-color: rgba(0, 5, 48, 1);
 }
 
+.buttonRegSign:hover {
+    cursor: pointer;
+}
+
 .forgotPassLink {
+    position: relative;
     font-size: 35px;
     margin-left: 202px;
+    max-width: 270px;
     text-decoration: underline;
 }
 
+.forgotPassLink:hover {
+    cursor: pointer;
+}
+
 .logInLink {
+    position: relative;
+    max-width: 270px;
     font-size: 35px;
-    margin-top: 63px;
+    top: 63px;
     color: white;
+}
+
+.logInLink:hover {
+    cursor: pointer;
 }
