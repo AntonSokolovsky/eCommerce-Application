@@ -4,27 +4,33 @@ import {
   type AuthMiddlewareOptions,
   type HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-  
+
+const clientId = process.env.CLIENT_ID || '';
+const clientSecret = process.env.CLIENT_SECRET || '';
+const projectKey = process.env.PROJECT_KEY || '';
+const hostApi = process.env.HOST_API || '';
+const hostAuth = process.env.HOST_AUTH || '';
+
 // Configure authMiddlewareOptions
 const authMiddlewareOptions: AuthMiddlewareOptions = {
-  host: 'https://auth.europe-west1.gcp.commercetools.com',
-  projectKey: 'ava-ecommerce',
+  host: hostAuth,
+  projectKey: projectKey,
   credentials: {
-    clientId: '8zxq7q_A1uABYIzLc7EwMOxt',
-    clientSecret: '4GN_1c_xZ7goak1ybNhq17CEh_39k8fM',
+    clientId: clientId,
+    clientSecret: clientSecret,
   },
-  scopes: [`manage_my_quotes:ava-ecommerce 
-  manage_my_payments:ava-ecommerce 
-  manage_my_orders:ava-ecommerce manage_my_shopping_lists:ava-ecommerce
-   manage_my_business_units:ava-ecommerce view_published_products:ava-ecommerce 
-   manage_my_quote_requests:ava-ecommerce
-   manage_my_profile:ava-ecommerce view_categories:ava-ecommerce create_anonymous_token:ava-ecommerce`],
+  scopes: [`manage_my_quotes:${projectKey}
+  manage_my_payments:${projectKey} 
+  manage_my_orders:${projectKey} manage_my_shopping_lists:${projectKey}
+   manage_my_business_units:${projectKey} view_published_products:${projectKey} 
+   manage_my_quote_requests:${projectKey}
+   manage_my_profile:${projectKey} view_categories:${projectKey} create_anonymous_token:${projectKey}`],
   fetch,
 };
   
 // Configure httpMiddlewareOptions
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  host: 'https://api.europe-west1.gcp.commercetools.com',
+  host: hostApi,
   fetch,
 };
   
