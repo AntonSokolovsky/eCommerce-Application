@@ -1,7 +1,7 @@
 import './style.css';
 import View from '../../view';
 import { ElementCreator } from '../../../utilities/element-creator';
-import { InputElementCreator } from '../../../utilities/InputFieldsCreator/InputFieldsCreator';
+import LogInFormView from '../../log-in/logInView/formView/Log_in_form_view';
 
 export default class LogInVindowView extends View {
   constructor() {
@@ -24,77 +24,8 @@ export default class LogInVindowView extends View {
 
     this.viewElementCreator.addInsideElement(registerWindow);
 
-    const paramsTelOrEmail = {
-      tag: 'span',
-      classNames: ['Tel_text'],
-      textContent: 'telephone or Email',
-      callback: null,
-    };
-    const TelOrEmail = new ElementCreator(paramsTelOrEmail);
-
-    this.viewElementCreator.addInsideElement(TelOrEmail);
-
-    const paramsTelOrEmailInput = {
-      tag: 'input',
-      classNames: ['input', 'Email_input'],
-      textContent: '',
-      type: 'email',
-      callback: null,
-    };
-    const TelOrEmailInput = new InputElementCreator(paramsTelOrEmailInput);
+    const logInForm = new LogInFormView();
     
-
-    this.viewElementCreator.addInsideElement(TelOrEmailInput);
-
-    const paramsPassword = {
-      tag: 'span',
-      classNames: ['Password_text'],
-      textContent: 'Password',
-      callback: null,
-    };
-    const password = new ElementCreator(paramsPassword);
-
-    this.viewElementCreator.addInsideElement(password);
-
-    const paramsPasswordInput = {
-      tag: 'input',
-      classNames: ['input', 'password_input'],
-      textContent: '',
-      type: 'password',
-      callback: null,
-    };
-    const PasswordInput = new InputElementCreator(paramsPasswordInput);
-
-    this.viewElementCreator.addInsideElement(PasswordInput);
-
-    const paramsSignInButton = {
-      tag: 'button',
-      classNames: ['buttonRegSign'],
-      textContent: 'Sign In',
-      callback: null,
-    };
-    const SignIn = new ElementCreator(paramsSignInButton);
-
-    this.viewElementCreator.addInsideElement(SignIn);
-
-    const ParamsForgotLink = {
-      tag: 'span',
-      classNames: ['forgotPassLink'],
-      textContent: 'forgot a password',
-      callback: null,
-    };
-    const ForgotPassLink = new ElementCreator(ParamsForgotLink);
-  
-    this.viewElementCreator.addInsideElement(ForgotPassLink);
-
-    const ParamsCreateLink = {
-      tag: 'span',
-      classNames: ['logInLink'],
-      textContent: 'Create an account',
-      callback: null,
-    };
-    const CreateAccLink = new ElementCreator(ParamsCreateLink);
-
-    this.viewElementCreator.addInsideElement(CreateAccLink);
+    this.viewElementCreator.addInsideElement(logInForm.getElement());
   }
 }

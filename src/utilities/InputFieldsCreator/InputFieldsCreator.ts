@@ -1,5 +1,5 @@
 import './style.css';
-import { Attributes, InputElementParams } from '../../type/params-element-type';
+import { InputElementParams } from '../../type/params-element-type';
 import { ElementCreator } from '../element-creator';
 
 export class InputElementCreator extends ElementCreator {
@@ -8,12 +8,14 @@ export class InputElementCreator extends ElementCreator {
   constructor(params: InputElementParams) {
     super(params);
     this._InputElement = null;
-    this.addValue(params.type);
+    this.addValue(params.type, params.value, params.disabled);
   }
 
-  addValue(value: string) {
+  addValue(type: string, value: string, disabled: boolean) {
     this._InputElement = this._element as HTMLInputElement;
-    this._InputElement.type = value;
+    this._InputElement.type = type;
+    this._InputElement.value = value;
+    this._InputElement.disabled = disabled;
   }
 
   getInputElement() {
@@ -21,5 +23,14 @@ export class InputElementCreator extends ElementCreator {
       throw new Error('InputElement not defined');
     }
     return this._InputElement;
+  }
+
+  Callback(callback: null | ((event: Event) => void)) {
+    if (!this._InputElement) {
+      throw new Error('element does not exist');
+    }
+    if (typeof callback === 'function') {
+      this._InputElement.addEventListener('input', (event) => callback(event));
+    }
   }
 }

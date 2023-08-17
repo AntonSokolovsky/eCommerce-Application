@@ -43,6 +43,10 @@ const baseConfig = {
       {
         test: /\.s[ac]ss$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.avif$/,
+        use: 'avif-loader'
       }
     ],
   },
