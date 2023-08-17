@@ -1,0 +1,36 @@
+.nav_header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 25px;
+}
+
+.search,
+.account,
+.basket {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.search {
+    width: 88px;
+    height: 77px;
+    background-color: #fff;
+}
+
+.account {
+    width: 60px;
+    height: 66px;
+    background-color: #fff;
+}
+
+.basket {
+    width: 107px;
+    height: 68px;
+    background-color: #fff;
+}
