@@ -7,6 +7,7 @@ body {
         position: relative;
         top: 57px;
         left: 55px;
+        height: 800px;
         margin: 0;
         max-width: 585px;
     }
@@ -31,6 +32,7 @@ body {
     .RgVindow {
         position: relative;
         margin: auto;
+        height: 800px;
         width: 100%;
         top: 57px;
         max-width: 585px;
