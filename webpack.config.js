@@ -5,6 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const mode = process.env.NODE_ENV || 'development';
 
@@ -54,7 +55,8 @@ const baseConfig = {
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
     new HtmlWebpackPlugin({ title: 'ecommerce application' }),
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-    new ESLintPlugin({ extensions: ['ts', 'js'] })
+    new ESLintPlugin({ extensions: ['ts', 'js'] }),
+    new Dotenv({allowEmptyValues: true,})
   ],
   resolve: {
     extensions: ['.ts', '.js'],
