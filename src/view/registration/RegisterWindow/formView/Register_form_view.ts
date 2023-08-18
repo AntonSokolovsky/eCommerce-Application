@@ -2,6 +2,9 @@ import View from '../../../view';
 import { ElementCreator } from '../../../../utilities/element-creator';
 import { InputElementCreator } from '../../../../utilities/InputFieldsCreator/InputFieldsCreator';
 import showHidePass from '../../../../utilities/showHidePass';
+import validationEmail from '../../../../utilities/validation/validationEmail';
+import validationPassword from '../../../../utilities/validation/validationPass';
+import validationComfrimPassword from '../../../../utilities/validation/validationComfrimPass';
 
 export default class RegisterFormView extends View {
   constructor() {
@@ -41,9 +44,9 @@ export default class RegisterFormView extends View {
       textContent: '',
       value: '',
       action: '',
-      type: 'password',
+      type: 'email',
       disabled: false,
-      callback: null,
+      callback: validationEmail,
     };
     const TelOrEmailInput = new InputElementCreator(paramsTelOrEmailInput);
 
@@ -52,7 +55,7 @@ export default class RegisterFormView extends View {
     const RequirementsToEmail = {
       tag: 'div',
       classNames: ['Requirements'],
-      textContent: 'Requirements',
+      textContent: '',
       callback: null,
     };
 
@@ -138,7 +141,7 @@ export default class RegisterFormView extends View {
       action: '',
       type: 'password',
       disabled: false,
-      callback: null,
+      callback: validationPassword,
     };
     const PasswordInput = new InputElementCreator(paramsPasswordInput);
 
@@ -147,7 +150,7 @@ export default class RegisterFormView extends View {
     const RequirementsToPassword = {
       tag: 'div',
       classNames: ['Requirements'],
-      textContent: 'Requirements',
+      textContent: '',
       callback: null,
     };
 
@@ -162,7 +165,7 @@ export default class RegisterFormView extends View {
     const firstRequirementPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Email address must be properly formatted (e.g., user@example.com).',
+      textContent: 'Password must be at least 8 characters long.',
       callback: null,
     };
 
@@ -171,7 +174,7 @@ export default class RegisterFormView extends View {
     const secondRequirementPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Email address must not contain leading or trailing whitespace.',
+      textContent: 'Password must contain at least one uppercase letter (A-Z).',
       callback: null,
     };
 
@@ -180,7 +183,7 @@ export default class RegisterFormView extends View {
     const thirdRequirementPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Email address must contain a domain name (e.g., example.com).',
+      textContent: 'Password must contain at least one lowercase letter (a-z).',
       callback: null,
     };
 
@@ -189,7 +192,7 @@ export default class RegisterFormView extends View {
     const forthRequirementPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Email address must contain an \'@\' symbol separating local part and domain name.',
+      textContent: 'Password must contain at least one digit (0-9).',
       callback: null,
     };
 
@@ -198,7 +201,7 @@ export default class RegisterFormView extends View {
     const FivesRequirementPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Password must contain at least one digit (0-9).',
+      textContent: '(Optional) Password must contain at least one special character (e.g., !@#$%^&*).',
       callback: null,
     };
 
@@ -207,7 +210,7 @@ export default class RegisterFormView extends View {
     const SixRequirementPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Password must contain at least one digit (0-9).',
+      textContent: 'Password must not contain leading or trailing whitespace.',
       callback: null,
     };
 
@@ -231,7 +234,7 @@ export default class RegisterFormView extends View {
 
     PasswordContainerHtmlElement.append(showHidePassword.getElement());
     PasswordContainerHtmlElement.append(RequirementsToPasswordText.getElement());
-
+    
     this.viewElementCreator.addInsideElement(PasswordContainerHtmlElement);
 
     const paramsConfrimPassword = {
@@ -264,9 +267,9 @@ export default class RegisterFormView extends View {
       textContent: '',
       value: '',
       action: '',
-      type: 'text',
+      type: 'password',
       disabled: false,
-      callback: null,
+      callback: validationComfrimPassword,
     };
     const ConfrimPasswordInput = new InputElementCreator(paramsConfrinPasswordInput);
 
@@ -290,7 +293,7 @@ export default class RegisterFormView extends View {
     const firstRequirementConfrimPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Email address must be properly formatted (e.g., user@example.com).',
+      textContent: 'Password must be at least 8 characters long.',
       callback: null,
     };
 
@@ -299,7 +302,7 @@ export default class RegisterFormView extends View {
     const secondRequirementConfrimPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Email address must not contain leading or trailing whitespace.',
+      textContent: 'Password must contain at least one uppercase letter (A-Z).',
       callback: null,
     };
 
@@ -308,7 +311,7 @@ export default class RegisterFormView extends View {
     const thirdRequirementConfrimPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Email address must contain a domain name (e.g., example.com).',
+      textContent: 'Password must contain at least one lowercase letter (a-z).',
       callback: null,
     };
 
@@ -317,7 +320,7 @@ export default class RegisterFormView extends View {
     const forthRequirementConfrimPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Email address must contain an \'@\' symbol separating local part and domain name.',
+      textContent: 'Password must contain at least one digit (0-9).',
       callback: null,
     };
 
@@ -326,7 +329,7 @@ export default class RegisterFormView extends View {
     const FivesRequirementConfrimPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Password must contain at least one digit (0-9).',
+      textContent: '(Optional) Password must contain at least one special character (e.g., !@#$%^&*).',
       callback: null,
     };
 
@@ -335,7 +338,7 @@ export default class RegisterFormView extends View {
     const SixRequirementConfrimPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Password must contain at least one digit (0-9).',
+      textContent: 'Password must not contain leading or trailing whitespace.',
       callback: null,
     };
 

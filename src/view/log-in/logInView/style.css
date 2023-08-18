@@ -146,3 +146,7 @@ body {
     background-position: center;
     background-image: url('../../../assets/hidePass.PNG');
 }
+
+.accept {
+    border: 5px solid green;
+}

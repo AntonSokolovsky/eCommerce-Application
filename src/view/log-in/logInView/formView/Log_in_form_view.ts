@@ -2,6 +2,8 @@ import View from '../../../view';
 import { ElementCreator } from '../../../../utilities/element-creator';
 import { InputElementCreator } from '../../../../utilities/InputFieldsCreator/InputFieldsCreator';
 import showHidePass from '../../../../utilities/showHidePass';
+import validationEmail from '../../../../utilities/validation/validationEmail';
+import validationPassword from '../../../../utilities/validation/validationPass';
 
 export default class LogInFormView extends View {
   constructor() {
@@ -43,7 +45,7 @@ export default class LogInFormView extends View {
       action: '',
       type: 'email',
       disabled: false,
-      callback: null,
+      callback: validationEmail,
     };
     const TelOrEmailInput = new InputElementCreator(paramsTelOrEmailInput);
     
@@ -138,7 +140,7 @@ export default class LogInFormView extends View {
       value: '',
       action: '',
       disabled: false,
-      callback: null,
+      callback: validationPassword,
     };
     const PasswordInput = new InputElementCreator(paramsPasswordInput);
 
@@ -198,7 +200,7 @@ export default class LogInFormView extends View {
     const FivesRequirementPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Password must contain at least one digit (0-9).',
+      textContent: '(Optional) Password must contain at least one special character (e.g., !@#$%^&*).',
       callback: null,
     };
 
@@ -207,7 +209,7 @@ export default class LogInFormView extends View {
     const SixRequirementPasswordParams = {
       tag: 'p',
       classNames: ['Requirement'],
-      textContent: 'Password must contain at least one digit (0-9).',
+      textContent: 'Password must not contain leading or trailing whitespace.',
       callback: null,
     };
 
@@ -231,7 +233,7 @@ export default class LogInFormView extends View {
     
     PasswordInputContainerHtmlElement.append(showHidePassword.getElement());
     PasswordInputContainerHtmlElement.append(RequirementsToPasswordText.getElement());
-
+    
     this.viewElementCreator.addInsideElement(PasswordInputContainerHtmlElement);
 
     const paramsSignInButton = {
