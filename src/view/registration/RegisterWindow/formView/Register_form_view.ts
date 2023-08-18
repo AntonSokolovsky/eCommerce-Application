@@ -1,10 +1,7 @@
 import View from '../../../view';
 import { ElementCreator } from '../../../../utilities/element-creator';
 import { InputElementCreator } from '../../../../utilities/InputFieldsCreator/InputFieldsCreator';
-import showHidePass from '../../../../utilities/showHidePass';
-import validationEmail from '../../../../utilities/validation/validationEmail';
-import validationPassword from '../../../../utilities/validation/validationPass';
-import validationComfrimPassword from '../../../../utilities/validation/validationComfrimPass';
+import { registerFormViewParams } from '../RegisterWindowParams';
 
 export default class RegisterFormView extends View {
   constructor() {
@@ -17,91 +14,26 @@ export default class RegisterFormView extends View {
   }
 
   configureView() {
-    const paramsTelOrEmail = {
-      tag: 'span',
-      classNames: ['Tel_text'],
-      textContent: 'Telephone or Email',
-      callback: null,
-    };
-    const TelOrEmail = new ElementCreator(paramsTelOrEmail);
-
+    const TelOrEmail = new ElementCreator(registerFormViewParams.paramsTelOrEmail);
     this.viewElementCreator.addInsideElement(TelOrEmail);
 
-    const paramsMailInContainer = {
-      tag: 'div',
-      classNames: ['input_container'],
-      textContent: '',
-      callback: null,
-    };
-
-    const MailInputContainer = new View(paramsMailInContainer);
-
+    const MailInputContainer = new View(registerFormViewParams.paramsMailInContainer);
     const MailContainerHtmlElement = MailInputContainer.getHtmlElement();
 
-    const paramsTelOrEmailInput = {
-      tag: 'input',
-      classNames: ['input', 'Email_input'],
-      textContent: '',
-      value: '',
-      action: '',
-      type: 'email',
-      disabled: false,
-      callback: validationEmail,
-    };
-    const TelOrEmailInput = new InputElementCreator(paramsTelOrEmailInput);
-
+    const TelOrEmailInput = new InputElementCreator(registerFormViewParams.paramsTelOrEmailInput);
     MailContainerHtmlElement.append(TelOrEmailInput.getInputElement());
-
-    const RequirementsToEmail = {
-      tag: 'div',
-      classNames: ['Requirements'],
-      textContent: '',
-      callback: null,
-    };
 
     const RequirementsToEmailAttributes = {
       style: 'display: none',
     };
-
-    const RequirementsToEmailText = new ElementCreator(RequirementsToEmail);
+    const RequirementsToEmailText = new ElementCreator(registerFormViewParams.RequirementsToEmail);
 
     RequirementsToEmailText.setAttributeElement(RequirementsToEmailAttributes);
 
-    const firstRequirementParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Email address must be properly formatted (e.g., user@example.com).',
-      callback: null,
-    };
-
-    const firstRequirement = new ElementCreator(firstRequirementParams);
-
-    const secondRequirementParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Email address must not contain leading or trailing whitespace.',
-      callback: null,
-    };
-
-    const secondRequirement = new ElementCreator(secondRequirementParams);
-
-    const thirdRequirementParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Email address must contain a domain name (e.g., example.com).',
-      callback: null,
-    };
-
-    const thirdRequirement = new ElementCreator(thirdRequirementParams);
-
-    const forthRequirementParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Email address must contain an \'@\' symbol separating local part and domain name.',
-      callback: null,
-    };
-
-    const forthRequirement = new ElementCreator(forthRequirementParams);
+    const firstRequirement = new ElementCreator(registerFormViewParams.firstRequirementParams);
+    const secondRequirement = new ElementCreator(registerFormViewParams.secondRequirementParams);
+    const thirdRequirement = new ElementCreator(registerFormViewParams.thirdRequirementParams);
+    const forthRequirement = new ElementCreator(registerFormViewParams.forthRequirementParams);
 
     RequirementsToEmailText.addInsideElement(firstRequirement);
     RequirementsToEmailText.addInsideElement(secondRequirement);
@@ -112,118 +44,30 @@ export default class RegisterFormView extends View {
 
     this.viewElementCreator.addInsideElement(MailContainerHtmlElement);
 
-    const paramsPassword = {
-      tag: 'span',
-      classNames: ['Password_text'],
-      textContent: 'Password',
-      callback: null,
-    };
-    const password = new ElementCreator(paramsPassword);
-
+    const password = new ElementCreator(registerFormViewParams.paramsPassword);
     this.viewElementCreator.addInsideElement(password);
 
-    const paramsPasswordInContainer = {
-      tag: 'div',
-      classNames: ['input_container'],
-      textContent: '',
-      callback: null,
-    };
-
-    const PassworsInputContainer = new View(paramsPasswordInContainer);
-
+    const PassworsInputContainer = new View(registerFormViewParams.paramsPasswordInContainer);
     const PasswordContainerHtmlElement = PassworsInputContainer.getHtmlElement();
 
-    const paramsPasswordInput = {
-      tag: 'input',
-      classNames: ['input', 'password_input'],
-      textContent: '',
-      value: '',
-      action: '',
-      type: 'password',
-      disabled: false,
-      callback: validationPassword,
-    };
-    const PasswordInput = new InputElementCreator(paramsPasswordInput);
-
+    const PasswordInput = new InputElementCreator(registerFormViewParams.paramsPasswordInput);
     PasswordContainerHtmlElement.append(PasswordInput.getInputElement());
-
-    const RequirementsToPassword = {
-      tag: 'div',
-      classNames: ['Requirements'],
-      textContent: '',
-      callback: null,
-    };
 
     const RequirementsToPasswordAttributes = {
       style: 'display: none',
     };
 
-    const RequirementsToPasswordText = new ElementCreator(RequirementsToPassword);
-
+    const RequirementsToPasswordText = new ElementCreator(registerFormViewParams.RequirementsToPassword);
     RequirementsToPasswordText.setAttributeElement(RequirementsToPasswordAttributes);
 
-    const firstRequirementPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Password must be at least 8 characters long.',
-      callback: null,
-    };
-
-    const firstRequirementPassword = new ElementCreator(firstRequirementPasswordParams);
-
-    const secondRequirementPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Password must contain at least one uppercase letter (A-Z).',
-      callback: null,
-    };
-
-    const secondRequirementPassword = new ElementCreator(secondRequirementPasswordParams);
-
-    const thirdRequirementPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Password must contain at least one lowercase letter (a-z).',
-      callback: null,
-    };
-
-    const thirdRequirementPassword = new ElementCreator(thirdRequirementPasswordParams);
-
-    const forthRequirementPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Password must contain at least one digit (0-9).',
-      callback: null,
-    };
-
-    const forthRequirementPassword = new ElementCreator(forthRequirementPasswordParams);
-
-    const FivesRequirementPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: '(Optional) Password must contain at least one special character (e.g., !@#$%^&*).',
-      callback: null,
-    };
-
-    const FivesRequirementPassword = new ElementCreator(FivesRequirementPasswordParams);
-
-    const SixRequirementPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Password must not contain leading or trailing whitespace.',
-      callback: null,
-    };
-
-    const SixRequirementPassword = new ElementCreator(SixRequirementPasswordParams);
-
-    const showHidePasswordParams = {
-      tag: 'div',
-      classNames: ['showPass'],
-      textContent: '',
-      callback: showHidePass,
-    };
-
-    const showHidePassword = new ElementCreator(showHidePasswordParams);
+    const firstRequirementPassword = new ElementCreator(registerFormViewParams.firstRequirementPasswordParams);
+    const secondRequirementPassword = new ElementCreator(registerFormViewParams.secondRequirementPasswordParams);
+    const thirdRequirementPassword = new ElementCreator(registerFormViewParams.thirdRequirementPasswordParams);
+    const forthRequirementPassword = new ElementCreator(registerFormViewParams.forthRequirementPasswordParams);
+    const FivesRequirementPassword = new ElementCreator(registerFormViewParams.FivesRequirementPasswordParams);
+    const SixRequirementPassword = new ElementCreator(registerFormViewParams.SixRequirementPasswordParams);
+    
+    const showHidePassword = new ElementCreator(registerFormViewParams.showHidePasswordParams);
 
     RequirementsToPasswordText.addInsideElement(firstRequirementPassword);
     RequirementsToPasswordText.addInsideElement(secondRequirementPassword);
@@ -237,130 +81,31 @@ export default class RegisterFormView extends View {
     
     this.viewElementCreator.addInsideElement(PasswordContainerHtmlElement);
 
-    const paramsConfrimPassword = {
-      tag: 'span',
-      classNames: ['Password_text', 'Confrim_password_input'],
-      textContent: 'Confrim Password',
-      value: '',
-      action: '',
-      type: 'password',
-      callback: null,
-    };
-    const Confrimpassword = new ElementCreator(paramsConfrimPassword);
-
+    const Confrimpassword = new ElementCreator(registerFormViewParams.paramsConfrimPassword);
     this.viewElementCreator.addInsideElement(Confrimpassword);
 
-    const paramsConfrimPasswordInContainer = {
-      tag: 'div',
-      classNames: ['input_container'],
-      textContent: '',
-      callback: null,
-    };
-
-    const ConfrimPassworsInputContainer = new View(paramsConfrimPasswordInContainer);
-
+    const ConfrimPassworsInputContainer = new View(registerFormViewParams.paramsConfrimPasswordInContainer);
     const ConfrimPasswordContainerHtmlElement = ConfrimPassworsInputContainer.getHtmlElement();
 
-    const paramsConfrinPasswordInput = {
-      tag: 'input',
-      classNames: ['input'],
-      textContent: '',
-      value: '',
-      action: '',
-      type: 'password',
-      disabled: false,
-      callback: validationComfrimPassword,
-    };
-    const ConfrimPasswordInput = new InputElementCreator(paramsConfrinPasswordInput);
-
+    const ConfrimPasswordInput = new InputElementCreator(registerFormViewParams.paramsConfrinPasswordInput);
     ConfrimPasswordContainerHtmlElement.append(ConfrimPasswordInput.getInputElement());
-
-    const RequirementsToConfrimPassword = {
-      tag: 'div',
-      classNames: ['Requirements'],
-      textContent: '',
-      callback: null,
-    };
 
     const RequirementsToConfrimPasswordAttributes = {
       style: 'display: none',
     };
 
-    const RequirementsToConfrimPasswordText = new ElementCreator(RequirementsToConfrimPassword);
-
+    const RequirementsToConfrimPasswordText = new ElementCreator(registerFormViewParams.RequirementsToConfrimPassword);
     RequirementsToConfrimPasswordText.setAttributeElement(RequirementsToConfrimPasswordAttributes);
 
-    const firstRequirementConfrimPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Password must be at least 8 characters long.',
-      callback: null,
-    };
+    const firstRequirementConfrimPassword = new ElementCreator(registerFormViewParams.firstRequirementConfrimPasswordParams);
+    const secondRequirementConfrimPassword = new ElementCreator(registerFormViewParams.secondRequirementConfrimPasswordParams);
+    const thirdRequirementConfrimPassword = new ElementCreator(registerFormViewParams.thirdRequirementConfrimPasswordParams);
+    const forthRequirementConfrimPassword = new ElementCreator(registerFormViewParams.forthRequirementConfrimPasswordParams);
+    const FivesRequirementConfrimPassword = new ElementCreator(registerFormViewParams.FivesRequirementConfrimPasswordParams);
+    const SixRequirementConfrimPassword = new ElementCreator(registerFormViewParams.SixRequirementConfrimPasswordParams);
+    const SeventhRequirementConfrimPassword = new ElementCreator(registerFormViewParams.SeventhRequirementConfrimPasswordParams);
 
-    const firstRequirementConfrimPassword = new ElementCreator(firstRequirementConfrimPasswordParams);
-
-    const secondRequirementConfrimPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Password must contain at least one uppercase letter (A-Z).',
-      callback: null,
-    };
-
-    const secondRequirementConfrimPassword = new ElementCreator(secondRequirementConfrimPasswordParams);
-
-    const thirdRequirementConfrimPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Password must contain at least one lowercase letter (a-z).',
-      callback: null,
-    };
-
-    const thirdRequirementConfrimPassword = new ElementCreator(thirdRequirementConfrimPasswordParams);
-
-    const forthRequirementConfrimPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Password must contain at least one digit (0-9).',
-      callback: null,
-    };
-
-    const forthRequirementConfrimPassword = new ElementCreator(forthRequirementConfrimPasswordParams);
-
-    const FivesRequirementConfrimPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: '(Optional) Password must contain at least one special character (e.g., !@#$%^&*).',
-      callback: null,
-    };
-
-    const FivesRequirementConfrimPassword = new ElementCreator(FivesRequirementConfrimPasswordParams);
-
-    const SixRequirementConfrimPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Password must not contain leading or trailing whitespace.',
-      callback: null,
-    };
-
-    const SixRequirementConfrimPassword = new ElementCreator(SixRequirementConfrimPasswordParams);
-
-    const SeventhRequirementConfrimPasswordParams = {
-      tag: 'p',
-      classNames: ['Requirement'],
-      textContent: 'Passwords must match',
-      callback: null,
-    };
-
-    const SeventhRequirementConfrimPassword = new ElementCreator(SeventhRequirementConfrimPasswordParams);
-
-    const showHideConfrimPasswordParams = {
-      tag: 'div',
-      classNames: ['showPass'],
-      textContent: '',
-      callback: showHidePass,
-    };
-
-    const showHideConfrimPassword = new ElementCreator(showHideConfrimPasswordParams);
+    const showHideConfrimPassword = new ElementCreator(registerFormViewParams.showHideConfrimPasswordParams);
 
     RequirementsToConfrimPasswordText.addInsideElement(firstRequirementConfrimPassword);
     RequirementsToConfrimPasswordText.addInsideElement(secondRequirementConfrimPassword);
@@ -375,27 +120,11 @@ export default class RegisterFormView extends View {
 
     this.viewElementCreator.addInsideElement(ConfrimPasswordContainerHtmlElement);
 
-    const paramsRegisterButton = {
-      tag: 'input',
-      classNames: ['buttonRegSign'],
-      textContent: 'Register',
-      value: 'Register',
-      action: '',
-      type: 'submit',
-      disabled: true,
-      callback: null,
-    };
-    const RegButton = new InputElementCreator(paramsRegisterButton);
+    const RegButton = new InputElementCreator(registerFormViewParams.paramsRegisterButton);
 
     this.viewElementCreator.addInsideElement(RegButton);
 
-    const ParamslogInLink = {
-      tag: 'span',
-      classNames: ['logInLink'],
-      textContent: 'Log In',
-      callback: null,
-    };
-    const logInLink = new ElementCreator(ParamslogInLink);
+    const logInLink = new ElementCreator(registerFormViewParams.ParamslogInLink);
 
     this.viewElementCreator.addInsideElement(logInLink);
   }
