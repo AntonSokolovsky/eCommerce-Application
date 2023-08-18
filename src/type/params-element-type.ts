@@ -4,17 +4,6 @@ export type ElementParams = {
   textContent: string;
   callback: null | ((event: Event) => void);
 };
-
-export type InputElementParams = {
-  tag: string;
-  classNames: string[];
-  textContent: string;
-  type: string;
-  value: string;
-  action: string;
-  disabled: boolean;
-  callback: null | ((event: Event) => void);
-};
   
 export type ViewParams = {
   tag: string;
@@ -42,5 +31,4 @@ export type Attributes = {
   src?: string;
   type?: string;
   value?: string;
-  style?: string;
 };
