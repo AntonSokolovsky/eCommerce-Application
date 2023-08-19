@@ -38,13 +38,27 @@ const baseConfig = {
         type: 'asset/resource',
       },
       {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      },
-      {
         test: /\.s[ac]ss$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-      }
+      },
+      {
+        test: /.+(?<=.module).css$/i,
+        use: [
+            "style-loader",
+            {
+                loader: "css-loader",
+                options: {
+                    modules: {
+                        localIdentName: '[local]--[hash:base64:5]',
+                    },
+                },
+            }
+        ],
+    },
+    {
+      test: /.+(?<!.module).css$/i,
+      use: [MiniCssExtractPlugin.loader, 'css-loader'],
+    },
     ],
   },
   plugins: [
