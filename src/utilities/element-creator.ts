@@ -1,7 +1,7 @@
 import { Attributes, ElementParams } from '../type/params-element-type';
 
 export class ElementCreator {
-  private _element: null | HTMLElement;
+  protected _element: null | HTMLElement;
 
   constructor(params: ElementParams) {
     this._element = null;

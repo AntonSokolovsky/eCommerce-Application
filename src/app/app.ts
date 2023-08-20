@@ -1,22 +1,12 @@
 import './app.css';
+import RegView from '../view/registration/reg-view';
+import LogInView from '../view/log-in/log-in_view';
 import HeaderView from '../view/header/header-view';
 import MainView from '../view/main-page/main-view';
 import FooterView from '../view/footer/footer-view';
 
 export default class App {
   constructor() {
-<<<<<<< HEAD
-    this.createView();
-  }
-
-  createView() {
-    const header = new HeaderView();
-    const main = new MainView();
-    const footer = new FooterView();
-
-    document.body.append(header.getHtmlElement(), main.getHtmlElement(), footer.getHtmlElement());
-  }
-=======
     // this.createRegView();
     // this.createLogInView();
     this.createView();
@@ -45,5 +35,4 @@ export default class App {
 
       document.body.append(header.getHtmlElement(), main.getHtmlElement(), footer.getHtmlElement());
     }
->>>>>>> 7303ea8ea82ab27a97893a280bd90d70c5b6715a
 }
