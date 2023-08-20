@@ -1,7 +1,7 @@
 import './catalog.css';
 import View from '../view';
 import { ElementCreator } from '../../utilities/element-creator';
-import ItemView from '../main-page/popular/item/item-view';
+import ItemView from '../first-page/popular/item/item-view';
 
 export default class CatalogView extends View {
   constructor() {

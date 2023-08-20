@@ -1,8 +1,5 @@
 import './main.css';
 import View from '../view';
-import CarouselView from './carousel/carousel-view';
-import PopularView from './popular/popular-view';
-
 
 export default class MainView extends View {
   constructor() {
@@ -11,13 +8,16 @@ export default class MainView extends View {
       classNames: ['main'],
     };
     super(params);
-    this.configureView();
   }
+  
+  setContent(view: View) {
+    const element = view.getHtmlElement();
+    const currentElement = this.viewElementCreator.getElement();
 
-  configureView() {
-    const carouselView = new CarouselView();
-    this.viewElementCreator.addInsideElement(carouselView.getHtmlElement());
-    const popularView = new PopularView();
-    this.viewElementCreator.addInsideElement(popularView.getHtmlElement());
+    while (currentElement.firstElementChild) {
+      currentElement.firstElementChild.remove();
+    }
+
+    this.viewElementCreator.addInsideElement(element);
   }
 }

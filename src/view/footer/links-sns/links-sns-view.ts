@@ -1,4 +1,4 @@
-import './links.css';
+import './links-sns.css';
 import View from '../../view';
 import { ElementCreator } from '../../../utilities/element-creator';
 
