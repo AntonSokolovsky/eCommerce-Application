@@ -1,19 +1,30 @@
 import './nav-header.css';
 import View from '../../view';
+import LinkNavHeaderView from './links-nav/links-nav-header-view';
 import { ElementCreator } from '../../../utilities/element-creator';
+import Router from '../../../app/router/router';
+import { Pages } from '../../../app/router/pages';
 
+const NamePages = {
+  LOGIN: 'Log in',
+  REGISTER: 'Register',
+  BASKET: 'Basket',
+};
 
 export default class NavHeaderView extends View {
-  constructor() {
+  linkElements: Map<string, LinkNavHeaderView>;
+
+  constructor(router: Router) {
     const params = {
       tag: 'nav',
       classNames: ['nav_header'],
     };
     super(params);
-    this.configureView();
+    this.linkElements = new Map();
+    this.configureView(router);
   }
 
-  configureView() {
+  configureView(router: Router) {
     const paramsSearch = {
       tag: 'div',
       classNames: ['search'],
@@ -21,27 +32,25 @@ export default class NavHeaderView extends View {
       callback: null,
     };
     const creatorSearch = new ElementCreator(paramsSearch);
-
     this.viewElementCreator.addInsideElement(creatorSearch);
 
-    const paramsAccount = {
-      tag: 'div',
-      classNames: ['account'],
-      textContent: 'account',
-      callback: null,
-    };
-    const creatorAccount = new ElementCreator(paramsAccount);
+    (Object.keys(NamePages) as Array<keyof typeof NamePages>).forEach((key) => {
+      const linkParams = {
+        name: NamePages[key],
+        callback: () => router.navigate(Pages[key]),
+      };
+      const linkElement = new LinkNavHeaderView(linkParams, this.linkElements);
 
-    this.viewElementCreator.addInsideElement(creatorAccount);
+      this.viewElementCreator.addInsideElement(linkElement.getHtmlElement());
 
-    const paramsBasket = {
-      tag: 'div',
-      classNames: ['basket'],
-      textContent: 'basket',
-      callback: null,
-    };
-    const creatorBasket = new ElementCreator(paramsBasket);
+      this.linkElements.set(Pages[key], linkElement);
+    });
+  }
 
-    this.viewElementCreator.addInsideElement(creatorBasket);
+  setSelectedItem(namePage: string) {
+    const linkComponent = this.linkElements.get(namePage);
+    if (linkComponent instanceof LinkNavHeaderView) {
+      linkComponent.setSelectedStatus();
+    }
   }
 }

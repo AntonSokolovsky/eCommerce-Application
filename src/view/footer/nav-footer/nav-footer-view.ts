@@ -1,36 +1,41 @@
 import './nav-footer.css';
 import View from '../../view';
+import LinkNavFooterView from './links-nav/links-nav-footer-view';
 import { ElementCreator } from '../../../utilities/element-creator';
+import Router from '../../../app/router/router';
+import { Pages } from '../../../app/router/pages';
 
+const NamePages = {
+  FIRSTPAGE: 'Main',
+  CATALOG: 'Catalog',
+};
 
 export default class NavFooterView extends View {
-  constructor() {
+  linkElements: Map<string, LinkNavFooterView>;
+  
+  constructor(router: Router) {
     const params = {
       tag: 'nav',
       classNames: ['nav_footer'],
     };
     super(params);
-    this.configureView();
+    this.linkElements = new Map();
+    this.configureView(router);
   }
 
-  configureView() {
-    const paramsItemTop = {
-      tag: 'div',
-      classNames: ['itemTop'],
-      textContent: 'Catalog',
-      callback: null,
-    };
-    const creatorItemTop = new ElementCreator(paramsItemTop);
-    this.viewElementCreator.addInsideElement(creatorItemTop);
+  configureView(router: Router) {
 
-    const paramsItemMid = {
-      tag: 'div',
-      classNames: ['itemMid'],
-      textContent: 'Contacts',
-      callback: null,
-    };
-    const creatorItemMid = new ElementCreator(paramsItemMid);
-    this.viewElementCreator.addInsideElement(creatorItemMid);
+    (Object.keys(NamePages) as Array<keyof typeof NamePages>).forEach((key) => {
+      const linkParams = {
+        name: NamePages[key],
+        callback: () => router.navigate(Pages[key]),
+      };
+      const linkElement = new LinkNavFooterView(linkParams, this.linkElements);
+
+      this.viewElementCreator.addInsideElement(linkElement.getHtmlElement());
+
+      this.linkElements.set(Pages[key], linkElement);
+    });
 
     const paramsItemBottom = {
       tag: 'div',
@@ -40,5 +45,12 @@ export default class NavFooterView extends View {
     };
     const creatorItemBottom = new ElementCreator(paramsItemBottom);
     this.viewElementCreator.addInsideElement(creatorItemBottom);
+  }
+
+  setSelectedItem(namePage: string) {
+    const linkComponent = this.linkElements.get(namePage);
+    if (linkComponent instanceof LinkNavFooterView) {
+      linkComponent.setSelectedStatus();
+    }
   }
 }

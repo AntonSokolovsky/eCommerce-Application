@@ -1,11 +1,4 @@
-.nav_header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 25px;
-}
-
-.search {
+.nav__item_header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,4 +10,11 @@
     border: 1px solid;
     font-size: 16px;
     font-weight: 700;
+
+    background-color: #fff;
+}
+
+.nav__item_header .selected {
+    color: #fff;
+    background-color: #0000ff;
 }
