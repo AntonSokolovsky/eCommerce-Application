@@ -1,12 +1,18 @@
 import validationEmail from '../../../../src/utilities/validation/validationEmail';
 import validationPassword from '../../../../src/utilities/validation/validationPass';
 import validationComfrimPassword from '../../../../src/utilities/validation/validationComfrimPass';
+import validationFirstLastName from '../../../../src/utilities/validation/validationFirstLastName';
+import validationDateOfBirth from '../../../../src/utilities/validation/validationDateOfBirth';
+import validationStreet from '../../../../src/utilities/validation/validationStreet';
+import validationCity from '../../../../src/utilities/validation/validationCity';
+import checkCountry from '../../../../src/utilities/validation/checkCountry';
+import validationPostalCode from '../../../../src/utilities/validation/validationPostalCode';
 import showHidePass from '../../../../src/utilities/showHidePass';
 
 export const registerFormViewParams = {
   paramsTelOrEmail: {
     tag: 'span',
-    classNames: ['Tel_text'],
+    classNames: ['Tel_text', 'text'],
     textContent: 'Telephone or Email',
     callback: null,
   },
@@ -58,7 +64,7 @@ export const registerFormViewParams = {
   },
   paramsPassword: {
     tag: 'span',
-    classNames: ['Password_text'],
+    classNames: ['Password_text', 'text'],
     textContent: 'Password',
     callback: null,
   },
@@ -129,7 +135,7 @@ export const registerFormViewParams = {
   },
   paramsConfrimPassword: {
     tag: 'span',
-    classNames: ['Password_text', 'Confrim_password_input'],
+    classNames: ['Password_text', 'Confrim_password_input', 'text'],
     textContent: 'Confrim Password',
     value: '',
     action: '',
@@ -221,6 +227,251 @@ export const registerFormViewParams = {
     tag: 'span',
     classNames: ['logInLink'],
     textContent: 'Log In',
+    callback: null,
+  },
+
+  firstName: {
+    tag: 'span',
+    classNames: ['firstName_text', 'text'],
+    textContent: 'First Name',
+    callback: null,
+  },
+  paramsfirstNameInContainer:{
+    tag: 'div',
+    classNames: ['input_container'],
+    textContent: '',
+    callback: null,
+  },
+  paramsFirstNameInput:{
+    tag: 'input',
+    classNames: ['input', 'firstName_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationFirstLastName,
+  },
+  RequirementsTofirstName: {
+    tag: 'div',
+    classNames: ['Requirements'],
+    textContent: '',
+    callback: null,
+  },
+  firstNameRequirementParams: {
+    tag: 'p',
+    classNames: ['Requirement'],
+    textContent: 'Must contain at least one character and no special characters or numbers.',
+    callback: null,
+  },
+
+  LastName: {
+    tag: 'span',
+    classNames: ['LastName_text', 'text'],
+    textContent: 'Last Name',
+    callback: null,
+  },
+  paramsLastNameInContainer:{
+    tag: 'div',
+    classNames: ['input_container'],
+    textContent: '',
+    callback: null,
+  },
+  paramsLastNameInput:{
+    tag: 'input',
+    classNames: ['input', 'LastName_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationFirstLastName,
+  },
+  RequirementsToLastName: {
+    tag: 'div',
+    classNames: ['Requirements'],
+    textContent: '',
+    callback: null,
+  },
+  LastNamefirstRequirementParams: {
+    tag: 'p',
+    classNames: ['Requirement'],
+    textContent: 'Must contain at least one character and no special characters or numbers',
+    callback: null,
+  },
+
+  DateOfBirth: {
+    tag: 'span',
+    classNames: ['DateOfBirth', 'text'],
+    textContent: 'Date of birth',
+    callback: null,
+  },
+  paramsDateOfBirthInContainer:{
+    tag: 'div',
+    classNames: ['input_container'],
+    textContent: '',
+    callback: null,
+  },
+  paramsDateOfBirthInput:{
+    tag: 'input',
+    classNames: ['input', 'DateOfBirth_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationDateOfBirth,
+  },
+  RequirementsToDateOfBirth: {
+    tag: 'div',
+    classNames: ['Requirements'],
+    textContent: '',
+    callback: null,
+  },
+  DateOfBirthfirstRequirementParams: {
+    tag: 'p',
+    classNames: ['Requirement'],
+    textContent: 'Enter your birthday in the format YYYY.MM.DD',
+    callback: null,
+  },
+
+  Street: {
+    tag: 'span',
+    classNames: ['Street_text', 'text'],
+    textContent: 'Street',
+    callback: null,
+  },
+  paramsStreetInContainer:{
+    tag: 'div',
+    classNames: ['input_container'],
+    textContent: '',
+    callback: null,
+  },
+  paramsStreetInput:{
+    tag: 'input',
+    classNames: ['input', 'Street_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationStreet,
+  },
+  RequirementsToStreet: {
+    tag: 'div',
+    classNames: ['Requirements'],
+    textContent: '',
+    callback: null,
+  },
+  StreetfirstRequirementParams: {
+    tag: 'p',
+    classNames: ['Requirement'],
+    textContent: 'Must contain at least one character.',
+    callback: null,
+  },
+
+  City: {
+    tag: 'span',
+    classNames: ['City_text', 'text'],
+    textContent: 'City',
+    callback: null,
+  },
+  paramsCityInContainer:{
+    tag: 'div',
+    classNames: ['input_container'],
+    textContent: '',
+    callback: null,
+  },
+  paramsCityInput:{
+    tag: 'input',
+    classNames: ['input', 'City_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationCity,
+  },
+  RequirementsToCity: {
+    tag: 'div',
+    classNames: ['Requirements'],
+    textContent: '',
+    callback: null,
+  },
+  CityfirstRequirementParams: {
+    tag: 'p',
+    classNames: ['Requirement'],
+    textContent: 'Must contain at least one character and no special characters or numbers/',
+    callback: null,
+  },
+
+  PostalCode: {
+    tag: 'span',
+    classNames: ['PostalCode_text', 'text'],
+    textContent: 'Postal Code',
+    callback: null,
+  },
+  paramsPostalCodeInContainer:{
+    tag: 'div',
+    classNames: ['input_container'],
+    textContent: '',
+    callback: null,
+  },
+  paramsPostalCodeInput:{
+    tag: 'input',
+    classNames: ['input', 'PostalCode_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationPostalCode,
+  },
+  RequirementsToPostalCode: {
+    tag: 'div',
+    classNames: ['Requirements'],
+    textContent: '',
+    callback: null,
+  },
+  PostalCodefirstRequirementParams: {
+    tag: 'p',
+    classNames: ['Requirement'],
+    textContent: 'Must follow the format for the country (e.g., 12345 or A1B 2C3 for the U.S. and Canada, respectively).',
+    callback: null,
+  },
+
+  Country: {
+    tag: 'span',
+    classNames: ['Country_text', 'text'],
+    textContent: 'Country',
+    callback: null,
+  },
+  paramsCountryInContainer:{
+    tag: 'div',
+    classNames: ['input_container'],
+    textContent: '',
+    callback: null,
+  },
+  paramsCountryInput:{
+    tag: 'input',
+    classNames: ['input', 'Country_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: checkCountry,
+  },
+  RequirementsToCountry: {
+    tag: 'div',
+    classNames: ['Requirements'],
+    textContent: '',
+    callback: null,
+  },
+  CountryfirstRequirementParams: {
+    tag: 'p',
+    classNames: ['Requirement'],
+    textContent: 'Must be a valid country from a predefined list or autocomplete field.',
     callback: null,
   },
 };
