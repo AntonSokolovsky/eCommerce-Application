@@ -9,7 +9,7 @@ const Pages: {
   FIRSTPAGE: 'main',
   CATALOG: 'catalog',
   LOGIN: 'login',
-  REGISTER: 'register',
+  REGISTER: 'registration',
   BASKET: 'basket',
   NOT_FOUND: 'not-found',
 };

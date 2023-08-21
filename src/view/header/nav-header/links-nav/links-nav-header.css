@@ -14,6 +14,13 @@
     background-color: #fff;
 }
 
+@media (max-width: 800px) {
+    .nav__item_header {
+        width: 60px;
+        height: 60px;
+    }
+}
+
 .nav__item_header .selected {
     color: #fff;
     background-color: #0000ff;

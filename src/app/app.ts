@@ -59,6 +59,11 @@ export default class App {
     this.footer = new FooterView(this.router);
 
     document.body.append(this.header.getHtmlElement(), this.main.getHtmlElement(), this.footer.getHtmlElement());
+  
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.href = './assets/favicon.ico';
+    document.head.appendChild(link);
   }
 
   createRoutes() {
@@ -90,19 +95,19 @@ export default class App {
       {
         path: `${Pages.LOGIN}`,
         callback: () => {
-          this.setContent(Pages.LOGIN, new LogInView());
+          this.setContent(Pages.LOGIN, new LogInView(this.router));
         },
       },
       {
         path: `${Pages.REGISTER}`,
         callback: () => {
-          this.setContent(Pages.REGISTER, new RegView());
+          this.setContent(Pages.REGISTER, new RegView(this.router));
         },
       },
       {
         path: `${Pages.NOT_FOUND}`,
         callback: () => {
-          this.setContent(Pages.NOT_FOUND, new NotFoundView());
+          this.setContent(Pages.NOT_FOUND, new NotFoundView(this.router));
         },
       },
     ];

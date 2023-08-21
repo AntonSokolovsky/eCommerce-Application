@@ -9,3 +9,10 @@
 
     padding: 45px 35px;
 }
+
+@media (max-width: 800px) {
+    .footer {
+        flex-direction: column;
+        padding: 15px;
+    }
+}

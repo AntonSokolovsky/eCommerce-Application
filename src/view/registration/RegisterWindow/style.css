@@ -33,7 +33,8 @@ body {
         position: relative;
         margin: auto;
         height: 800px;
-        width: 100%;
+        /* width: 100%; */
+        padding: 0 15px;
         top: 57px;
         max-width: 585px;
     }
@@ -41,7 +42,7 @@ body {
     .RegForm {
         position: relative;
         display: grid;
-        width: 100%;
+        /* width: 100%; */
         grid-template-rows: 40px 95px 43px 95px 45px 95px 47px 43px;
         margin: 0;
     }
@@ -118,7 +119,7 @@ body {
     border: none;
     border-radius: 25px;
     bottom: 50%;
-    left: 90%;
+    left: 83%;
     background-repeat: no-repeat;
     background-position: center;
     background-image: url('../../../assets/showPass.PNG');
@@ -131,7 +132,7 @@ body {
     border: none;
     border-radius: 25px;
     bottom: 50%;
-    left: 90%;
+    left: 83%;
     background-repeat: no-repeat;
     background-position: center;
     background-image: url('../../../assets/hidePass.PNG');
