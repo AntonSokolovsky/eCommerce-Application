@@ -1,3 +1,4 @@
+import formValidation from '../validation/vlidationForm';
 const regExpression = /^\d{4}.\d{2}.\d{2}$/;
 
 export default function validationDateOfBirth(e: Event):void {
@@ -17,6 +18,7 @@ export default function validationDateOfBirth(e: Event):void {
       if (targetInput.classList.contains('accept')) targetInput.classList.remove('accept');
     }
   });
+  formValidation();
   targetInput.addEventListener('blur', () => rules.style.display = 'none');
   targetInput.removeEventListener('input', () => rules.style.display = 'block');
   targetInput.removeEventListener('blur', () => rules.style.display = 'none');
