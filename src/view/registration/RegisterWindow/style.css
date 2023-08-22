@@ -2,12 +2,16 @@ body {
     width: 100%;
     margin: 0px;
 }
+
+.logInregView {
+    height: 1700px;
+}
 @media (min-width: 751px) {
     .RgVindow {
         position: relative;
         top: 57px;
         left: 55px;
-        height: 800px;
+        height: 1200px;
         margin: 0;
         max-width: 585px;
     }
@@ -15,7 +19,8 @@ body {
     .RegForm {
         position: relative;
         display: grid;
-        grid-template-rows: 40px 95px 43px 95px 45px 95px 47px 43px;
+        height: 1600px;
+        grid-template-rows: 40px 95px 43px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 47px 43px;
         margin: 0;
     }
 
@@ -23,7 +28,6 @@ body {
         font-size: 35px;
         margin-left: 75.2%;
         width: 150px;
-        margin-top: 20px;
         color: white;
     }
 }
@@ -32,9 +36,8 @@ body {
     .RgVindow {
         position: relative;
         margin: auto;
-        height: 800px;
-        /* width: 100%; */
         padding: 0 15px;
+        height: 1600px;
         top: 57px;
         max-width: 585px;
     }
@@ -42,8 +45,8 @@ body {
     .RegForm {
         position: relative;
         display: grid;
-        /* width: 100%; */
-        grid-template-rows: 40px 95px 43px 95px 45px 95px 47px 43px;
+        height: 1600px;
+        grid-template-rows: 40px 95px 43px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 47px 43px;
         margin: 0;
     }
 
@@ -51,7 +54,6 @@ body {
         font-size: 30px;
         margin-left: 67%;
         width: 90px;
-        margin-top: 20px;
         color: white;
     }
 }
@@ -78,16 +80,15 @@ body {
     font-size: 60px;
 }
 
-.Tel_text {
+.text {
     font-size: 30px;
     display: flex;
     align-items: flex-end;
 }
 
-.Password_text {
-    font-size: 30px;
-    display: flex;
-    align-items: flex-end;
+.text:hover {
+    background-color: rgb(109, 109, 109);
+    cursor: pointer;
 }
 
 .buttonRegSign {

@@ -4,6 +4,7 @@ import { InputElementCreator } from '../../../../utilities/InputFieldsCreator/In
 import { registerFormViewParams } from '../RegisterWindowParams';
 import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
+import { countryList } from '../../../../utilities/validation/countryList/CountryList';
 
 export default class RegisterFormView extends View {
   constructor(mainComponent: Router) {
@@ -121,6 +122,187 @@ export default class RegisterFormView extends View {
     ConfrimPasswordContainerHtmlElement.append(RequirementsToConfrimPasswordText.getElement());
 
     this.viewElementCreator.addInsideElement(ConfrimPasswordContainerHtmlElement);
+
+
+
+
+    const firstName = new ElementCreator(registerFormViewParams.firstName);
+    this.viewElementCreator.addInsideElement(firstName);
+
+    const firstNameInputContainer = new View(registerFormViewParams.paramsfirstNameInContainer);
+    const firstNameContainerHtmlElement = firstNameInputContainer.getHtmlElement();
+
+    const firstNameInput = new InputElementCreator(registerFormViewParams.paramsFirstNameInput);
+    firstNameContainerHtmlElement.append(firstNameInput.getInputElement());
+
+    const RequirementsTofirstNameAttributes = {
+      style: 'display: none',
+    };
+    const RequirementsTofirstNameText = new ElementCreator(registerFormViewParams.RequirementsTofirstName);
+
+    RequirementsTofirstNameText.setAttributeElement(RequirementsTofirstNameAttributes);
+
+    const firstRequirementFirstName = new ElementCreator(registerFormViewParams.firstNameRequirementParams);
+
+    RequirementsTofirstNameText.addInsideElement(firstRequirementFirstName);
+    
+    firstNameContainerHtmlElement.append(RequirementsTofirstNameText.getElement());
+
+    this.viewElementCreator.addInsideElement(firstNameContainerHtmlElement);
+
+
+
+
+    const LastName = new ElementCreator(registerFormViewParams.LastName);
+    this.viewElementCreator.addInsideElement(LastName);
+
+    const LastNameInputContainer = new View(registerFormViewParams.paramsLastNameInContainer);
+    const LastNameContainerHtmlElement = LastNameInputContainer.getHtmlElement();
+
+    const LastNameInput = new InputElementCreator(registerFormViewParams.paramsLastNameInput);
+    LastNameContainerHtmlElement.append(LastNameInput.getInputElement());
+
+    const RequirementsToLastNameAttributes = {
+      style: 'display: none',
+    };
+    const RequirementsToLastNameText = new ElementCreator(registerFormViewParams.RequirementsToLastName);
+
+    RequirementsToLastNameText.setAttributeElement(RequirementsToLastNameAttributes);
+
+    const firstRequirementLastName = new ElementCreator(registerFormViewParams.LastNamefirstRequirementParams);
+
+    RequirementsToLastNameText.addInsideElement(firstRequirementLastName);
+    
+    LastNameContainerHtmlElement.append(RequirementsToLastNameText.getElement());
+
+    this.viewElementCreator.addInsideElement(LastNameContainerHtmlElement);
+
+
+
+    const DateOfBirth = new ElementCreator(registerFormViewParams.DateOfBirth);
+    this.viewElementCreator.addInsideElement(DateOfBirth);
+
+    const DateOfBirthInputContainer = new View(registerFormViewParams.paramsDateOfBirthInContainer);
+    const DateOfBirthContainerHtmlElement = DateOfBirthInputContainer.getHtmlElement();
+
+    const DateOfBirthInput = new InputElementCreator(registerFormViewParams.paramsDateOfBirthInput);
+    DateOfBirthContainerHtmlElement.append(DateOfBirthInput.getInputElement());
+
+    const RequirementsToDateOfBirthAttributes = {
+      style: 'display: none',
+    };
+    const RequirementsToDateOfBirthText = new ElementCreator(registerFormViewParams.RequirementsToDateOfBirth);
+
+    RequirementsToDateOfBirthText.setAttributeElement(RequirementsToDateOfBirthAttributes);
+
+    const firstRequirementDateOfBirth = new ElementCreator(registerFormViewParams.DateOfBirthfirstRequirementParams);
+
+    RequirementsToDateOfBirthText.addInsideElement(firstRequirementDateOfBirth);
+    
+    DateOfBirthContainerHtmlElement.append(RequirementsToDateOfBirthText.getElement());
+
+    this.viewElementCreator.addInsideElement(DateOfBirthContainerHtmlElement);
+
+
+
+    const Street = new ElementCreator(registerFormViewParams.Street);
+    this.viewElementCreator.addInsideElement(Street);
+
+    const StreetInputContainer = new View(registerFormViewParams.paramsStreetInContainer);
+    const StreetContainerHtmlElement = StreetInputContainer.getHtmlElement();
+
+    const StreetInput = new InputElementCreator(registerFormViewParams.paramsStreetInput);
+    StreetContainerHtmlElement.append(StreetInput.getInputElement());
+
+    const RequirementsToStreetAttributes = {
+      style: 'display: none',
+    };
+    const RequirementsToStreetText = new ElementCreator(registerFormViewParams.RequirementsToStreet);
+
+    RequirementsToStreetText.setAttributeElement(RequirementsToStreetAttributes);
+
+    const firstRequirementStreet = new ElementCreator(registerFormViewParams.StreetfirstRequirementParams);
+
+    RequirementsToStreetText.addInsideElement(firstRequirementStreet);
+    
+    StreetContainerHtmlElement.append(RequirementsToStreetText.getElement());
+
+    this.viewElementCreator.addInsideElement(StreetContainerHtmlElement);
+
+
+
+    const City = new ElementCreator(registerFormViewParams.City);
+    this.viewElementCreator.addInsideElement(City);
+
+    const CityInputContainer = new View(registerFormViewParams.paramsCityInContainer);
+    const CityContainerHtmlElement = CityInputContainer.getHtmlElement();
+
+    const CityInput = new InputElementCreator(registerFormViewParams.paramsCityInput);
+    CityContainerHtmlElement.append(CityInput.getInputElement());
+
+    const RequirementsToCityAttributes = {
+      style: 'display: none',
+    };
+    const RequirementsToCityText = new ElementCreator(registerFormViewParams.RequirementsToCity);
+
+    RequirementsToCityText.setAttributeElement(RequirementsToCityAttributes);
+
+    const firstRequirementCity = new ElementCreator(registerFormViewParams.CityfirstRequirementParams);
+
+    RequirementsToCityText.addInsideElement(firstRequirementCity);
+    
+    CityContainerHtmlElement.append(RequirementsToCityText.getElement());
+
+    this.viewElementCreator.addInsideElement(CityContainerHtmlElement);
+
+    const Country = new ElementCreator(registerFormViewParams.Country);
+    this.viewElementCreator.addInsideElement(Country);
+
+    const CountryInputContainer = new View(registerFormViewParams.paramsCountryInContainer);
+    const CountryContainerHtmlElement = CountryInputContainer.getHtmlElement();
+
+    const CountryInput = new InputElementCreator(registerFormViewParams.paramsCountryInput);
+    CountryContainerHtmlElement.append(CountryInput.getInputElement());
+
+    const RequirementsToCountryAttributes = {
+      style: 'display: none',
+    };
+    const RequirementsToCountryText = new ElementCreator(registerFormViewParams.RequirementsToCountry);
+
+    RequirementsToCountryText.setAttributeElement(RequirementsToCountryAttributes);
+
+    const entries = Object.entries(countryList);
+    for (const [key, value] of entries) {
+      const country = new ElementCreator(value);
+      RequirementsToCountryText.addInsideElement(country);
+      CountryContainerHtmlElement.append(RequirementsToCountryText.getElement());
+    }
+
+    this.viewElementCreator.addInsideElement(CountryContainerHtmlElement);
+
+    const PostalCode = new ElementCreator(registerFormViewParams.PostalCode);
+    this.viewElementCreator.addInsideElement(PostalCode);
+
+    const PostalCodeInputContainer = new View(registerFormViewParams.paramsPostalCodeInContainer);
+    const PostalCodeContainerHtmlElement = PostalCodeInputContainer.getHtmlElement();
+
+    const PostalCodeInput = new InputElementCreator(registerFormViewParams.paramsPostalCodeInput);
+    PostalCodeContainerHtmlElement.append(PostalCodeInput.getInputElement());
+
+    const RequirementsToPostalCodeAttributes = {
+      style: 'display: none',
+    };
+    const RequirementsToPostalCodeText = new ElementCreator(registerFormViewParams.RequirementsToPostalCode);
+
+    RequirementsToPostalCodeText.setAttributeElement(RequirementsToPostalCodeAttributes);
+
+    const firstRequirementPostalCode = new ElementCreator(registerFormViewParams.PostalCodefirstRequirementParams);
+
+    RequirementsToPostalCodeText.addInsideElement(firstRequirementPostalCode);
+
+    PostalCodeContainerHtmlElement.append(RequirementsToPostalCodeText.getElement());
+
+    this.viewElementCreator.addInsideElement(PostalCodeContainerHtmlElement);
 
     const RegButton = new InputElementCreator(registerFormViewParams.paramsRegisterButton);
     RegButton.setCallback(() => mainComponent.navigate(Pages.FIRSTPAGE));
