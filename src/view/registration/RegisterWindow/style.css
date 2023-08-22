@@ -87,7 +87,7 @@ body {
     align-items: flex-end;
 }
 
-.text:hover {
+.list:hover {
     background-color: rgb(109, 109, 109);
     cursor: pointer;
 }
