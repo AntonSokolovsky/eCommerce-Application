@@ -7,3 +7,9 @@
   font-size: 40px;
   font-weight: normal;
 }
+
+@media (max-width: 800px) {
+  .nav_footer {
+    display: none;
+  }
+}

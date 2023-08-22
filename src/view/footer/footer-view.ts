@@ -4,6 +4,7 @@ import NavFooterView from './nav-footer/nav-footer-view';
 import LogoView from '../header/logo/logo-view';
 import LinksView from './links-sns/links-sns-view';
 import Router from '../../app/router/router';
+import { Pages } from '../../app/router/pages';
 
 export default class FooterView extends View {
   constructor(mainComponent: Router) {
@@ -18,8 +19,14 @@ export default class FooterView extends View {
   configureView(mainComponent: Router) {
     const navFooterView = new NavFooterView(mainComponent);
     this.viewElementCreator.addInsideElement(navFooterView.getHtmlElement());
-    const logoView = new LogoView();
+
+    const linkParams = {
+      name: 'AVA',
+      callback: () => mainComponent.navigate(Pages.FIRSTPAGE),
+    };
+    const logoView = new LogoView(linkParams);
     this.viewElementCreator.addInsideElement(logoView.getHtmlElement());
+
     const linksView = new LinksView();
     this.viewElementCreator.addInsideElement(linksView.getHtmlElement());
   }

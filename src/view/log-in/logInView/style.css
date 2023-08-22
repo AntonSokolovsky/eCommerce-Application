@@ -31,16 +31,17 @@ body {
 @media (max-width: 750px) {
     .LogInVindow {
         position: relative;
-        width: 100%;
+        /* width: 100%; */
         height: 800px;
         margin: auto;
+        padding: 0 15px;
         top: 57px;
         max-width: 585px;
     }
 
     .logInFormView {
         position: relative;
-        width: 100%;
+        /* width: 100%; */
         display: grid;
         grid-template-rows: 40px 95px 43px 95px 75px 47px 43px;
         margin: 0;
@@ -129,7 +130,7 @@ body {
     height: 25px;
     border-radius: 25px;
     bottom: 50%;
-    left: 90%;
+    left: 83%;
     border: none;
     background-repeat: no-repeat;
     background-position: center;
@@ -143,7 +144,7 @@ body {
     border: none;
     border-radius: 25px;
     bottom: 50%;
-    left: 90%;
+    left: 83%;
     background-repeat: no-repeat;
     background-position: center;
     background-image: url('../../../assets/hidePass.PNG');

@@ -1,19 +1,20 @@
 import './style.css';
 import View from '../view';
 import RgVindowView from '../registration/RegisterWindow/regVindow_view';
+import Router from '../../app/router/router';
 
 export default class RegView extends View {
-  constructor() {
+  constructor(mainComponent: Router) {
     const params = {
       tag: 'div',
       classNames: ['logInregView'],
     };
     super(params);
-    this.configureView();
+    this.configureView(mainComponent);
   }
 
-  configureView() {
-    const registerWindowView = new RgVindowView();
+  configureView(mainComponent: Router) {
+    const registerWindowView = new RgVindowView(mainComponent);
     this.viewElementCreator.addInsideElement(registerWindowView.getHtmlElement());
   }
 }

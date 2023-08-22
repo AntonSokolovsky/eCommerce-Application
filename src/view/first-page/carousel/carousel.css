@@ -2,6 +2,12 @@
     padding: 6px 100px 41px 100px;
 }
 
+@media (max-width: 800px) {
+    .carousel {
+        padding: 6px 25px 41px 25px;
+    }
+}
+
 .carousel__frame {
     margin: 0 auto;
     overflow: hidden;
@@ -37,6 +43,12 @@
     gap: 252px;
 
     margin: 32px;
+}
+
+@media (max-width: 800px) {
+    .carousel__arrows {
+        gap: 20px;
+    }
 }
 
 .carousel__arrow {

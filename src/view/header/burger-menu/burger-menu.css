@@ -36,3 +36,9 @@
 .menu-burger__line {
    top: 50%;
 }
+
+@media (max-width: 800px) {
+   .menu-burger {
+      width: 40px;
+   }
+}

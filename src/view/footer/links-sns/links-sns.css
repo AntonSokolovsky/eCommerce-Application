@@ -16,9 +16,12 @@
     border: 1px solid;
     font-size: 16px;
     font-weight: 700;
+
+    width: 65px;
+    height: 65px;
 }
 
-.tiktok {
+/* .tiktok {
     width: 94px;
     height: 94px;
 }
@@ -36,4 +39,4 @@
 .youtube {
     width: 98px;
     height: 87px;
-}
+} */

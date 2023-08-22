@@ -1,19 +1,20 @@
 import './style.css';
 import View from '../view';
 import LogInVindowView from '../log-in/logInView/logInWindow';
+import Router from '../../app/router/router';
 
 export default class LogInView extends View {
-  constructor() {
+  constructor(mainComponent: Router) {
     const params = {
       tag: 'div',
       classNames: ['logInregView'],
     };
     super(params);
-    this.configureView();
+    this.configureView(mainComponent);
   }
 
-  configureView() {
-    const LogInWindowView = new LogInVindowView();
+  configureView(mainComponent: Router) {
+    const LogInWindowView = new LogInVindowView(mainComponent);
     this.viewElementCreator.addInsideElement(LogInWindowView.getHtmlElement());
   }
 }

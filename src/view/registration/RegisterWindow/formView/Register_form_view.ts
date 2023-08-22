@@ -2,19 +2,21 @@ import View from '../../../view';
 import { ElementCreator } from '../../../../utilities/element-creator';
 import { InputElementCreator } from '../../../../utilities/InputFieldsCreator/InputFieldsCreator';
 import { registerFormViewParams } from '../RegisterWindowParams';
+import Router from '../../../../app/router/router';
+import { Pages } from '../../../../app/router/pages';
 import { countryList } from '../../../../utilities/validation/countryList/CountryList';
 
 export default class RegisterFormView extends View {
-  constructor() {
+  constructor(mainComponent: Router) {
     const params = {
       tag: 'form',
       classNames: ['RegForm'],
     };
     super(params);
-    this.configureView();
+    this.configureView(mainComponent);
   }
 
-  configureView() {
+  configureView(mainComponent: Router) {
     const TelOrEmail = new ElementCreator(registerFormViewParams.paramsTelOrEmail);
     this.viewElementCreator.addInsideElement(TelOrEmail);
 
@@ -303,11 +305,11 @@ export default class RegisterFormView extends View {
     this.viewElementCreator.addInsideElement(PostalCodeContainerHtmlElement);
 
     const RegButton = new InputElementCreator(registerFormViewParams.paramsRegisterButton);
-
+    RegButton.setCallback(() => mainComponent.navigate(Pages.FIRSTPAGE));
     this.viewElementCreator.addInsideElement(RegButton);
 
     const logInLink = new ElementCreator(registerFormViewParams.ParamslogInLink);
-
+    logInLink.setCallback(() => mainComponent.navigate(Pages.LOGIN));
     this.viewElementCreator.addInsideElement(logInLink);
   }
 
