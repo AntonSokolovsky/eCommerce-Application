@@ -9,16 +9,16 @@ interface MyAdress {
   state?: string;
 }
 export interface CustomerCreate {
-  key: string,
+  key?: string,
   email: string,
-  firstName: string,
+  firstName: string | undefined,
   lastName: string,
   dateOfBirth: string,
   password: string,
   addresses: MyAdress[],
-  defaultShippingAddress: number,
-  shippingAddressIds: number[],
-  defaultBillingAddress: number,
-  billingAddressIds: number[],
+  defaultShippingAddress?: number,
+  shippingAddressIds?: number[],
+  defaultBillingAddress?: number,
+  billingAddressIds?: number[],
 }
 
