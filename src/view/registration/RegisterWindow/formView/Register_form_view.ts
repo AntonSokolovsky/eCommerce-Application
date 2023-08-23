@@ -271,12 +271,11 @@ export default class RegisterFormView extends View {
 
     RequirementsToCountryText.setAttributeElement(RequirementsToCountryAttributes);
 
-    const entries = Object.entries(countryList);
-    for (const [key, value] of entries) {
-      const country = new ElementCreator(value);
+    Object.values(countryList).map(countryParams => {
+      const country = new ElementCreator(countryParams);
       RequirementsToCountryText.addInsideElement(country);
       CountryContainerHtmlElement.append(RequirementsToCountryText.getElement());
-    }
+    });
 
     this.viewElementCreator.addInsideElement(CountryContainerHtmlElement);
 
