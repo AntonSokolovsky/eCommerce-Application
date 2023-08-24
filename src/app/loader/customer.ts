@@ -1,17 +1,30 @@
-import { ctpClient } from '../../sdk/client';
+import { ctpClient, getCtpClientPasswordFlow } from '../../sdk/client';
 import {
+  CustomerDraft,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
-import { CustomerCreate } from '../../type/customer-type';
+import { UserAuthOptions } from '@commercetools/sdk-client-v2';
 
 const projectKey = process.env.CTP_PROJECT_KEY || '';
 
 export class Customer {
   protected apiRoot;
 
-  constructor() {
-    this.apiRoot = createApiBuilderFromCtpClient(ctpClient)
-      .withProjectKey({ projectKey: projectKey });
+  protected options: UserAuthOptions | null;
+
+  constructor(options?: UserAuthOptions) {
+    this.options = options || null;
+    this.apiRoot = this.getApiRoot();
+  }
+
+  getApiRoot() {
+    if (this.options) {
+      return createApiBuilderFromCtpClient(getCtpClientPasswordFlow(this.options))
+        .withProjectKey({ projectKey: projectKey });
+    } else {
+      return createApiBuilderFromCtpClient(ctpClient)
+        .withProjectKey({ projectKey: projectKey });
+    }
   }
 
   getCustomerByEmail(customerEmail:string) {
@@ -25,7 +38,7 @@ export class Customer {
       .execute();
   }
 
-  createCustomer(customerParams: CustomerCreate) {
+  createCustomer(customerParams: CustomerDraft) {
     return this.apiRoot
       .customers()
       .post(
@@ -33,5 +46,9 @@ export class Customer {
           body: customerParams,
         })
       .execute();
+  }
+
+  loginCustomer() {
+
   }
 }

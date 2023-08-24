@@ -4,6 +4,9 @@ import { InputElementCreator } from '../../../../utilities/InputFieldsCreator/In
 import { LogInFormViewParams } from '../LogInWindowParams';
 import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
+import { UserAuthOptions } from '@commercetools/sdk-client-v2';
+import { getInputValue } from '../../../../utilities/function-utils';
+import { Customer } from '../../../../app/loader/customer';
 
 export default class LogInFormView extends View {
   constructor(mainComponent: Router) {
@@ -83,7 +86,7 @@ export default class LogInFormView extends View {
     this.viewElementCreator.addInsideElement(PasswordInputContainerHtmlElement);
 
     const SignIn = new InputElementCreator(LogInFormViewParams.paramsSignInButton);
-    SignIn.setCallback(() => mainComponent.navigate(Pages.FIRSTPAGE));
+    SignIn.setCallback(() => this.sendForm(mainComponent));
     this.viewElementCreator.addInsideElement(SignIn);
 
     const ForgotPassLink = new ElementCreator(LogInFormViewParams.ParamsForgotLink);
@@ -96,5 +99,21 @@ export default class LogInFormView extends View {
 
   getElement() {
     return this.viewElementCreator.getElement();
+  }
+
+  sendForm(mainComponent: Router) {
+    //eslint-disable-next-line
+    const customer = new Customer(this.getDataForm());
+    mainComponent.navigate(Pages.FIRSTPAGE);
+  }
+
+  //ToDo find another way to get the input value. Without use querySelector
+  getDataForm(): UserAuthOptions {
+    const dataForm: UserAuthOptions = {
+      username: getInputValue(LogInFormViewParams.paramsTelOrEmailInput.classNames[0]),
+      password: getInputValue(LogInFormViewParams.paramsPasswordInput.classNames[0]),
+    };
+
+    return dataForm;
   }
 }
