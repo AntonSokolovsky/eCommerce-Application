@@ -4,9 +4,9 @@ import { InputElementCreator } from '../../../../utilities/InputFieldsCreator/In
 import { LogInFormViewParams } from '../LogInWindowParams';
 import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
-import { UserAuthOptions } from '@commercetools/sdk-client-v2';
 import { getInputValue } from '../../../../utilities/function-utils';
 import { Customer } from '../../../../app/loader/customer';
+import { MyCustomerSignin } from '@commercetools/platform-sdk';
 
 export default class LogInFormView extends View {
   constructor(mainComponent: Router) {
@@ -102,16 +102,16 @@ export default class LogInFormView extends View {
   }
 
   sendForm(mainComponent: Router) {
-    //eslint-disable-next-line
     const customer = new Customer(this.getDataForm());
+    customer.loginCustomer(this.getDataForm());
     mainComponent.navigate(Pages.FIRSTPAGE);
   }
 
   //ToDo find another way to get the input value. Without use querySelector
-  getDataForm(): UserAuthOptions {
-    const dataForm: UserAuthOptions = {
-      username: getInputValue(LogInFormViewParams.paramsTelOrEmailInput.classNames[0]),
-      password: getInputValue(LogInFormViewParams.paramsPasswordInput.classNames[0]),
+  getDataForm(): MyCustomerSignin {
+    const dataForm = {
+      email: getInputValue(LogInFormViewParams.paramsTelOrEmailInput.classNames[1]),
+      password: getInputValue(LogInFormViewParams.paramsPasswordInput.classNames[1]),
     };
 
     return dataForm;

@@ -331,16 +331,16 @@ export default class RegisterFormView extends View {
       email: getInputValue(registerFormViewParams.paramsTelOrEmailInput.classNames[1]),
       firstName: getInputValue(registerFormViewParams.paramsFirstNameInput.classNames[1]),
       lastName: getInputValue(registerFormViewParams.paramsLastNameInput.classNames[1]),
-      // dateOfBirth: getInputValue(registerFormViewParams.paramsDateOfBirthInput.classNames[1]),
+      dateOfBirth: getInputValue(registerFormViewParams.paramsDateOfBirthInput.classNames[1]),
       password: getInputValue(registerFormViewParams.paramsPasswordInput.classNames[1]),
-      // addresses: [
-      //   {
-      //     country: getInputValue(registerFormViewParams.paramsCountryInput.classNames[1]),
-      //     streetName: getInputValue(registerFormViewParams.paramsStreetInput.classNames[1]),
-      //     postalCode: getInputValue(registerFormViewParams.paramsPostalCodeInput.classNames[1]),
-      //     city: getInputValue(registerFormViewParams.paramsCityInput.classNames[1]),
-      //   },
-      // ],
+      addresses: [
+        {
+          country: getInputValue(registerFormViewParams.paramsCountryInput.classNames[1]),
+          streetName: getInputValue(registerFormViewParams.paramsStreetInput.classNames[1]),
+          postalCode: getInputValue(registerFormViewParams.paramsPostalCodeInput.classNames[1]),
+          city: getInputValue(registerFormViewParams.paramsCityInput.classNames[1]),
+        },
+      ],
     };
 
     return dataForm;

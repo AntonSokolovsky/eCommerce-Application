@@ -64,9 +64,3 @@ export function getCtpClientPasswordFlow(userAuth: UserAuthOptions) {
     .build();
   return ctpClientPasswordFlow;
 }
-// const ctpClientPasswordFlow = new ClientBuilder()
-//   .withPasswordFlow(options)
-//   .withHttpMiddleware(httpMiddlewareOptions)
-//   .withLoggerMiddleware()
-//   .build();
-
