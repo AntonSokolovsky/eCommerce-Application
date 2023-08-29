@@ -7,6 +7,7 @@ import { Pages } from '../../../../app/router/pages';
 import { getInputValue } from '../../../../utilities/function-utils';
 import { Customer } from '../../../../app/loader/customer';
 import { MyCustomerSignin } from '@commercetools/platform-sdk';
+import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
 
 export default class LogInFormView extends View {
   constructor(mainComponent: Router) {
@@ -103,10 +104,12 @@ export default class LogInFormView extends View {
 
   sendForm(mainComponent: Router) {
     const customer = new Customer(this.getDataForm());
-    customer.loginCustomer(this.getDataForm());
-    mainComponent.navigate(Pages.FIRSTPAGE);
+    const response = customer.loginCustomer(this.getDataForm());
+    response.then((data) => this.handleSuccessResponse(data.body.customer.firstName, mainComponent))
+      .catch(() => this.handleErrorResponse());
+    mainComponent.navigate(Pages.LOGIN);
   }
-
+  
   //ToDo find another way to get the input value. Without use querySelector
   getDataForm(): MyCustomerSignin {
     const dataForm = {
@@ -115,5 +118,30 @@ export default class LogInFormView extends View {
     };
 
     return dataForm;
+  }
+
+  handleSuccessResponse(message: string | undefined, mainComponent: Router) {
+    const greetingMessage = `Hello, ${message}! You have successfully logged in`;
+    this.showModalWindow(greetingMessage);
+    this.hideAuthButton();
+    mainComponent.navigate(Pages.FIRSTPAGE);
+  }
+
+  handleErrorResponse() {
+    const errorMessage = 'Invalid email or password. You may not be registered yet';
+    this.showModalWindow(errorMessage);
+  }
+
+  hideAuthButton() {
+    const buttonLogin = document.querySelector('.nav__login');
+    buttonLogin?.remove();
+    const buttonRegister = document.querySelector('.nav__register');
+    buttonRegister?.remove();
+
+  }
+
+  showModalWindow(message: string) {
+    const modalWindow = new ModalWindowRequest(message);
+    return modalWindow;
   }
 }

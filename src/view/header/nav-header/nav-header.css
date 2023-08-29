@@ -10,7 +10,7 @@
         gap: 5px;
     }
 }
-
+.button-logout,
 .search {
     display: flex;
     align-items: center;

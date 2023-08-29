@@ -1,12 +1,9 @@
 import { UserAuthOptions } from '@commercetools/sdk-client-v2';
-import { ctpClient, getCtpClientPasswordFlow } from '../../sdk/client';
+import { getCtpClientAnonFlow, getCtpClientPasswordFlow } from '../../sdk/client';
 import {
   CustomerDraft,
   MyCustomerSignin,
-  createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
-
-const projectKey = process.env.CTP_PROJECT_KEY || '';
 
 export class Customer {
   protected apiRoot;
@@ -24,11 +21,9 @@ export class Customer {
         username: this.options.email,
         password: this.options.password,
       };
-      return createApiBuilderFromCtpClient(getCtpClientPasswordFlow(userAuthOptions))
-        .withProjectKey({ projectKey: projectKey });
+      return getCtpClientPasswordFlow(userAuthOptions);
     } else {
-      return createApiBuilderFromCtpClient(ctpClient)
-        .withProjectKey({ projectKey: projectKey });
+      return getCtpClientAnonFlow();
     }
   }
 
