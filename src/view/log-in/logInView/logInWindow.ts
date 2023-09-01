@@ -5,16 +5,16 @@ import LogInFormView from '../../log-in/logInView/formView/Log_in_form_view';
 import Router from '../../../app/router/router';
 
 export default class LogInVindowView extends View {
-  constructor(mainComponent: Router) {
+  constructor(router: Router) {
     const params = {
       tag: 'div',
       classNames: ['LogInVindow'],
     };
     super(params);
-    this.configureView(mainComponent);
+    this.configureView(router);
   }
 
-  configureView(mainComponent: Router) {
+  configureView(router: Router) {
     const paramsRegister = {
       tag: 'span',
       classNames: ['Log_In_text'],
@@ -25,7 +25,7 @@ export default class LogInVindowView extends View {
 
     this.viewElementCreator.addInsideElement(registerWindow);
 
-    const logInForm = new LogInFormView(mainComponent);
+    const logInForm = new LogInFormView(router);
     
     this.viewElementCreator.addInsideElement(logInForm.getElement());
   }

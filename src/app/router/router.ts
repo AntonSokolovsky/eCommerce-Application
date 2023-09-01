@@ -1,41 +1,38 @@
-import { Pages } from './pages';
+import { Pages, ID_SELECTOR } from './pages';
+import HistoryRouterHandler from '../handler/history-router';
 
 export default class Router {
-  routes: Array<{ path: string, callback: (e: string) => void }>;
+  routes: Array<{ path: string, callback: (e?: string) => void }>;
 
-  constructor(routes: Array<{ path: string, callback: (e: string) => void }>) {
+  handler: HistoryRouterHandler;
+
+  constructor(routes: Array<{ path: string, callback: () => void }>) {
     this.routes = routes;
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const path = this.getCurrentPath();
-      this.navigate(path);
-    });
+    this.handler = new HistoryRouterHandler(this.urlChangedHandler.bind(this));
 
-    window.addEventListener('popstate', this.browserChangeHandler.bind(this));
-    window.addEventListener('hashchange', this.browserChangeHandler.bind(this));
+    document.addEventListener('DOMContentLoaded', () => {
+      this.handler.navigate('');
+    });
   }
 
   navigate(url: string) {
-    const request = this.parseUrl(url);
+    this.handler.navigate(url);
+  }
 
-    const pathForFind = request.resource === '' ? request.path : `${request.path}/${request.resource}`;
+  urlChangedHandler(requestParams: { path?: string, resource?: string }) {
+    const pathForFind = requestParams.resource === '' ? requestParams.path : `${requestParams.path}/${ID_SELECTOR}`;
     const route = this.routes.find((item) => item.path === pathForFind);
 
     if (!route) {
       this.redirectToNotFound();
       return;
     }
-
-    route.callback('');
-  }
-
-  parseUrl(url: string) {
-    const result: { path?: string, resource?: string } = {};
-
-    const path = url.split('/');
-    [result.path = '', result.resource = ''] = path;
-
-    return result;
+    if (requestParams.resource) {
+      route.callback(requestParams.resource);
+    } else {
+      route.callback();
+    }
   }
 
   redirectToNotFound() {
@@ -43,17 +40,5 @@ export default class Router {
     if (routeNotFound) {
       this.navigate(routeNotFound.path);
     }
-  }
-
-  browserChangeHandler() {
-    const path = this.getCurrentPath();
-    this.navigate(path);
-  }
-
-  getCurrentPath() {
-    if (window.location.hash) {
-      return window.location.hash.slice(1);
-    }
-    return window.location.pathname.slice(1);
   }
 }

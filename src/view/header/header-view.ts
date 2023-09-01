@@ -7,27 +7,27 @@ import Router from '../../app/router/router';
 import { Pages } from '../../app/router/pages';
 
 export default class HeaderView extends View {
-  constructor(mainComponent: Router) {
+  constructor(router: Router) {
     const params = {
       tag: 'header',
       classNames: ['header'],
     };
     super(params);
-    this.configureView(mainComponent);
+    this.configureView(router);
   }
 
-  configureView(mainComponent: Router) {
+  configureView(router: Router) {
     const burgerMenuView = new BurgerMenuView();
     this.viewElementCreator.addInsideElement(burgerMenuView.getHtmlElement());
 
     const linkParams = {
       name: 'AVA',
-      callback: () => mainComponent.navigate(Pages.FIRSTPAGE),
+      callback: () => router.navigate(Pages.FIRSTPAGE),
     };
     const logoView = new LogoView(linkParams);
     this.viewElementCreator.addInsideElement(logoView.getHtmlElement());
 
-    const navHeaderView = new NavHeaderView(mainComponent);
+    const navHeaderView = new NavHeaderView(router);
     this.viewElementCreator.addInsideElement(navHeaderView.getHtmlElement());
   }
 }

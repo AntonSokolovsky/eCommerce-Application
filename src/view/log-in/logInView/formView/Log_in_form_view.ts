@@ -6,16 +6,16 @@ import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
 
 export default class LogInFormView extends View {
-  constructor(mainComponent: Router) {
+  constructor(router: Router) {
     const params = {
       tag: 'form',
       classNames: ['logInFormView'],
     };
     super(params);
-    this.configureView(mainComponent);
+    this.configureView(router);
   }
 
-  configureView(mainComponent: Router) {
+  configureView(router: Router) {
     const TelOrEmail = new ElementCreator(LogInFormViewParams.paramsTelOrEmail);
     this.viewElementCreator.addInsideElement(TelOrEmail);
 
@@ -83,14 +83,14 @@ export default class LogInFormView extends View {
     this.viewElementCreator.addInsideElement(PasswordInputContainerHtmlElement);
 
     const SignIn = new InputElementCreator(LogInFormViewParams.paramsSignInButton);
-    SignIn.setCallback(() => mainComponent.navigate(Pages.FIRSTPAGE));
+    SignIn.setCallback(() => router.navigate(Pages.FIRSTPAGE));
     this.viewElementCreator.addInsideElement(SignIn);
 
     const ForgotPassLink = new ElementCreator(LogInFormViewParams.ParamsForgotLink);
     this.viewElementCreator.addInsideElement(ForgotPassLink);
 
     const CreateAccLink = new ElementCreator(LogInFormViewParams.ParamsCreateLink);
-    CreateAccLink.setCallback(() => mainComponent.navigate(Pages.REGISTER));
+    CreateAccLink.setCallback(() => router.navigate(Pages.REGISTER));
     this.viewElementCreator.addInsideElement(CreateAccLink);
   }
 
