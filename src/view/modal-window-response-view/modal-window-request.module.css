@@ -1,0 +1,17 @@
+.modal-window {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 90vh;
+    border: 2px solid;
+    border-color: var(--border-color);
+    background-color: var(--main-bg-color);
+}
+
+.modal-window__text {
+    font-family: var(--main-font-family);
+    font-size: var(--text-font-size);
+    color: var(--main-font-color);
+    padding: 1rem;
+}

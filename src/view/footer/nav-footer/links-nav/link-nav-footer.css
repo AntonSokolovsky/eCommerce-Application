@@ -1,0 +1,9 @@
+/* .nav__item {
+  width: 60px;
+  height: 20px;
+  background-color: #a6d84b;
+} */
+
+.nav__item .selected {
+  color: #0000ff;
+}
