@@ -10,16 +10,16 @@ import { getInputValue } from '../../../../utilities/function-utils';
 import { CustomerDraft } from '@commercetools/platform-sdk';
 
 export default class RegisterFormView extends View {
-  constructor(mainComponent: Router) {
+  constructor(router: Router) {
     const params = {
       tag: 'form',
       classNames: ['RegForm'],
     };
     super(params);
-    this.configureView(mainComponent);
+    this.configureView(router);
   }
 
-  configureView(mainComponent: Router) {
+  configureView(router: Router) {
     const TelOrEmail = new ElementCreator(registerFormViewParams.paramsTelOrEmail);
     this.viewElementCreator.addInsideElement(TelOrEmail);
 
@@ -307,11 +307,12 @@ export default class RegisterFormView extends View {
     this.viewElementCreator.addInsideElement(PostalCodeContainerHtmlElement);
 
     const RegButton = new InputElementCreator(registerFormViewParams.paramsRegisterButton);
-    RegButton.setCallback(() => this.sendForm(mainComponent));
+    RegButton.setCallback(() => this.sendForm(router));
     this.viewElementCreator.addInsideElement(RegButton);
 
     const logInLink = new ElementCreator(registerFormViewParams.ParamslogInLink);
     logInLink.setCallback(() => mainComponent.navigate(Pages.LOGIN));
+
     this.viewElementCreator.addInsideElement(logInLink);
   }
 

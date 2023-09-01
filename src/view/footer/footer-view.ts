@@ -7,22 +7,22 @@ import Router from '../../app/router/router';
 import { Pages } from '../../app/router/pages';
 
 export default class FooterView extends View {
-  constructor(mainComponent: Router) {
+  constructor(router: Router) {
     const params = {
       tag: 'footer',
       classNames: ['footer'],
     };
     super(params);
-    this.configureView(mainComponent);
+    this.configureView(router);
   }
 
-  configureView(mainComponent: Router) {
-    const navFooterView = new NavFooterView(mainComponent);
+  configureView(router: Router) {
+    const navFooterView = new NavFooterView(router);
     this.viewElementCreator.addInsideElement(navFooterView.getHtmlElement());
 
     const linkParams = {
       name: 'AVA',
-      callback: () => mainComponent.navigate(Pages.FIRSTPAGE),
+      callback: () => router.navigate(Pages.FIRSTPAGE),
     };
     const logoView = new LogoView(linkParams);
     this.viewElementCreator.addInsideElement(logoView.getHtmlElement());

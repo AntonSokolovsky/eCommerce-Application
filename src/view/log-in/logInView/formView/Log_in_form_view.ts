@@ -10,16 +10,16 @@ import { MyCustomerSignin } from '@commercetools/platform-sdk';
 import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
 
 export default class LogInFormView extends View {
-  constructor(mainComponent: Router) {
+  constructor(router: Router) {
     const params = {
       tag: 'form',
       classNames: ['logInFormView'],
     };
     super(params);
-    this.configureView(mainComponent);
+    this.configureView(router);
   }
 
-  configureView(mainComponent: Router) {
+  configureView(router: Router) {
     const TelOrEmail = new ElementCreator(LogInFormViewParams.paramsTelOrEmail);
     this.viewElementCreator.addInsideElement(TelOrEmail);
 
@@ -88,13 +88,14 @@ export default class LogInFormView extends View {
 
     const SignIn = new InputElementCreator(LogInFormViewParams.paramsSignInButton);
     SignIn.setCallback(() => this.sendForm(mainComponent));
+
     this.viewElementCreator.addInsideElement(SignIn);
 
     const ForgotPassLink = new ElementCreator(LogInFormViewParams.ParamsForgotLink);
     this.viewElementCreator.addInsideElement(ForgotPassLink);
 
     const CreateAccLink = new ElementCreator(LogInFormViewParams.ParamsCreateLink);
-    CreateAccLink.setCallback(() => mainComponent.navigate(Pages.REGISTER));
+    CreateAccLink.setCallback(() => router.navigate(Pages.REGISTER));
     this.viewElementCreator.addInsideElement(CreateAccLink);
   }
 
