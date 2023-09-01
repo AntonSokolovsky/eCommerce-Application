@@ -10,8 +10,8 @@ interface MyAdress {
 }
 export interface CustomerCreate {
   key?: string,
-  email: string,
   firstName: string | undefined,
+  email: string,
   lastName: string,
   dateOfBirth: string,
   password: string,
@@ -21,4 +21,3 @@ export interface CustomerCreate {
   defaultBillingAddress?: number,
   billingAddressIds?: number[],
 }
-

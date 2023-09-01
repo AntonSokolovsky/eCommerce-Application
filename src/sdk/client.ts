@@ -3,7 +3,12 @@ import {
   ClientBuilder,
   type AuthMiddlewareOptions,
   type HttpMiddlewareOptions,
+  PasswordAuthMiddlewareOptions,
+  UserAuthOptions,
+  ExistingTokenMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
+import { anonTokenCache, getCurrentToken, userTokenCache } from '../app/loader/token';
+import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
 const clientId = process.env.CTP_CLIENT_ID || '';
 const clientSecret = process.env.CTP_CLIENT_SECRET || '';
@@ -22,18 +27,62 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
   },
   scopes: [scopes],
   fetch,
+  tokenCache: anonTokenCache,
 };
-  
+
 // Configure httpMiddlewareOptions
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
   host: urlApi,
   fetch,
 };
   
+//Configure PasswordAuthMiddlewareOptions
+const options: PasswordAuthMiddlewareOptions = {
+  host: urlAuth,
+  projectKey: projectKey,
+  credentials: {
+    clientId: clientId,
+    clientSecret: clientSecret,
+    user: {
+      username: '',
+      password: '',
+    },
+  },
+  scopes: [`manage_project:${projectKey}`],
+  fetch,
+  tokenCache: userTokenCache,
+};
 // Export the ClientBuilder
-export const ctpClient = new ClientBuilder()
-  .withClientCredentialsFlow(authMiddlewareOptions)
-  .withHttpMiddleware(httpMiddlewareOptions)
-  .withLoggerMiddleware()
-  .build();
-  
+
+const existingAuthMiddlewareOptions: ExistingTokenMiddlewareOptions = {
+  force: true,
+};
+
+export function getCtpClientAnonFlow() {
+  const currentToken = getCurrentToken();
+  const ctpClient = currentToken
+    ? new ClientBuilder()
+      .withExistingTokenFlow(currentToken, existingAuthMiddlewareOptions)
+      .withHttpMiddleware(httpMiddlewareOptions)
+      .withLoggerMiddleware()
+      .build()
+    : new ClientBuilder()
+      .withClientCredentialsFlow(authMiddlewareOptions)
+      .withHttpMiddleware(httpMiddlewareOptions)
+      .withLoggerMiddleware()
+      .build();
+  return createApiBuilderFromCtpClient(ctpClient)
+    .withProjectKey({ projectKey: projectKey });
+}
+
+export function getCtpClientPasswordFlow(userAuth: UserAuthOptions) {
+  const optionsPasswordFlow = { ...options };
+  optionsPasswordFlow.credentials.user = { ...userAuth };
+  const ctpClientPasswordFlow = new ClientBuilder()
+    .withPasswordFlow(optionsPasswordFlow)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .withLoggerMiddleware()
+    .build();
+  return createApiBuilderFromCtpClient(ctpClientPasswordFlow)
+    .withProjectKey({ projectKey: projectKey });
+}
