@@ -206,10 +206,19 @@ export default class RegisterFormView extends View {
 
     this.viewElementCreator.addInsideElement(DateOfBirthContainerHtmlElement);
 
+    const billingAdressContainer = new ElementCreator(registerFormViewParams.billingAdressContainer);
 
+    const saveBillingAdressAsDefaultContainer = new ElementCreator(registerFormViewParams.saveBillingAdressAsDefaultContainer);
+
+    const saveBillingAdressAsDefaultCheckboks = new InputElementCreator(registerFormViewParams.saveBillingAdressAsDefault);
+    saveBillingAdressAsDefaultContainer.addInsideElement(saveBillingAdressAsDefaultCheckboks);
+    const saveBillingAdressAsDefaultText = new ElementCreator(registerFormViewParams.saveBillingAdressAsDefaultText);
+    saveBillingAdressAsDefaultContainer.addInsideElement(saveBillingAdressAsDefaultText);
+
+    billingAdressContainer.addInsideElement(saveBillingAdressAsDefaultContainer);
 
     const Street = new ElementCreator(registerFormViewParams.Street);
-    this.viewElementCreator.addInsideElement(Street);
+    billingAdressContainer.addInsideElement(Street);
 
     const StreetInputContainer = new View(registerFormViewParams.paramsStreetInContainer);
     const StreetContainerHtmlElement = StreetInputContainer.getHtmlElement();
@@ -230,12 +239,12 @@ export default class RegisterFormView extends View {
     
     StreetContainerHtmlElement.append(RequirementsToStreetText.getElement());
 
-    this.viewElementCreator.addInsideElement(StreetContainerHtmlElement);
+    billingAdressContainer.addInsideElement(StreetContainerHtmlElement);
 
 
 
     const City = new ElementCreator(registerFormViewParams.City);
-    this.viewElementCreator.addInsideElement(City);
+    billingAdressContainer.addInsideElement(City);
 
     const CityInputContainer = new View(registerFormViewParams.paramsCityInContainer);
     const CityContainerHtmlElement = CityInputContainer.getHtmlElement();
@@ -256,10 +265,10 @@ export default class RegisterFormView extends View {
     
     CityContainerHtmlElement.append(RequirementsToCityText.getElement());
 
-    this.viewElementCreator.addInsideElement(CityContainerHtmlElement);
+    billingAdressContainer.addInsideElement(CityContainerHtmlElement);
 
     const Country = new ElementCreator(registerFormViewParams.Country);
-    this.viewElementCreator.addInsideElement(Country);
+    billingAdressContainer.addInsideElement(Country);
 
     const CountryInputContainer = new View(registerFormViewParams.paramsCountryInContainer);
     const CountryContainerHtmlElement = CountryInputContainer.getHtmlElement();
@@ -280,10 +289,10 @@ export default class RegisterFormView extends View {
       CountryContainerHtmlElement.append(RequirementsToCountryText.getElement());
     });
 
-    this.viewElementCreator.addInsideElement(CountryContainerHtmlElement);
+    billingAdressContainer.addInsideElement(CountryContainerHtmlElement);
 
     const PostalCode = new ElementCreator(registerFormViewParams.PostalCode);
-    this.viewElementCreator.addInsideElement(PostalCode);
+    billingAdressContainer.addInsideElement(PostalCode);
 
     const PostalCodeInputContainer = new View(registerFormViewParams.paramsPostalCodeInContainer);
     const PostalCodeContainerHtmlElement = PostalCodeInputContainer.getHtmlElement();
@@ -304,15 +313,26 @@ export default class RegisterFormView extends View {
 
     PostalCodeContainerHtmlElement.append(RequirementsToPostalCodeText.getElement());
 
-    this.viewElementCreator.addInsideElement(PostalCodeContainerHtmlElement);
+    billingAdressContainer.addInsideElement(PostalCodeContainerHtmlElement);
+
+    const BillingAdressMatchShippingContainer = new ElementCreator(registerFormViewParams.saveBillingAdressAsDefaultContainer);
+
+    const BillingAdressMatchShippingCheckboks = new InputElementCreator(registerFormViewParams.BillingAdressMatchShipping);
+    BillingAdressMatchShippingContainer.addInsideElement(BillingAdressMatchShippingCheckboks);
+    const BillingAdressMatchShippingText = new ElementCreator(registerFormViewParams.BillingAdressMatchShippingText);
+    BillingAdressMatchShippingContainer.addInsideElement(BillingAdressMatchShippingText);
+
+    billingAdressContainer.addInsideElement(BillingAdressMatchShippingContainer);
 
     const RegButton = new InputElementCreator(registerFormViewParams.paramsRegisterButton);
     RegButton.setCallback(() => this.sendForm(mainComponent));
-    this.viewElementCreator.addInsideElement(RegButton);
+    billingAdressContainer.addInsideElement(RegButton);
 
     const logInLink = new ElementCreator(registerFormViewParams.ParamslogInLink);
     logInLink.setCallback(() => mainComponent.navigate(Pages.FIRSTPAGE));
-    this.viewElementCreator.addInsideElement(logInLink);
+    billingAdressContainer.addInsideElement(logInLink);
+
+    this.viewElementCreator.addInsideElement(billingAdressContainer);
   }
 
   getElement() {
