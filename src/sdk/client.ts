@@ -7,7 +7,7 @@ import {
   UserAuthOptions,
   ExistingTokenMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import { anonTokenCache, getCurrentToken, userTokenCache } from '../app/loader/token';
+import { TokenStorage } from '../app/loader/token';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
 const clientId = process.env.CTP_CLIENT_ID || '';
@@ -16,6 +16,7 @@ const projectKey = process.env.CTP_PROJECT_KEY || '';
 const urlApi = process.env.CTP_API_URL || '';
 const urlAuth = process.env.CTP_AUTH_URL || '';
 const scopes = process.env.CTP_SCOPES || '';
+const tokenStorage = TokenStorage.getInstance(); 
 
 // Configure authMiddlewareOptions
 const authMiddlewareOptions: AuthMiddlewareOptions = {
@@ -27,7 +28,7 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
   },
   scopes: [scopes],
   fetch,
-  tokenCache: anonTokenCache,
+  tokenCache: tokenStorage.anonTokenCache,
 };
 
 // Configure httpMiddlewareOptions
@@ -50,7 +51,7 @@ const options: PasswordAuthMiddlewareOptions = {
   },
   scopes: [`manage_project:${projectKey}`],
   fetch,
-  tokenCache: userTokenCache,
+  tokenCache: tokenStorage.customerTokenCache,
 };
 // Export the ClientBuilder
 
@@ -59,7 +60,7 @@ const existingAuthMiddlewareOptions: ExistingTokenMiddlewareOptions = {
 };
 
 export function getCtpClientAnonFlow() {
-  const currentToken = getCurrentToken();
+  const currentToken = tokenStorage.getCurrentToken();
   const ctpClient = currentToken
     ? new ClientBuilder()
       .withExistingTokenFlow(currentToken, existingAuthMiddlewareOptions)
