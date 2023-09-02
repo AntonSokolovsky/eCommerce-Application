@@ -311,7 +311,7 @@ export default class RegisterFormView extends View {
     this.viewElementCreator.addInsideElement(RegButton);
 
     const logInLink = new ElementCreator(registerFormViewParams.ParamslogInLink);
-    logInLink.setCallback(() => mainComponent.navigate(Pages.LOGIN));
+    logInLink.setCallback(() => router.navigate(Pages.LOGIN));
 
     this.viewElementCreator.addInsideElement(logInLink);
   }
