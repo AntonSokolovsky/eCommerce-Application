@@ -8,8 +8,12 @@ import { getInputValue } from '../../../../utilities/function-utils';
 import { Customer } from '../../../../app/loader/customer';
 import { MyCustomerSignin } from '@commercetools/platform-sdk';
 import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
+import { Mediator } from '../../../../app/controller/mediator';
+import { CustomEventNames } from '../../../../type/mediator-type';
 
 export default class LogInFormView extends View {
+  private mediator = Mediator.getInstance();
+
   constructor(mainComponent: Router) {
     const params = {
       tag: 'form',
@@ -116,14 +120,14 @@ export default class LogInFormView extends View {
       email: getInputValue(LogInFormViewParams.paramsTelOrEmailInput.classNames[1]),
       password: getInputValue(LogInFormViewParams.paramsPasswordInput.classNames[1]),
     };
-
     return dataForm;
   }
 
   handleSuccessResponse(message: string | undefined, mainComponent: Router) {
     const greetingMessage = `Hello, ${message}! You have successfully logged in`;
     this.showModalWindow(greetingMessage);
-    this.hideAuthButton();
+    // this.hideAuthButton();
+    this.mediator.notify(CustomEventNames.CUSTOMER_LOGIN, {});
     mainComponent.navigate(Pages.FIRSTPAGE);
   }
 
@@ -132,13 +136,13 @@ export default class LogInFormView extends View {
     this.showModalWindow(errorMessage);
   }
 
-  hideAuthButton() {
-    const buttonLogin = document.querySelector('.nav__login');
-    buttonLogin?.remove();
-    const buttonRegister = document.querySelector('.nav__register');
-    buttonRegister?.remove();
+  // hideAuthButton() {
+  //   const buttonLogin = document.querySelector('.nav__login');
+  //   buttonLogin?.remove();
+  //   const buttonRegister = document.querySelector('.nav__register');
+  //   buttonRegister?.remove();
 
-  }
+  // }
 
   showModalWindow(message: string) {
     const modalWindow = new ModalWindowRequest(message);
