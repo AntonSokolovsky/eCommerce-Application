@@ -5,7 +5,7 @@ export class TokenStorage {
   private static instanceToken = new TokenStorage;
 
   // eslint-disable-next-line
-    constructor() {}
+    private constructor() {}
       
   static getInstance() {
     return this.instanceToken;
