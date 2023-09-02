@@ -1,3 +1,12 @@
+:root {
+    --border-color: #000;
+    --main-bg-color: #ffffff;
+    --main-bg-color-accent: #dbdbdb;
+    --main-font-family: 'Times New Roman', Times, serif;
+    --main-font-color: #000000;
+    --text-font-size: 1rem;
+    --h2-font-size: 3rem;
+}
 body {
     display: flex;
     flex-direction: column;

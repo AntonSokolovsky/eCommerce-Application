@@ -6,20 +6,20 @@ import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
 import { countryList } from '../../../../utilities/validation/countryList/CountryList';
 import { Customer } from '../../../../app/loader/customer';
-import { CustomerCreate } from '../../../../type/customer-type';
 import { getInputValue } from '../../../../utilities/function-utils';
+import { CustomerDraft } from '@commercetools/platform-sdk';
 
 export default class RegisterFormView extends View {
-  constructor(mainComponent: Router) {
+  constructor(router: Router) {
     const params = {
       tag: 'form',
       classNames: ['RegForm'],
     };
     super(params);
-    this.configureView(mainComponent);
+    this.configureView(router);
   }
 
-  configureView(mainComponent: Router) {
+  configureView(router: Router) {
     const TelOrEmail = new ElementCreator(registerFormViewParams.paramsTelOrEmail);
     this.viewElementCreator.addInsideElement(TelOrEmail);
 
@@ -307,11 +307,12 @@ export default class RegisterFormView extends View {
     this.viewElementCreator.addInsideElement(PostalCodeContainerHtmlElement);
 
     const RegButton = new InputElementCreator(registerFormViewParams.paramsRegisterButton);
-    RegButton.setCallback(() => this.sendForm(mainComponent));
+    RegButton.setCallback(() => this.sendForm(router));
     this.viewElementCreator.addInsideElement(RegButton);
 
     const logInLink = new ElementCreator(registerFormViewParams.ParamslogInLink);
-    logInLink.setCallback(() => mainComponent.navigate(Pages.FIRSTPAGE));
+    logInLink.setCallback(() => router.navigate(Pages.LOGIN));
+
     this.viewElementCreator.addInsideElement(logInLink);
   }
 
@@ -326,19 +327,19 @@ export default class RegisterFormView extends View {
   }
 
   //ToDo find another way to get the input value. Without use querySelector
-  getDataForm(): CustomerCreate {
+  getDataForm(): CustomerDraft {
     const dataForm = {
-      email: getInputValue(registerFormViewParams.paramsTelOrEmailInput.classNames[0]),
-      firstName: getInputValue(registerFormViewParams.paramsFirstNameInput.classNames[0]),
-      lastName: getInputValue(registerFormViewParams.paramsLastNameInput.classNames[0]),
-      dateOfBirth: getInputValue(registerFormViewParams.paramsDateOfBirthInput.classNames[0]),
-      password: getInputValue(registerFormViewParams.paramsPasswordInput.classNames[0]),
+      email: getInputValue(registerFormViewParams.paramsTelOrEmailInput.classNames[1]),
+      firstName: getInputValue(registerFormViewParams.paramsFirstNameInput.classNames[1]),
+      lastName: getInputValue(registerFormViewParams.paramsLastNameInput.classNames[1]),
+      dateOfBirth: getInputValue(registerFormViewParams.paramsDateOfBirthInput.classNames[1]),
+      password: getInputValue(registerFormViewParams.paramsPasswordInput.classNames[1]),
       addresses: [
         {
-          country: getInputValue(registerFormViewParams.paramsCountryInput.classNames[0]),
-          streetName: getInputValue(registerFormViewParams.paramsStreetInput.classNames[0]),
-          postalCode: getInputValue(registerFormViewParams.paramsPostalCodeInput.classNames[0]),
-          city: getInputValue(registerFormViewParams.paramsCityInput.classNames[0]),
+          country: getInputValue(registerFormViewParams.paramsCountryInput.classNames[1]),
+          streetName: getInputValue(registerFormViewParams.paramsStreetInput.classNames[1]),
+          postalCode: getInputValue(registerFormViewParams.paramsPostalCodeInput.classNames[1]),
+          city: getInputValue(registerFormViewParams.paramsCityInput.classNames[1]),
         },
       ],
     };

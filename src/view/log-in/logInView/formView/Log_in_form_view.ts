@@ -4,18 +4,22 @@ import { InputElementCreator } from '../../../../utilities/InputFieldsCreator/In
 import { LogInFormViewParams } from '../LogInWindowParams';
 import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
+import { getInputValue } from '../../../../utilities/function-utils';
+import { Customer } from '../../../../app/loader/customer';
+import { MyCustomerSignin } from '@commercetools/platform-sdk';
+import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
 
 export default class LogInFormView extends View {
-  constructor(mainComponent: Router) {
+  constructor(router: Router) {
     const params = {
       tag: 'form',
       classNames: ['logInFormView'],
     };
     super(params);
-    this.configureView(mainComponent);
+    this.configureView(router);
   }
 
-  configureView(mainComponent: Router) {
+  configureView(router: Router) {
     const TelOrEmail = new ElementCreator(LogInFormViewParams.paramsTelOrEmail);
     this.viewElementCreator.addInsideElement(TelOrEmail);
 
@@ -83,18 +87,62 @@ export default class LogInFormView extends View {
     this.viewElementCreator.addInsideElement(PasswordInputContainerHtmlElement);
 
     const SignIn = new InputElementCreator(LogInFormViewParams.paramsSignInButton);
-    SignIn.setCallback(() => mainComponent.navigate(Pages.FIRSTPAGE));
+    SignIn.setCallback(() => this.sendForm(router));
+
     this.viewElementCreator.addInsideElement(SignIn);
 
     const ForgotPassLink = new ElementCreator(LogInFormViewParams.ParamsForgotLink);
     this.viewElementCreator.addInsideElement(ForgotPassLink);
 
     const CreateAccLink = new ElementCreator(LogInFormViewParams.ParamsCreateLink);
-    CreateAccLink.setCallback(() => mainComponent.navigate(Pages.REGISTER));
+    CreateAccLink.setCallback(() => router.navigate(Pages.REGISTER));
     this.viewElementCreator.addInsideElement(CreateAccLink);
   }
 
   getElement() {
     return this.viewElementCreator.getElement();
+  }
+
+  sendForm(mainComponent: Router) {
+    const customer = new Customer(this.getDataForm());
+    const response = customer.loginCustomer(this.getDataForm());
+    response.then((data) => this.handleSuccessResponse(data.body.customer.firstName, mainComponent))
+      .catch(() => this.handleErrorResponse());
+    mainComponent.navigate(Pages.LOGIN);
+  }
+  
+  //ToDo find another way to get the input value. Without use querySelector
+  getDataForm(): MyCustomerSignin {
+    const dataForm = {
+      email: getInputValue(LogInFormViewParams.paramsTelOrEmailInput.classNames[1]),
+      password: getInputValue(LogInFormViewParams.paramsPasswordInput.classNames[1]),
+    };
+
+    return dataForm;
+  }
+
+  handleSuccessResponse(message: string | undefined, mainComponent: Router) {
+    const greetingMessage = `Hello, ${message}! You have successfully logged in`;
+    this.showModalWindow(greetingMessage);
+    this.hideAuthButton();
+    mainComponent.navigate(Pages.FIRSTPAGE);
+  }
+
+  handleErrorResponse() {
+    const errorMessage = 'Invalid email or password. You may not be registered yet';
+    this.showModalWindow(errorMessage);
+  }
+
+  hideAuthButton() {
+    const buttonLogin = document.querySelector('.nav__login');
+    buttonLogin?.remove();
+    const buttonRegister = document.querySelector('.nav__register');
+    buttonRegister?.remove();
+
+  }
+
+  showModalWindow(message: string) {
+    const modalWindow = new ModalWindowRequest(message);
+    return modalWindow;
   }
 }
