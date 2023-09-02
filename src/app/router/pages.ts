@@ -4,6 +4,7 @@ const Pages: {
   LOGIN: string,
   REGISTER: string,
   BASKET: string,
+  ACCOUNT: string,
   NOT_FOUND: string,
 } = {
   FIRSTPAGE: 'main',
@@ -11,6 +12,7 @@ const Pages: {
   LOGIN: 'login',
   REGISTER: 'registration',
   BASKET: 'basket',
+  ACCOUNT: 'account',
   NOT_FOUND: 'not-found',
 };
 

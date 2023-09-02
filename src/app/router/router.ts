@@ -20,7 +20,6 @@ export default class Router {
 
     const pathForFind = request.resource === '' ? request.path : `${request.path}/${request.resource}`;
     const route = this.routes.find((item) => item.path === pathForFind);
-
     if (!route) {
       this.redirectToNotFound();
       return;
@@ -34,7 +33,6 @@ export default class Router {
 
     const path = url.split('/');
     [result.path = '', result.resource = ''] = path;
-
     return result;
   }
 
