@@ -87,7 +87,7 @@ export default class LogInFormView extends View {
     this.viewElementCreator.addInsideElement(PasswordInputContainerHtmlElement);
 
     const SignIn = new InputElementCreator(LogInFormViewParams.paramsSignInButton);
-    SignIn.setCallback(() => this.sendForm(mainComponent));
+    SignIn.setCallback(() => this.sendForm(router));
 
     this.viewElementCreator.addInsideElement(SignIn);
 
