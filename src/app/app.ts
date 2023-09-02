@@ -10,6 +10,7 @@ import Router from './router/router';
 import { ID_SELECTOR, Pages } from './../app/router/pages';
 import LogInView from '../view/log-in/log-in_view';
 import RegView from '../view/registration/reg-view';
+import AccountView from '../view/account/account_View';
 
 
 export default class App {
@@ -82,6 +83,12 @@ export default class App {
         path: `${Pages.REGISTER}`,
         callback: () => {
           this.setContent(Pages.REGISTER, new RegView(this.router));
+        },
+      },
+      {
+        path: `${Pages.ACCOUNT}`,
+        callback: () => {
+          this.setContent(Pages.ACCOUNT, new AccountView());
         },
       },
       {
