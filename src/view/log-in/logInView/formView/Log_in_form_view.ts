@@ -20,6 +20,7 @@ export default class LogInFormView extends View {
 
   constructor(router: Router) {
 
+
     const params = {
       tag: 'form',
       classNames: ['logInFormView'],
