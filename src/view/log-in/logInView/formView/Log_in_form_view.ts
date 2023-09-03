@@ -133,7 +133,7 @@ export default class LogInFormView extends View {
   handleSuccessResponse(message: string | undefined, mainComponent: Router) {
     const greetingMessage = `${MessagesModalWindow.AUTH_SUCCESS_MESSAGE} ${message}`;
     this.showModalWindow(greetingMessage);
-    this.mediator.loginCustomer(CustomEventNames.CUSTOMER_LOGIN);
+    this.mediator.loginLogoutCustomer(CustomEventNames.CUSTOMER_LOGIN);
     mainComponent.navigate(Pages.FIRSTPAGE);
   }
 

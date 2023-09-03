@@ -27,7 +27,7 @@ export class Mediator {
     }
   }
 
-  loginCustomer(nameEvent: CustomEventNames) {
+  loginLogoutCustomer(nameEvent: CustomEventNames) {
     this.notify(nameEvent, {});
   }
 

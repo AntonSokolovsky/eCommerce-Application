@@ -7,6 +7,7 @@ import Router from '../../../app/router/router';
 import { Pages } from '../../../app/router/pages';
 import { isUserLogin } from '../../../utilities/is-user-login';
 import { CustomEventNames } from '../../../type/mediator-type';
+import { TokenNames } from '../../../type/enum-token';
 
 const NamePages = {
   LOGIN: 'Log in',
@@ -16,6 +17,8 @@ const NamePages = {
 
 export default class NavHeaderView extends View {
   linkElements: Map<string, LinkNavHeaderView>;
+  
+  logoutButton: HTMLElement[] = [];
 
   private mediator = Mediator.getInstance();
 
@@ -27,7 +30,7 @@ export default class NavHeaderView extends View {
     super(params);
     this.linkElements = new Map();
     this.configureView(router);
-    this.mediator.subscribe(CustomEventNames.CUSTOMER_LOGIN, this.authHandler.bind(this));
+    this.mediator.subscribe(CustomEventNames.CUSTOMER_LOGIN, this.authHandler.bind(this, router));
   }
 
   configureView(router: Router) {
@@ -67,14 +70,41 @@ export default class NavHeaderView extends View {
         callback: null,
       };
       const creatorLogoutButton = new ElementCreator(paramsLogoutButton);
+      creatorLogoutButton.setCallback(()=> this.logoutCustomer(router));
+      this.logoutButton.push(creatorLogoutButton.getElement());
       this.viewElementCreator.addInsideElement(creatorLogoutButton);
     }
   }
 
-  authHandler() {
+  logoutCustomer(router: Router) {
+    this.mediator.loginLogoutCustomer(CustomEventNames.CUSTOMER_LOGOUT);
+    this.logoutButton[0].remove();
+    localStorage.removeItem(TokenNames.TOKEN_CUSTOMER);
+    this.linkElements.forEach(item => item.getHtmlElement().remove());
+    this.viewElementCreator.getElement().childNodes.forEach(item => item.remove());
+    this.configureView(router);
+    router.navigate(Pages.FIRSTPAGE);
+  }
+
+  addButtonLogout(router: Router) {
+    const paramsLogoutButton = {
+      tag: 'div',
+      classNames: ['button-logout'],
+      textContent: 'Log out',
+      callback: null,
+    };
+    const creatorLogoutButton = new ElementCreator(paramsLogoutButton);
+    creatorLogoutButton.setCallback(()=> this.logoutCustomer(router));
+    this.logoutButton.push(creatorLogoutButton.getElement());
+    return creatorLogoutButton.getElement();
+  }
+
+  authHandler(router: Router) {
     this.linkElements.forEach((linkElement) => {
-      linkElement.getHtmlElement().remove();
+      if (linkElement.getHtmlElement().textContent !== NamePages.BASKET)
+        linkElement.getHtmlElement().remove();
     });
+    this.viewElementCreator.addInsideElement(this.addButtonLogout(router));
   }
 
   setSelectedItem(namePage: string) {

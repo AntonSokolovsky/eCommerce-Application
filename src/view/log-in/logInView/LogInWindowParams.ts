@@ -133,7 +133,7 @@ export const LogInFormViewParams = {
     textContent: 'Sign In',
     value: 'Sign In',
     action: '',
-    type: 'submit',
+    type: 'button',
     disabled: true,
     callback: null,
   },
