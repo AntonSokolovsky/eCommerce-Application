@@ -6,6 +6,7 @@ import { InputElementCreator } from '../../../utilities/InputFieldsCreator/Input
 import editFields from '../../../utilities/editField';
 import BillingAdressVindowView from './billingAdressView/billingAdressView';
 import ShippingAdressVindowView from './ShippingAdressView/shippingAdressView';
+import { Customer } from '../../../app/loader/customer';
 
 export default class AccountVindowView extends View {
   constructor() {
@@ -15,6 +16,7 @@ export default class AccountVindowView extends View {
     };
     super(params);
     this.configureView();
+    const customer = new Customer();
   }
 
   configureView() {
