@@ -77,6 +77,7 @@ export function getCtpClientAnonFlow() {
 }
 
 export function getCtpClientPasswordFlow(userAuth: UserAuthOptions) {
+  localStorage.clear();
   const optionsPasswordFlow = { ...options };
   optionsPasswordFlow.credentials.user = { ...userAuth };
   const ctpClientPasswordFlow = new ClientBuilder()
@@ -86,4 +87,11 @@ export function getCtpClientPasswordFlow(userAuth: UserAuthOptions) {
     .build();
   return createApiBuilderFromCtpClient(ctpClientPasswordFlow)
     .withProjectKey({ projectKey: projectKey });
+}
+
+export function createFlow(userAuth?: UserAuthOptions) {
+  if (userAuth) {
+    return getCtpClientPasswordFlow(userAuth);
+  }
+  return getCtpClientAnonFlow();
 }
