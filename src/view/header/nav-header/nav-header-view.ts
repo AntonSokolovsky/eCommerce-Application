@@ -43,7 +43,6 @@ export default class NavHeaderView extends View {
     const arrayNamePages = isUserLogin() 
       ? (Object.entries(NamePages) as Array<Array<keyof typeof NamePages>>).filter((namePage) => {
         if (![NamePages.LOGIN, NamePages.REGISTER].includes(namePage[1])) {
-          console.log(namePage[1]);
           return namePage;
         }
       })
