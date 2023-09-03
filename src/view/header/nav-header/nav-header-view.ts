@@ -19,8 +19,6 @@ export default class NavHeaderView extends View {
 
   private mediator = Mediator.getInstance();
 
-  // private links = new Map<string, HTMLElement>();
-
   constructor(router: Router) {
     const params = {
       tag: 'nav',
@@ -43,16 +41,14 @@ export default class NavHeaderView extends View {
     this.viewElementCreator.addInsideElement(creatorSearch);
 
     const arrayNamePages = isUserLogin() 
-      // ? (Object.keys(NamePages) as Array<keyof typeof NamePages>).filter((namePage) => {
       ? (Object.entries(NamePages) as Array<Array<keyof typeof NamePages>>).filter((namePage) => {
-        if (![NamePages.LOGIN, NamePages.REGISTER].includes(namePage[0])) {
+        if (![NamePages.LOGIN, NamePages.REGISTER].includes(namePage[1])) {
+          console.log(namePage[1]);
           return namePage;
         }
       })
-      // : Object.keys(NamePages) as Array<keyof typeof NamePages>;
       : Object.entries(NamePages) as Array<Array<keyof typeof NamePages>>;
 
-    console.log('Check');
     arrayNamePages.forEach((page) => {
       const linkParams = {
         name: NamePages[page[0]],
@@ -77,7 +73,6 @@ export default class NavHeaderView extends View {
   }
 
   authHandler() {
-    console.log('Working');
     this.linkElements.forEach((linkElement) => {
       linkElement.getHtmlElement().remove();
     });
