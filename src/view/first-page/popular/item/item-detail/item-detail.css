@@ -1,0 +1,27 @@
+.item_detail {
+  margin: 0 auto;
+  padding: 10px 20px;
+  max-width: 600px;
+}
+
+.item_detail__img {
+  max-width: 200px;
+  height: 200px;
+  margin: 0 auto;
+
+  background-color: grey;
+}
+
+.item_detail__name {
+  text-align: center;
+}
+
+.item_detail__desc{
+  text-align: center;
+}
+
+.item_detail__button {
+  margin: 0 auto;
+  display: block;
+}
+

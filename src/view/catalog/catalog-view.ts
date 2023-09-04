@@ -2,18 +2,28 @@ import './catalog.css';
 import View from '../view';
 import { ElementCreator } from '../../utilities/element-creator';
 import ItemView from '../first-page/popular/item/item-view';
+import Router from '../../app/router/router';
+import ItemDetailView from '../first-page/popular/item/item-detail/item-detail-view';
 
 export default class CatalogView extends View {
-  constructor() {
+  constructor(router: Router, id = '') {
     const params = {
       tag: 'section',
       classNames: ['section', 'section-catalog'],
     };
     super(params);
-    this.configureView();
+    this.configureView(router, id);
   }
 
-  configureView() {
+  configureView(router: Router, id = '') {
+    if (id) {
+      this.addLargeItemToView(router, id);
+    } else {
+      this.addSmallItemsToView(router);
+    }
+  }
+
+  addSmallItemsToView(router: Router) {
     const paramsTitle = {
       tag: 'h2',
       classNames: ['section__title', 'catalog__title'],
@@ -39,8 +49,8 @@ export default class CatalogView extends View {
       callback: null,
     };
     const creatorItems = new ElementCreator(paramsItems);
-    for (let i = 0; i < 12; i += 1) {
-      const creatorItem = new ItemView();
+    for (let i = 0; i < 20; i += 1) {
+      const creatorItem = new ItemView(router);
       creatorItems.addInsideElement(creatorItem.getHtmlElement());
     }
     this.viewElementCreator.addInsideElement(creatorItems);
@@ -77,5 +87,11 @@ export default class CatalogView extends View {
     creatorBtns.addInsideElement(creatorBtnRight);
 
     this.viewElementCreator.addInsideElement(creatorBtns);
+  }
+
+  addLargeItemToView(router: Router, id = '') {
+    // const selectedCard = cardsInfo.find((card) => card.id === id);
+    const largeCardComponent = new ItemDetailView(router);
+    this.viewElementCreator.addInsideElement(largeCardComponent.getHtmlElement());
   }
 }

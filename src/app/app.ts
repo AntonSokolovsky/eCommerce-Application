@@ -52,25 +52,25 @@ export default class App {
       {
         path: '',
         callback: () => {
-          this.setContent(Pages.FIRSTPAGE, new FirstPageView());
+          this.setContent(Pages.FIRSTPAGE, new FirstPageView(this.router));
         },
       },
       {
         path: `${Pages.FIRSTPAGE}`,
         callback: () => {
-          this.setContent(Pages.FIRSTPAGE, new FirstPageView());
+          this.setContent(Pages.FIRSTPAGE, new FirstPageView(this.router));
         },
       },
       {
         path: `${Pages.CATALOG}`,
         callback: () => {
-          this.setContent(Pages.FIRSTPAGE, new CatalogView());
+          this.setContent(Pages.FIRSTPAGE, new CatalogView(this.router));
         },
       },
       {
         path: `${Pages.CATALOG}/${ID_SELECTOR}`,
-        callback: () => {
-          this.setContent(Pages.FIRSTPAGE, new CatalogView());
+        callback: (id?: string) => {
+          this.setContent(Pages.FIRSTPAGE, new CatalogView(this.router, id));
         },
       },
       {

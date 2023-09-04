@@ -1,24 +1,30 @@
 import './item.css';
 import View from '../../../view';
 import { ElementCreator } from '../../../../utilities/element-creator';
+import Router from '../../../../app/router/router';
+import { Pages } from '../../../../app/router/pages';
 
 
 export default class ItemView extends View {
-  constructor() {
+  router: Router;
+
+  constructor(router: Router) {
     const params = {
       tag: 'div',
       classNames: ['item'],
     };
     super(params);
     this.configureView();
+    this.router = router;
   }
 
   configureView() {
+    this.viewElementCreator.setElementClass(['item-small']);
     const paramsContImg = {
       tag: 'div',
       classNames: ['item__cont-img'],
       textContent: '',
-      callback: null,
+      callback: this.buttonClickHandler.bind(this, `${Pages.CATALOG}/${1}`),
     };
     const creatorContImg = new ElementCreator(paramsContImg);
     this.viewElementCreator.addInsideElement(creatorContImg);
@@ -49,5 +55,9 @@ export default class ItemView extends View {
     creatorToolbar.addInsideElement(creatorBasket);
 
     this.viewElementCreator.addInsideElement(creatorToolbar);
+  }
+
+  buttonClickHandler(url: string) {
+    this.router.navigate(url);
   }
 }

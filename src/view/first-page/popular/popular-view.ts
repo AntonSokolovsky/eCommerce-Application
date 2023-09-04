@@ -2,20 +2,21 @@ import './popular.css';
 import View from '../../view';
 import { ElementCreator } from '../../../utilities/element-creator';
 import ItemView from './item/item-view';
+import Router from '../../../app/router/router';
 
 
 
 export default class PopularView extends View {
-  constructor() {
+  constructor(router: Router) {
     const params = {
       tag: 'section',
       classNames: ['section', 'section-popular'],
     };
     super(params);
-    this.configureView();
+    this.configureView(router);
   }
 
-  configureView() {
+  configureView(router: Router) {
     const paramsTitle = {
       tag: 'h2',
       classNames: ['section__title', 'popular__title'],
@@ -33,7 +34,7 @@ export default class PopularView extends View {
     };
     const creatorItems = new ElementCreator(paramsItems);
     for (let i = 0; i < 8; i += 1) {
-      const creatorItem = new ItemView();
+      const creatorItem = new ItemView(router);
       creatorItems.addInsideElement(creatorItem.getHtmlElement());
     }
     this.viewElementCreator.addInsideElement(creatorItems);
