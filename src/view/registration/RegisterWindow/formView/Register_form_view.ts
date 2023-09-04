@@ -8,6 +8,7 @@ import { countryList } from '../../../../utilities/validation/countryList/Countr
 import { Customer } from '../../../../app/loader/customer';
 import { getInputValue } from '../../../../utilities/function-utils';
 import { CustomerDraft } from '@commercetools/platform-sdk';
+import { getCountryCode } from '../../../../utilities/get-country-code';
 
 export default class RegisterFormView extends View {
   constructor(router: Router) {
@@ -336,14 +337,13 @@ export default class RegisterFormView extends View {
       password: getInputValue(registerFormViewParams.paramsPasswordInput.classNames[1]),
       addresses: [
         {
-          country: getInputValue(registerFormViewParams.paramsCountryInput.classNames[1]),
+          country: getCountryCode(getInputValue(registerFormViewParams.paramsCountryInput.classNames[1])),
           streetName: getInputValue(registerFormViewParams.paramsStreetInput.classNames[1]),
           postalCode: getInputValue(registerFormViewParams.paramsPostalCodeInput.classNames[1]),
           city: getInputValue(registerFormViewParams.paramsCityInput.classNames[1]),
         },
       ],
     };
-
     return dataForm;
   }
 }

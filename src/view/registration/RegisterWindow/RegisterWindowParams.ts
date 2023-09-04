@@ -318,7 +318,7 @@ export const registerFormViewParams = {
     textContent: '',
     value: '',
     action: '',
-    type: 'text',
+    type: 'date',
     disabled: false,
     callback: validationDateOfBirth,
   },
