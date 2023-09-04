@@ -5,16 +5,16 @@ import RegisterFormView from '../../registration/RegisterWindow/formView/Registe
 import Router from '../../../app/router/router';
 
 export default class RgVindowView extends View {
-  constructor(router: Router) {
+  constructor(mainComponent: Router) {
     const params = {
       tag: 'div',
       classNames: ['RgVindow'],
     };
     super(params);
-    this.configureView(router);
+    this.configureView(mainComponent);
   }
 
-  configureView(router: Router) {
+  configureView(mainComponent: Router) {
     const paramsRegister = {
       tag: 'span',
       classNames: ['Reg_text'],
@@ -25,7 +25,7 @@ export default class RgVindowView extends View {
 
     this.viewElementCreator.addInsideElement(registerWindow);
 
-    const logInForm = new RegisterFormView(router);
+    const logInForm = new RegisterFormView(mainComponent);
     
     this.viewElementCreator.addInsideElement(logInForm.getElement());
   }
