@@ -97,3 +97,28 @@
     position: relative;
     display: flex;
 }
+
+.modalVindow {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 190px;
+    left: 25%;
+    top: 25%;
+    background: rgb(158, 158, 158);
+}
+
+.editField {
+    position: relative;
+    width: 80%;
+    height: 30px;
+    margin: auto;
+    margin-bottom: 15px;
+}
+
+.saveButton, .closeButton, .saveButtonMail, .closeButtonMail {
+    position: relative;
+    width: 20%;
+    margin: auto;
+}

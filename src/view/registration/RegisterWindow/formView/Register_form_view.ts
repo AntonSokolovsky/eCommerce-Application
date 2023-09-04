@@ -6,20 +6,20 @@ import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
 import { countryList } from '../../../../utilities/validation/countryList/CountryList';
 import { Customer } from '../../../../app/loader/customer';
-import { CustomerCreate } from '../../../../type/customer-type';
 import { getInputValue } from '../../../../utilities/function-utils';
+import { CustomerDraft } from '@commercetools/platform-sdk';
 
 export default class RegisterFormView extends View {
-  constructor(mainComponent: Router) {
+  constructor(router: Router) {
     const params = {
       tag: 'form',
       classNames: ['RegForm'],
     };
     super(params);
-    this.configureView(mainComponent);
+    this.configureView(router);
   }
 
-  configureView(mainComponent: Router) {
+  configureView(router: Router) {
     const TelOrEmail = new ElementCreator(registerFormViewParams.paramsTelOrEmail);
     this.viewElementCreator.addInsideElement(TelOrEmail);
 
@@ -325,11 +325,12 @@ export default class RegisterFormView extends View {
     billingAdressContainer.addInsideElement(BillingAdressMatchShippingContainer);
 
     const RegButton = new InputElementCreator(registerFormViewParams.paramsRegisterButton);
-    RegButton.setCallback(() => this.sendForm(mainComponent));
+    RegButton.setCallback(() => this.sendForm(router));
+    this.viewElementCreator.addInsideElement(RegButton);
     billingAdressContainer.addInsideElement(RegButton);
 
     const logInLink = new ElementCreator(registerFormViewParams.ParamslogInLink);
-    logInLink.setCallback(() => mainComponent.navigate(Pages.FIRSTPAGE));
+    logInLink.setCallback(() => router.navigate(Pages.LOGIN));
     billingAdressContainer.addInsideElement(logInLink);
 
     this.viewElementCreator.addInsideElement(billingAdressContainer);
@@ -346,7 +347,7 @@ export default class RegisterFormView extends View {
   }
 
   //ToDo find another way to get the input value. Without use querySelector
-  getDataForm(): CustomerCreate {
+  getDataForm(): CustomerDraft {
     const dataForm = {
       email: getInputValue(registerFormViewParams.paramsTelOrEmailInput.classNames[0]),
       firstName: getInputValue(registerFormViewParams.paramsFirstNameInput.classNames[0]),
