@@ -1,9 +1,10 @@
 import { UserAuthOptions } from '@commercetools/sdk-client-v2';
-import { getCtpClientAnonFlow, getCtpClientPasswordFlow } from '../../sdk/client';
+import { createFlow } from '../../sdk/client';
 import {
   CustomerDraft,
   MyCustomerSignin,
 } from '@commercetools/platform-sdk';
+// import { ProductsQueryArgs } from '../../type/products-type';
 
 export class Customer {
   protected apiRoot;
@@ -21,9 +22,9 @@ export class Customer {
         username: this.options.email,
         password: this.options.password,
       };
-      return getCtpClientPasswordFlow(userAuthOptions);
+      return createFlow(userAuthOptions);
     } else {
-      return getCtpClientAnonFlow();
+      return createFlow();
     }
   }
 
@@ -53,6 +54,27 @@ export class Customer {
       .me()
       .login()
       .post({ body: userAuthOptions })
+      .execute();
+  }
+  //To Do implement getting products with some arguments
+  // getProducts() {
+  //   const queryArgs: ProductsQueryArgs = {
+  //     sort: [],
+  //     limit: 20,
+  //     offset: 1,
+  // };
+  // this.apiRoot
+  //   .products()
+  // .get({ queryArgs })
+  // .get()
+  // .execute()
+  // .then((data) => console.log(data));
+  // }
+
+  getProducts() {
+    this.apiRoot
+      .products()
+      .get()
       .execute();
   }
 }

@@ -14,6 +14,7 @@ export class Mediator {
     let  arrayListeners = this.listeners.get(nameEvent);
     if (!arrayListeners) {
       arrayListeners = new Set<(ListenerMethod)>();
+
       this.listeners.set(nameEvent, arrayListeners);
     }
     arrayListeners.add(listenerMethod);
@@ -31,6 +32,7 @@ export class Mediator {
   }
 
   private notify(nameEvent: CustomEventNames, params: ParamsCustomEvent) {
+
     const arrayListeners = this.listeners.get(nameEvent);
     if (arrayListeners) {
       arrayListeners.forEach((listenerMethod) => listenerMethod(params));

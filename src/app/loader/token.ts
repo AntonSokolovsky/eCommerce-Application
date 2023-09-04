@@ -3,9 +3,9 @@ import { TokenNames } from '../../type/enum-token';
 
 export class TokenStorage {
   private static instanceToken = new TokenStorage;
-  
+
   // eslint-disable-next-line
-    constructor() {}
+    private constructor() {}
       
   static getInstance() {
     return this.instanceToken;
@@ -35,7 +35,7 @@ export class TokenStorage {
     const cache = 
            localStorage.getItem(TokenNames.TOKEN_CUSTOMER) || localStorage.getItem(TokenNames.TOKEN_ANONIM);
     const token = cache ? `Bearer ${JSON.parse(cache)?.token}` : '';
+
     return token;
   }
 }
-

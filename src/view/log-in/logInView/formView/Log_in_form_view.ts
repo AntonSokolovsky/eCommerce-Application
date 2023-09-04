@@ -19,8 +19,6 @@ export default class LogInFormView extends View {
   inputElements: HTMLInputElement[] = [];
 
   constructor(router: Router) {
-
-
     const params = {
       tag: 'form',
       classNames: ['logInFormView'],
