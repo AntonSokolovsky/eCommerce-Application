@@ -30,7 +30,6 @@ export default function editFields(e: Event) {
               const billingAdressId = res.body.results[0].addresses[0].id;
               const shippingAdressId = res.body.results[0].addresses[1].id;
               const ver = res.body.results[0].version;
-              console.log(res.body.results[0]);
               if (inputElem) {
                 if (targetParentElem?.classList.contains('firstName')) {
                   const actions: MyCustomerUpdateAction[] = [{
@@ -62,8 +61,6 @@ export default function editFields(e: Event) {
                   setTimeout(() => {
                     congradulationsWindow?.classList.add('hide');
                   }, 2000);
-
-
                 } else if (targetParentElem?.classList.contains('billingCountry')) {
                   const actions: MyCustomerUpdateAction[] = [{
                     'action': 'changeAddress',

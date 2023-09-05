@@ -7,8 +7,6 @@ import {
 } from '@commercetools/platform-sdk';
 // import { ProductsQueryArgs } from '../../type/products-type';
 
-
-
 export class Customer {
   protected apiRoot;
 
@@ -88,28 +86,6 @@ export class Customer {
         body: {
           version: ver,
           actions,
-        },
-      })
-      .execute();
-  }
-
-  changeAdress(ver: number, actions: MyCustomerUpdateAction[]) {
-    return this.apiRoot
-      .me()
-      .post({
-        body: {
-          version: ver,
-          actions,
-          // actions: [{
-          //   action: "changeAddress",
-          //   addressId: "{{addressId}}",
-          //   address: {
-          //     streetName: "Example Street",
-          //     postalCode: "80933",
-          //     city: "Exemplary City",
-          //     country: "DE",
-          //   }
-          // }]
         },
       })
       .execute();

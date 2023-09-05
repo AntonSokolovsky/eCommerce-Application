@@ -355,6 +355,7 @@ export default class RegisterFormView extends View {
     const StreetShippingContainerHtmlElement = StreetInputShippingContainer.getHtmlElement();
 
     const StreetShippingInput = new InputElementCreator(registerFormViewParams.paramsShippingStreetInput);
+
     StreetShippingContainerHtmlElement.append(StreetShippingInput.getInputElement());
 
     const RequirementsToShippingStreetText = new ElementCreator(registerFormViewParams.RequirementsToStreet);
@@ -378,6 +379,7 @@ export default class RegisterFormView extends View {
     const CityShippingContainerHtmlElement = CityShippingInputContainer.getHtmlElement();
 
     const CityShippingInput = new InputElementCreator(registerFormViewParams.paramsShippingCityInput);
+
     CityShippingContainerHtmlElement.append(CityShippingInput.getInputElement());
 
     const RequirementsShippingToCityText = new ElementCreator(registerFormViewParams.RequirementsToCity);
@@ -399,6 +401,7 @@ export default class RegisterFormView extends View {
     const CountryShippingContainerHtmlElement = CountryShippingInputContainer.getHtmlElement();
 
     const CountryShippingInput = new InputElementCreator(registerFormViewParams.paramsShippingCountryInput);
+
     CountryShippingContainerHtmlElement.append(CountryShippingInput.getInputElement());
 
     const RequirementsToShippingCountryText = new ElementCreator(registerFormViewParams.RequirementsToCountry);
@@ -420,6 +423,7 @@ export default class RegisterFormView extends View {
     const PostalCodeShippingContainerHtmlElement = PostalCodeShippingInputContainer.getHtmlElement();
 
     const PostalCodeShippingInput = new InputElementCreator(registerFormViewParams.paramsShippingPostalCodeInput);
+
     PostalCodeShippingContainerHtmlElement.append(PostalCodeShippingInput.getInputElement());
 
     const RequirementsToShippingPostalCodeText = new ElementCreator(registerFormViewParams.RequirementsToPostalCode);

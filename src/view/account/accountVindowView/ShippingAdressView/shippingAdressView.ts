@@ -41,7 +41,6 @@ export default class ShippingAdressVindowView extends View {
               if (res.body.results[0].addresses[1].postalCode) {
                 customerShippingPostalCode = res.body.results[0].addresses[1].postalCode;
               }
-
               const shippingAdressContainerNameParams = {
                 tag: 'p',
                 classNames: ['shippingAdressContainerName'],

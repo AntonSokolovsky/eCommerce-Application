@@ -25,7 +25,6 @@ export default class AccountVindowView extends View {
     let customerName = '';
     let customerBillingSurname = '';
     let dateOfBirthField = '';
-
     if (isUserLogin()) {
       const customer = new Customer();
       const mail = localStorage.getItem('userMail');
