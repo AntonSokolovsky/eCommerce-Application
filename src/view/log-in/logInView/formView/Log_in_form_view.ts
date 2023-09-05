@@ -117,9 +117,13 @@ export default class LogInFormView extends View {
   }
 
   sendForm(mainComponent: Router) {
-    const customer = new Customer(this.getDataForm());
+    const dataForm = this.getDataForm();
+    const customer = new Customer(dataForm);
     const response = customer.loginCustomer(this.getDataForm());
-    response.then((data) => this.handleSuccessResponse(data.body.customer.firstName, mainComponent))
+    response.then((data) => {
+      this.handleSuccessResponse(data.body.customer.firstName, mainComponent);
+      localStorage.setItem('userMail', dataForm.email);
+    })
       .catch(() => this.handleErrorResponse());
     mainComponent.navigate(Pages.LOGIN);
   }

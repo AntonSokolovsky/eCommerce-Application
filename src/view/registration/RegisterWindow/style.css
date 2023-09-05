@@ -4,14 +4,14 @@ body {
 }
 
 .logInregView {
-    height: 1700px;
+    height: 2500px;
 }
 @media (min-width: 751px) {
     .RgVindow {
         position: relative;
         top: 57px;
         left: 55px;
-        height: 1200px;
+        
         margin: 0;
         max-width: 585px;
     }
@@ -19,8 +19,8 @@ body {
     .RegForm {
         position: relative;
         display: grid;
-        height: 1600px;
-        grid-template-rows: 40px 95px 43px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 47px 43px;
+        
+        grid-template-rows: 40px 95px 43px 95px 45px 95px 45px 95px 45px 95px 45px 95px 650px;
         margin: 0;
     }
 
@@ -37,7 +37,7 @@ body {
         position: relative;
         margin: auto;
         padding: 0 15px;
-        height: 1600px;
+        
         top: 57px;
         max-width: 585px;
     }
@@ -45,8 +45,8 @@ body {
     .RegForm {
         position: relative;
         display: grid;
-        height: 1600px;
-        grid-template-rows: 40px 95px 43px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 45px 95px 47px 43px;
+        
+        grid-template-rows: 40px 95px 43px 95px 45px 95px 45px 95px 45px 95px 45px 95px 650px;
         margin: 0;
     }
 
@@ -141,4 +141,58 @@ body {
 
 .accept {
     border: 5px solid green;
+}
+
+.billingAdressContainer {
+    position: relative;
+    display: grid;
+    height: 630px;
+    grid-template-rows: auto 45px 95px 45px 95px 45px 95px 45px 95px auto;
+    border: 1px solid red;
+    border-radius: 30px;
+}
+
+.billingAdressContainer > * {
+    position: relative;
+    left: 15px;
+}
+
+.saveBillingAdressAsDefaultContainer, .saveBillingAdressAsDefaultContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+}
+
+.saveBillingAdressAsDefaultContainer {
+    position: relative;
+    top: 10px;
+}
+
+
+
+.shippingAdressContainer {
+    position: relative;
+    display: grid;
+    height: 615px;
+    grid-template-rows: 20px 45px 95px 45px 95px 45px 95px 45px 95px;
+    border: 1px solid red;
+    border-radius: 30px;
+}
+
+.shippingAdressContainer > * {
+    position: relative;
+    left: 15px;
+}
+
+.saveShippingAdressAsDefaultContainer, .saveBillingAdressAsDefaultContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+}
+
+.saveShippingAdressAsDefaultContainer {
+    position: relative;
+    top: 10px;
 }

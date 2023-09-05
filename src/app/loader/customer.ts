@@ -3,7 +3,9 @@ import { getCtpClientAnonFlow, getCtpClientPasswordFlow } from '../../sdk/client
 import {
   CustomerDraft,
   MyCustomerSignin,
+  MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
+
 
 export class Customer {
   protected apiRoot;
@@ -53,6 +55,33 @@ export class Customer {
       .me()
       .login()
       .post({ body: userAuthOptions })
+      .execute();
+  }
+
+  updatePass(version: number, currentPassword: string, newPassword: string) {
+    return this.apiRoot
+      .me()
+      .password()
+      .post({
+        body: {
+          version: version,
+          currentPassword: currentPassword,
+          newPassword: newPassword,
+        },
+      })
+      .execute();
+  }
+
+
+  changeData(ver: number, actions: MyCustomerUpdateAction[]) {
+    return this.apiRoot
+      .me()
+      .post({
+        body: {
+          version: ver,
+          actions,
+        },
+      })
       .execute();
   }
 }
