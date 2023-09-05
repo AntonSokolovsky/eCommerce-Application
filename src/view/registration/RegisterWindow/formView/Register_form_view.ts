@@ -333,16 +333,118 @@ export default class RegisterFormView extends View {
 
     billingAdressContainer.addInsideElement(BillingAdressMatchShippingContainer);
 
+
+
+
+
+    const shippingAdressContainer = new ElementCreator(registerFormViewParams.shippingAdressContainer);
+
+    const saveShippingAdressAsDefaultContainer = new ElementCreator(registerFormViewParams.saveShippingAdressAsDefaultContainer);
+
+    const saveShippingAdressAsDefaultCheckboks = new InputElementCreator(registerFormViewParams.saveShippingAdressAsDefault);
+    saveShippingAdressAsDefaultContainer.addInsideElement(saveShippingAdressAsDefaultCheckboks);
+    const saveShippingAdressAsDefaultText = new ElementCreator(registerFormViewParams.saveShippingAdressAsDefaultText);
+    saveShippingAdressAsDefaultContainer.addInsideElement(saveShippingAdressAsDefaultText);
+
+    shippingAdressContainer.addInsideElement(saveShippingAdressAsDefaultContainer);
+
+    const shippingStreet = new ElementCreator(registerFormViewParams.Street);
+    shippingAdressContainer.addInsideElement(shippingStreet);
+
+    const StreetInputShippingContainer = new View(registerFormViewParams.paramsStreetInContainer);
+    const StreetShippingContainerHtmlElement = StreetInputShippingContainer.getHtmlElement();
+
+    const StreetShippingInput = new InputElementCreator(registerFormViewParams.paramsStreetInput);
+    StreetShippingContainerHtmlElement.append(StreetShippingInput.getInputElement());
+
+    const RequirementsToShippingStreetText = new ElementCreator(registerFormViewParams.RequirementsToStreet);
+
+    RequirementsToShippingStreetText.setAttributeElement(RequirementsToStreetAttributes);
+
+    const firstRequirementShippingStreet = new ElementCreator(registerFormViewParams.StreetfirstRequirementParams);
+
+    RequirementsToShippingStreetText.addInsideElement(firstRequirementShippingStreet);
+    
+    StreetShippingContainerHtmlElement.append(RequirementsToShippingStreetText.getElement());
+
+    shippingAdressContainer.addInsideElement(StreetShippingContainerHtmlElement);
+
+
+
+    const shippingCity = new ElementCreator(registerFormViewParams.City);
+    shippingAdressContainer.addInsideElement(shippingCity);
+
+    const CityShippingInputContainer = new View(registerFormViewParams.paramsCityInContainer);
+    const CityShippingContainerHtmlElement = CityShippingInputContainer.getHtmlElement();
+
+    const CityShippingInput = new InputElementCreator(registerFormViewParams.paramsCityInput);
+    CityShippingContainerHtmlElement.append(CityShippingInput.getInputElement());
+
+    const RequirementsShippingToCityText = new ElementCreator(registerFormViewParams.RequirementsToCity);
+
+    RequirementsShippingToCityText.setAttributeElement(RequirementsToCityAttributes);
+
+    const firstRequirementShippingCity = new ElementCreator(registerFormViewParams.CityfirstRequirementParams);
+
+    RequirementsShippingToCityText.addInsideElement(firstRequirementShippingCity);
+    
+    CityShippingContainerHtmlElement.append(RequirementsShippingToCityText.getElement());
+
+    shippingAdressContainer.addInsideElement( CityShippingContainerHtmlElement);
+
+    const shippingCountry = new ElementCreator(registerFormViewParams.Country);
+    shippingAdressContainer.addInsideElement(shippingCountry);
+
+    const CountryShippingInputContainer = new View(registerFormViewParams.paramsCountryInContainer);
+    const CountryShippingContainerHtmlElement = CountryShippingInputContainer.getHtmlElement();
+
+    const CountryShippingInput = new InputElementCreator(registerFormViewParams.paramsCountryInput);
+    CountryShippingContainerHtmlElement.append(CountryShippingInput.getInputElement());
+
+    const RequirementsToShippingCountryText = new ElementCreator(registerFormViewParams.RequirementsToCountry);
+
+    RequirementsToShippingCountryText.setAttributeElement(RequirementsToCountryAttributes);
+
+    Object.values(countryList).map(countryParams => {
+      const country = new ElementCreator(countryParams);
+      RequirementsToShippingCountryText.addInsideElement(country);
+      CountryShippingContainerHtmlElement.append(RequirementsToShippingCountryText.getElement());
+    });
+
+    shippingAdressContainer.addInsideElement(CountryShippingContainerHtmlElement);
+
+    const shippingPostalCode = new ElementCreator(registerFormViewParams.PostalCode);
+    shippingAdressContainer.addInsideElement(shippingPostalCode);
+
+    const PostalCodeShippingInputContainer = new View(registerFormViewParams.paramsPostalCodeInContainer);
+    const PostalCodeShippingContainerHtmlElement = PostalCodeShippingInputContainer.getHtmlElement();
+
+    const PostalCodeShippingInput = new InputElementCreator(registerFormViewParams.paramsPostalCodeInput);
+    PostalCodeShippingContainerHtmlElement.append(PostalCodeShippingInput.getInputElement());
+
+    const RequirementsToShippingPostalCodeText = new ElementCreator(registerFormViewParams.RequirementsToPostalCode);
+
+    RequirementsToShippingPostalCodeText.setAttributeElement(RequirementsToPostalCodeAttributes);
+
+    const firstRequirementShippingPostalCode = new ElementCreator(registerFormViewParams.PostalCodefirstRequirementParams);
+
+    RequirementsToShippingPostalCodeText.addInsideElement(firstRequirementShippingPostalCode);
+
+    PostalCodeShippingContainerHtmlElement.append(RequirementsToShippingPostalCodeText.getElement());
+
+    shippingAdressContainer.addInsideElement(PostalCodeShippingContainerHtmlElement);
+
+    this.viewElementCreator.addInsideElement(billingAdressContainer);
+    this.viewElementCreator.addInsideElement(shippingAdressContainer);
+
     const RegButton = new InputElementCreator(registerFormViewParams.paramsRegisterButton);
     RegButton.setCallback(() => this.sendForm(router));
     this.viewElementCreator.addInsideElement(RegButton);
-    billingAdressContainer.addInsideElement(RegButton);
+    this.viewElementCreator.addInsideElement(RegButton);
 
     const logInLink = new ElementCreator(registerFormViewParams.ParamslogInLink);
     logInLink.setCallback(() => router.navigate(Pages.LOGIN));
-    billingAdressContainer.addInsideElement(logInLink);
-
-    this.viewElementCreator.addInsideElement(billingAdressContainer);
+    this.viewElementCreator.addInsideElement(logInLink);
   }
 
   getElement() {

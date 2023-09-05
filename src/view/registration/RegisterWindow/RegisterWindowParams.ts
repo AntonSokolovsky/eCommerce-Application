@@ -8,6 +8,7 @@ import validationCity from '../../../../src/utilities/validation/validationCity'
 import checkCountry from '../../../../src/utilities/validation/checkCountry';
 import validationPostalCode from '../../../../src/utilities/validation/validationPostalCode';
 import showHidePass from '../../../../src/utilities/showHidePass';
+import registerCheckBoxStatus from '../../../../src/utilities/checkBoxStatus';
 
 export const registerFormViewParams = {
   paramsTelOrEmail: {
@@ -516,12 +517,48 @@ export const registerFormViewParams = {
     action: '',
     type: 'checkbox',
     disabled: false,
-    callback: null,
+    callback: registerCheckBoxStatus,
   },
   BillingAdressMatchShippingText:{
     tag: 'p',
     classNames: ['saveBillingAdressAsDefaultText'],
     textContent: 'My billing address matches shipping address',
+    callback: null,
+  },
+
+
+  shippingAdressContainer: {
+    tag: 'div',
+    classNames: ['shippingAdressContainer'],
+    textContent: '',
+    callback: null,
+  },
+  saveShippingAdressAsDefault:{
+    tag: 'input',
+    classNames: ['saveShippingAdressAsDefault'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'checkbox',
+    disabled: false,
+    callback: null,
+  },
+  saveShippingAdressAsDefaultText:{
+    tag: 'p',
+    classNames: ['saveShippingAdressAsDefaultText'],
+    textContent: 'Save shipping adress as default',
+    callback: null,
+  },
+  saveShippingAdressAsDefaultContainer:{
+    tag: 'div',
+    classNames: ['saveShippingAdressAsDefaultContainer'],
+    textContent: '',
+    callback: null,
+  },
+  ShippingAdressMatchShippingContainer:{
+    tag: 'div',
+    classNames: ['ShippingAdressMatchShippingContainer'],
+    textContent: '',
     callback: null,
   },
 };
