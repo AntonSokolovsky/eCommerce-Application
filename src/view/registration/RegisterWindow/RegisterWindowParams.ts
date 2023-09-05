@@ -219,7 +219,7 @@ export const registerFormViewParams = {
     textContent: 'Register',
     value: 'Register',
     action: '',
-    type: 'submit',
+    type: 'button',
     disabled: true,
     callback: null,
   },

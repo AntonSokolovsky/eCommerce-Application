@@ -31,8 +31,11 @@ export class Mediator {
     this.notify(nameEvent, {});
   }
 
-  private notify(nameEvent: CustomEventNames, params: ParamsCustomEvent) {
+  signupCustomer(nameEvent: CustomEventNames, params: ParamsCustomEvent) {
+    this.notify(nameEvent, params);
+  }
 
+  private notify(nameEvent: CustomEventNames, params: ParamsCustomEvent) {
     const arrayListeners = this.listeners.get(nameEvent);
     if (arrayListeners) {
       arrayListeners.forEach((listenerMethod) => listenerMethod(params));
