@@ -119,7 +119,6 @@ export default class LogInFormView extends View {
     return this.viewElementCreator.getElement();
   }
 
-
   authHandler(params?: ParamsCustomEvent ) {
     const customerAuthParams = params?.customerAuth || this.getDataForm();
     this.sendForm(customerAuthParams);

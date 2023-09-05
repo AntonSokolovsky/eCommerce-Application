@@ -8,6 +8,7 @@ import {
 // import { ProductsQueryArgs } from '../../type/products-type';
 
 
+
 export class Customer {
   protected apiRoot;
 
@@ -59,28 +60,12 @@ export class Customer {
       .execute();
   }
 
-  //To Do implement getting products with some arguments
-  // getProducts() {
-  //   const queryArgs: ProductsQueryArgs = {
-  //     sort: [],
-  //     limit: 20,
-  //     offset: 1,
-  // };
-  // this.apiRoot
-  //   .products()
-  // .get({ queryArgs })
-  // .get()
-  // .execute()
-  // .then((data) => console.log(data));
-  // }
-
   getProducts() {
     return this.apiRoot
       .products()
       .get()
       .execute();
   }
-
 
   updatePass(version: number, currentPassword: string, newPassword: string) {
     return this.apiRoot
