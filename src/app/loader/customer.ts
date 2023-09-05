@@ -8,6 +8,7 @@ import {
 // import { ProductsQueryArgs } from '../../type/products-type';
 
 
+
 export class Customer {
   protected apiRoot;
 
@@ -80,7 +81,6 @@ export class Customer {
       .get()
       .execute();
   }
-
 
   updatePass(version: number, currentPassword: string, newPassword: string) {
     return this.apiRoot
