@@ -72,7 +72,7 @@ export class Customer {
   // }
 
   getProducts() {
-    this.apiRoot
+    return this.apiRoot
       .products()
       .get()
       .execute();

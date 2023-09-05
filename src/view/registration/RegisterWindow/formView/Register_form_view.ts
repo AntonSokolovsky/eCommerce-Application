@@ -7,9 +7,17 @@ import { Pages } from '../../../../app/router/pages';
 import { countryList } from '../../../../utilities/validation/countryList/CountryList';
 import { Customer } from '../../../../app/loader/customer';
 import { getInputValue } from '../../../../utilities/function-utils';
-import { CustomerDraft } from '@commercetools/platform-sdk';
+import { CustomerDraft, MyCustomerSignin } from '@commercetools/platform-sdk';
+import { getCountryCode } from '../../../../utilities/get-country-code';
+import { Mediator } from '../../../../app/controller/mediator';
+import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
+import { MessagesModalWindow } from '../../../../type/messages-modal';
+import { CustomEventNames } from '../../../../type/mediator-type';
 
 export default class RegisterFormView extends View {
+
+  private mediator = Mediator.getInstance();
+
   constructor(router: Router) {
     const params = {
       tag: 'form',
@@ -17,6 +25,7 @@ export default class RegisterFormView extends View {
     };
     super(params);
     this.configureView(router);
+
   }
 
   configureView(router: Router) {
@@ -340,10 +349,35 @@ export default class RegisterFormView extends View {
     return this.viewElementCreator.getElement();
   }
 
-  sendForm(mainComponent: Router) {
+  async sendForm(router: Router) {
     const customer = new Customer();
-    customer.createCustomer(this.getDataForm());
-    mainComponent.navigate(Pages.FIRSTPAGE);
+    const dataForm = this.getDataForm();
+    const response = customer.createCustomer(dataForm);
+    await response.then(() => this.handleSuccessResponse(dataForm, router))
+      .catch(() => this.handleErrorResponse);
+  }
+
+  async handleSuccessResponse(dataForm: CustomerDraft, router: Router) {
+    const greetingMessage = `${dataForm.firstName}, ${MessagesModalWindow.REGISTER_SUCCESS_MESSAGE}`;
+    this.showModalWindow(greetingMessage);
+    const customerAuthParams: MyCustomerSignin = {
+      email: dataForm.email,
+      password: dataForm.password || '',
+    };
+    setTimeout(() => {
+      this.mediator.signupCustomer(CustomEventNames.CUSTOMER_REGISTER, { customerAuth: customerAuthParams });
+    }, 1000);
+    router.navigate(Pages.LOGIN);
+  }
+
+  handleErrorResponse() {
+    const errorMessage = MessagesModalWindow.REGISTER_ERROR_MESSAGE;
+    this.showModalWindow(errorMessage);
+  }
+
+  showModalWindow(message: string) {
+    const modalWindow = new ModalWindowRequest(message);
+    return modalWindow;
   }
 
   //ToDo find another way to get the input value. Without use querySelector
@@ -356,14 +390,14 @@ export default class RegisterFormView extends View {
       password: getInputValue(registerFormViewParams.paramsPasswordInput.classNames[0]),
       addresses: [
         {
-          country: getInputValue(registerFormViewParams.paramsCountryInput.classNames[0]),
-          streetName: getInputValue(registerFormViewParams.paramsStreetInput.classNames[0]),
-          postalCode: getInputValue(registerFormViewParams.paramsPostalCodeInput.classNames[0]),
-          city: getInputValue(registerFormViewParams.paramsCityInput.classNames[0]),
+          country: getCountryCode(getInputValue(registerFormViewParams.paramsCountryInput.classNames[1])),
+          streetName: getInputValue(registerFormViewParams.paramsStreetInput.classNames[1]),
+          postalCode: getInputValue(registerFormViewParams.paramsPostalCodeInput.classNames[1]),
+          city: getInputValue(registerFormViewParams.paramsCityInput.classNames[1]),
+
         },
       ],
     };
-
     return dataForm;
   }
 }

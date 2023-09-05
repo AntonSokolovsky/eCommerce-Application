@@ -9,7 +9,7 @@ import { Customer } from '../../../../app/loader/customer';
 import { MyCustomerSignin } from '@commercetools/platform-sdk';
 import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
 import { Mediator } from '../../../../app/controller/mediator';
-import { CustomEventNames } from '../../../../type/mediator-type';
+import { CustomEventNames, ParamsCustomEvent } from '../../../../type/mediator-type';
 import { MessagesModalWindow } from '../../../../type/messages-modal';
 
 export default class LogInFormView extends View {
@@ -18,16 +18,21 @@ export default class LogInFormView extends View {
 
   inputElements: HTMLInputElement[] = [];
 
+  router: Router;
+
   constructor(router: Router) {
+
     const params = {
       tag: 'form',
       classNames: ['logInFormView'],
     };
     super(params);
-    this.configureView(router);
+    this.router = router;
+    this.configureView();
+    this.mediator.subscribe(CustomEventNames.CUSTOMER_REGISTER, this.authHandler.bind(this));
   }
 
-  configureView(router: Router) {
+  configureView() {
     const TelOrEmail = new ElementCreator(LogInFormViewParams.paramsTelOrEmail);
     this.viewElementCreator.addInsideElement(TelOrEmail);
 
@@ -98,7 +103,7 @@ export default class LogInFormView extends View {
     this.viewElementCreator.addInsideElement(PasswordInputContainerHtmlElement);
 
     const SignIn = new InputElementCreator(LogInFormViewParams.paramsSignInButton);
-    SignIn.setCallback(() => this.sendForm(router));
+    SignIn.setCallback(() => this.authHandler());
 
     this.viewElementCreator.addInsideElement(SignIn);
 
@@ -106,7 +111,7 @@ export default class LogInFormView extends View {
     this.viewElementCreator.addInsideElement(ForgotPassLink);
 
     const CreateAccLink = new ElementCreator(LogInFormViewParams.ParamsCreateLink);
-    CreateAccLink.setCallback(() => router.navigate(Pages.REGISTER));
+    CreateAccLink.setCallback(() => this.router.navigate(Pages.REGISTER));
     this.viewElementCreator.addInsideElement(CreateAccLink);
   }
 
@@ -114,12 +119,16 @@ export default class LogInFormView extends View {
     return this.viewElementCreator.getElement();
   }
 
-  sendForm(mainComponent: Router) {
-    const customer = new Customer(this.getDataForm());
-    const response = customer.loginCustomer(this.getDataForm());
-    response.then((data) => this.handleSuccessResponse(data.body.customer.firstName, mainComponent))
+  authHandler(params?: ParamsCustomEvent ) {
+    const customerAuthParams = params?.customerAuth || this.getDataForm();
+    this.sendForm(customerAuthParams);
+  }
+
+  sendForm(customerAuthParams: MyCustomerSignin) {
+    const customer = new Customer(customerAuthParams);
+    const response = customer.loginCustomer(customerAuthParams);
+    response.then((data) => this.handleSuccessResponse(data.body.customer.firstName))
       .catch(() => this.handleErrorResponse());
-    mainComponent.navigate(Pages.LOGIN);
   }
   
   getDataForm(): MyCustomerSignin {
@@ -130,11 +139,11 @@ export default class LogInFormView extends View {
     return dataForm;
   }
 
-  handleSuccessResponse(message: string | undefined, mainComponent: Router) {
+  handleSuccessResponse(message: string | undefined) {
     const greetingMessage = `${MessagesModalWindow.AUTH_SUCCESS_MESSAGE} ${message}`;
     this.showModalWindow(greetingMessage);
     this.mediator.loginLogoutCustomer(CustomEventNames.CUSTOMER_LOGIN);
-    mainComponent.navigate(Pages.FIRSTPAGE);
+    this.router.navigate(Pages.FIRSTPAGE);
   }
 
   handleErrorResponse() {

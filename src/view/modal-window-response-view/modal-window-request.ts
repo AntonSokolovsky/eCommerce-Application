@@ -34,7 +34,13 @@ export class ModalWindowRequest extends View {
   }
 
   showModalWindow() {
-    const body = document.querySelector('body');
+    const body = document.body;
+    const previousModalWindow = body.querySelector(styles['modal-window']);
+    if (previousModalWindow) {
+      setTimeout(() => {
+        body.append(this.viewElementCreator.getElement());
+      }, 4000);
+    }
     body?.append(this.viewElementCreator.getElement());
     setTimeout(() => {
       this.viewElementCreator.getElement().remove();
