@@ -125,9 +125,13 @@ export default class LogInFormView extends View {
   }
 
   sendForm(customerAuthParams: MyCustomerSignin) {
+    const dataForm = this.getDataForm();
     const customer = new Customer(customerAuthParams);
     const response = customer.loginCustomer(customerAuthParams);
-    response.then((data) => this.handleSuccessResponse(data.body.customer.firstName))
+    response.then((data) => {
+      this.handleSuccessResponse(data.body.customer.firstName);
+      localStorage.setItem('userMail', dataForm.email);
+    })
       .catch(() => this.handleErrorResponse());
   }
   

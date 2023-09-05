@@ -122,3 +122,24 @@
     width: 20%;
     margin: auto;
 }
+
+.nonAutorize_window {
+    position: relative;
+    border: 1px solid black;
+    height: 300px;
+    font-size: 50px;
+    text-align: center;
+}
+
+.nonAutorize_window_text {
+    position: relative;
+    top: calc(50% - 29px);
+}
+
+.congradulations_window {
+    position: absolute;
+    top: calc(50% - 15px);
+    left: 50%;
+    height: 30px;
+    border: 1px solid black;
+}

@@ -60,7 +60,6 @@ export default class NavHeaderView extends View {
       const linkElement = new LinkNavHeaderView(linkParams, this.linkElements);
       linkElement.getHtmlElement().classList.add(`nav__${page[0].toLowerCase()}`);
       this.viewElementCreator.addInsideElement(linkElement.getHtmlElement());
-
       this.linkElements.set(Pages[page[0]], linkElement);
     });
     if (isUserLogin()) {
@@ -102,7 +101,7 @@ export default class NavHeaderView extends View {
 
   authHandler(router: Router) {
     this.linkElements.forEach((linkElement) => {
-      if (linkElement.getHtmlElement().textContent !== NamePages.BASKET)
+      if (linkElement.getHtmlElement().textContent !== NamePages.BASKET && linkElement.getHtmlElement().textContent !== NamePages.ACCOUNT)
         linkElement.getHtmlElement().remove();
     });
     this.viewElementCreator.addInsideElement(this.addButtonLogout(router));

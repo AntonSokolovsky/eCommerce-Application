@@ -3,8 +3,11 @@ import { createFlow } from '../../sdk/client';
 import {
   CustomerDraft,
   MyCustomerSignin,
+  MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
 // import { ProductsQueryArgs } from '../../type/products-type';
+
+
 
 export class Customer {
   protected apiRoot;
@@ -56,6 +59,7 @@ export class Customer {
       .post({ body: userAuthOptions })
       .execute();
   }
+
   //To Do implement getting products with some arguments
   // getProducts() {
   //   const queryArgs: ProductsQueryArgs = {
@@ -75,6 +79,33 @@ export class Customer {
     return this.apiRoot
       .products()
       .get()
+      .execute();
+  }
+
+  updatePass(version: number, currentPassword: string, newPassword: string) {
+    return this.apiRoot
+      .me()
+      .password()
+      .post({
+        body: {
+          version: version,
+          currentPassword: currentPassword,
+          newPassword: newPassword,
+        },
+      })
+      .execute();
+  }
+
+
+  changeData(ver: number, actions: MyCustomerUpdateAction[]) {
+    return this.apiRoot
+      .me()
+      .post({
+        body: {
+          version: ver,
+          actions,
+        },
+      })
       .execute();
   }
 }
