@@ -27,7 +27,10 @@ export default function editFields(e: Event) {
           const value = inputElem.value;
           if (customerMail) {
             customer.getCustomerByEmail(customerMail).then((res) => {
+              const billingAdressId = res.body.results[0].addresses[0].id;
+              const shippingAdressId = res.body.results[0].addresses[1].id;
               const ver = res.body.results[0].version;
+              console.log(res.body.results[0]);
               if (inputElem) {
                 if (targetParentElem?.classList.contains('firstName')) {
                   const actions: MyCustomerUpdateAction[] = [{
@@ -53,6 +56,142 @@ export default function editFields(e: Event) {
                   const actions: MyCustomerUpdateAction[] = [{
                     'action': 'setDateOfBirth',
                     'dateOfBirth': value,
+                  }];
+                  customer.changeData(ver, actions);
+                  congradulationsWindow?.classList.remove('hide');
+                  setTimeout(() => {
+                    congradulationsWindow?.classList.add('hide');
+                  }, 2000);
+
+
+                } else if (targetParentElem?.classList.contains('billingCountry')) {
+                  const actions: MyCustomerUpdateAction[] = [{
+                    'action': 'changeAddress',
+                    'addressId': billingAdressId,
+                    'address': {
+                      'country': value,
+                      'streetName': res.body.results[0].addresses[0].streetName,
+                      'city': res.body.results[0].addresses[0].city,
+                      'postalCode': res.body.results[0].addresses[0].postalCode,
+                    },
+                  }];
+                  customer.changeData(ver, actions);
+                  congradulationsWindow?.classList.remove('hide');
+                  setTimeout(() => {
+                    congradulationsWindow?.classList.add('hide');
+                  }, 2000);
+                } else if (targetParentElem?.classList.contains('billingStreet')) {
+                  const actions: MyCustomerUpdateAction[] = [{
+                    'action': 'changeAddress',
+                    'addressId': billingAdressId,
+                    'address': {
+                      'country': res.body.results[0].addresses[0].country,
+                      'streetName': value,
+                      'city': res.body.results[0].addresses[0].city,
+                      'postalCode': res.body.results[0].addresses[0].postalCode,
+                    },
+                  }];
+                  customer.changeData(ver, actions);
+                  congradulationsWindow?.classList.remove('hide');
+                  setTimeout(() => {
+                    congradulationsWindow?.classList.add('hide');
+                  }, 2000);
+                } else if (targetParentElem?.classList.contains('billingCity')) {
+                  const actions: MyCustomerUpdateAction[] = [{
+                    'action': 'changeAddress',
+                    'addressId': billingAdressId,
+                    'address': {
+                      'country': res.body.results[0].addresses[0].country,
+                      'streetName': res.body.results[0].addresses[0].streetName,
+                      'city': value,
+                      'postalCode': res.body.results[0].addresses[0].postalCode,
+                    },
+                    
+                  }];
+                  customer.changeData(ver, actions);
+                  congradulationsWindow?.classList.remove('hide');
+                  setTimeout(() => {
+                    congradulationsWindow?.classList.add('hide');
+                  }, 2000);
+                } else if (targetParentElem?.classList.contains('billingPostalCode')) {
+                  const actions: MyCustomerUpdateAction[] = [{
+                    'action': 'changeAddress',
+                    'addressId': billingAdressId,
+                    'address': {
+                      'country': res.body.results[0].addresses[0].country,
+                      'streetName': res.body.results[0].addresses[0].streetName,
+                      'city': res.body.results[0].addresses[0].city,
+                      'postalCode': value,
+                    },
+                    
+                  }];
+                  customer.changeData(ver, actions);
+                  congradulationsWindow?.classList.remove('hide');
+                  setTimeout(() => {
+                    congradulationsWindow?.classList.add('hide');
+                  }, 2000);
+                } else if (targetParentElem?.classList.contains('shippingCountry')) {
+                  const actions: MyCustomerUpdateAction[] = [{
+                    'action': 'changeAddress',
+                    'addressId': shippingAdressId,
+                    'address': {
+                      'country': value,
+                      'streetName': res.body.results[0].addresses[1].streetName,
+                      'city': res.body.results[0].addresses[1].city,
+                      'postalCode': res.body.results[0].addresses[1].postalCode,
+                    },
+                    
+                  }];
+                  customer.changeData(ver, actions);
+                  congradulationsWindow?.classList.remove('hide');
+                  setTimeout(() => {
+                    congradulationsWindow?.classList.add('hide');
+                  }, 2000);
+                } else if (targetParentElem?.classList.contains('shippingStreet')) {
+                  const actions: MyCustomerUpdateAction[] = [{
+                    'action': 'changeAddress',
+                    'addressId': shippingAdressId,
+                    'address': {
+                      'country': res.body.results[0].addresses[1].country,
+                      'streetName': value,
+                      'city': res.body.results[0].addresses[1].city,
+                      'postalCode': res.body.results[0].addresses[1].postalCode,
+                    },
+                    
+                  }];
+                  customer.changeData(ver, actions);
+                  congradulationsWindow?.classList.remove('hide');
+                  setTimeout(() => {
+                    congradulationsWindow?.classList.add('hide');
+                  }, 2000);
+                } else if (targetParentElem?.classList.contains('shippingCity')) {
+                  const actions: MyCustomerUpdateAction[] = [{
+                    'action': 'changeAddress',
+                    'addressId': shippingAdressId,
+                    'address': {
+                      'country': res.body.results[0].addresses[1].country,
+                      'streetName': res.body.results[0].addresses[1].streetName,
+                      'city': value,
+                      'postalCode': res.body.results[0].addresses[1].postalCode,
+                    },
+                    
+                  }];
+                  customer.changeData(ver, actions);
+                  congradulationsWindow?.classList.remove('hide');
+                  setTimeout(() => {
+                    congradulationsWindow?.classList.add('hide');
+                  }, 2000);
+                } else if (targetParentElem?.classList.contains('shippingPostalCode')) {
+                  const actions: MyCustomerUpdateAction[] = [{
+                    'action': 'changeAddress',
+                    'addressId': shippingAdressId,
+                    'address': {
+                      'country': res.body.results[0].addresses[1].country,
+                      'streetName': res.body.results[0].addresses[1].streetName,
+                      'city': res.body.results[0].addresses[1].city,
+                      'postalCode': value,
+                    },
+                    
                   }];
                   customer.changeData(ver, actions);
                   congradulationsWindow?.classList.remove('hide');
