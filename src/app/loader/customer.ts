@@ -7,8 +7,11 @@ import {
 } from '@commercetools/platform-sdk';
 // import { ProductsQueryArgs } from '../../type/products-type';
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 30ee1638c51f494bcf806c86ad017cd2469b9e58
 export class Customer {
   protected apiRoot;
 
@@ -60,21 +63,6 @@ export class Customer {
       .execute();
   }
 
-  //To Do implement getting products with some arguments
-  // getProducts() {
-  //   const queryArgs: ProductsQueryArgs = {
-  //     sort: [],
-  //     limit: 20,
-  //     offset: 1,
-  // };
-  // this.apiRoot
-  //   .products()
-  // .get({ queryArgs })
-  // .get()
-  // .execute()
-  // .then((data) => console.log(data));
-  // }
-
   getProducts() {
     return this.apiRoot
       .products()
@@ -96,7 +84,6 @@ export class Customer {
       .execute();
   }
 
-
   changeData(ver: number, actions: MyCustomerUpdateAction[]) {
     return this.apiRoot
       .me()
@@ -104,6 +91,28 @@ export class Customer {
         body: {
           version: ver,
           actions,
+        },
+      })
+      .execute();
+  }
+
+  changeAdress(ver: number, actions: MyCustomerUpdateAction[]) {
+    return this.apiRoot
+      .me()
+      .post({
+        body: {
+          version: ver,
+          actions,
+          // actions: [{
+          //   action: "changeAddress",
+          //   addressId: "{{addressId}}",
+          //   address: {
+          //     streetName: "Example Street",
+          //     postalCode: "80933",
+          //     city: "Exemplary City",
+          //     country: "DE",
+          //   }
+          // }]
         },
       })
       .execute();

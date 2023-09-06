@@ -29,12 +29,19 @@ export default class BillingAdressVindowView extends View {
         if (mail) {
           customer.getCustomerByEmail(mail)
             .then((res) => {
-              if (res && res.body && res.body.results) {
-                customerBillingCountry = '';
-                customerBillingStreet = '';
-                customerBillingCity = '';
-                customerBillingPostalCode = '';
-
+              if (res && res.body && res.body.results[0].addresses[0]) {
+                if (res.body.results[0].addresses[0].country) {
+                  customerBillingCountry = res.body.results[0].addresses[0].country;
+                }
+                if (res.body.results[0].addresses[0].streetName) {
+                  customerBillingStreet = res.body.results[0].addresses[0].streetName;
+                }
+                if (res.body.results[0].addresses[0].city) {
+                  customerBillingCity = res.body.results[0].addresses[0].city;
+                }
+                if (res.body.results[0].addresses[0].postalCode) {
+                  customerBillingPostalCode = res.body.results[0].addresses[0].postalCode;
+                }
                 const billingAdressContainerNameParams = {
                   tag: 'p',
                   classNames: ['billingAdressContainerName'],

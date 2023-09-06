@@ -25,7 +25,7 @@ export const registerFormViewParams = {
   },
   paramsTelOrEmailInput:{
     tag: 'input',
-    classNames: ['input', 'Email_input'],
+    classNames: ['Email_input', 'input'],
     textContent: '',
     value: '',
     action: '',
@@ -477,7 +477,7 @@ export const registerFormViewParams = {
   },
   billingAdressContainer: {
     tag: 'div',
-    classNames: ['billingAdressContainer'],
+    classNames: ['billingAdressContainer', 'adressContainer'],
     textContent: '',
     callback: null,
   },
@@ -511,7 +511,7 @@ export const registerFormViewParams = {
   },
   BillingAdressMatchShipping:{
     tag: 'input',
-    classNames: ['saveBillingAdressAsDefault'],
+    classNames: ['BillingAdressMatchShipping'],
     textContent: '',
     value: '',
     action: '',
@@ -521,7 +521,7 @@ export const registerFormViewParams = {
   },
   BillingAdressMatchShippingText:{
     tag: 'p',
-    classNames: ['saveBillingAdressAsDefaultText'],
+    classNames: ['BillingAdressMatchShippingText'],
     textContent: 'My billing address matches shipping address',
     callback: null,
   },
@@ -529,7 +529,7 @@ export const registerFormViewParams = {
 
   shippingAdressContainer: {
     tag: 'div',
-    classNames: ['shippingAdressContainer'],
+    classNames: ['shippingAdressContainer', 'adressContainer'],
     textContent: '',
     callback: null,
   },
@@ -541,7 +541,7 @@ export const registerFormViewParams = {
     action: '',
     type: 'checkbox',
     disabled: false,
-    callback: null,
+    callback: registerCheckBoxStatus,
   },
   saveShippingAdressAsDefaultText:{
     tag: 'p',
@@ -558,6 +558,57 @@ export const registerFormViewParams = {
   ShippingAdressMatchShippingContainer:{
     tag: 'div',
     classNames: ['ShippingAdressMatchShippingContainer'],
+    textContent: '',
+    callback: null,
+  },
+
+  paramsShippingCountryInput:{
+    tag: 'input',
+    classNames: ['input', 'Shipping_Country_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: checkCountry,
+  },
+
+  paramsShippingStreetInput:{
+    tag: 'input',
+    classNames: ['input', 'Shipping_Street_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationStreet,
+  },
+
+  paramsShippingPostalCodeInput:{
+    tag: 'input',
+    classNames: ['input', 'Shipping_PostalCode_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationPostalCode,
+  },
+
+  paramsShippingCityInput:{
+    tag: 'input',
+    classNames: ['input', 'Shipping_City_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationCity,
+  },
+
+  MyBillingAdressMatchesShippingContainer:{
+    tag: 'div',
+    classNames: ['MyBillingAdressMatchesShipping'],
     textContent: '',
     callback: null,
   },
