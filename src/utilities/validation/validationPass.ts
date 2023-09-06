@@ -5,7 +5,6 @@ const regExpression = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?!.*\s).{
 export default function validationPassword(e: Event):void {
   const targetInput = (e.target as HTMLElement);
   const rules = targetInput.parentElement?.querySelector('.Requirements') as HTMLElement;
-  console.log(targetInput);
   targetInput.addEventListener('keyup', () => {
     const val = (targetInput as HTMLInputElement).value;
     rules.style.display = 'block';
