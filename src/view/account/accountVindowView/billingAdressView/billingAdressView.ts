@@ -42,7 +42,6 @@ export default class BillingAdressVindowView extends View {
                 if (res.body.results[0].addresses[0].postalCode) {
                   customerBillingPostalCode = res.body.results[0].addresses[0].postalCode;
                 }
-                
                 const billingAdressContainerNameParams = {
                   tag: 'p',
                   classNames: ['billingAdressContainerName'],
