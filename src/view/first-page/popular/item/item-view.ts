@@ -20,6 +20,7 @@ export default class ItemView extends View {
   }
 
   configureView(paramItem: ProductCatalogData, id: number) {
+
     this.viewElementCreator.setElementClass(['item-small']);
 
     const paramsContImg = {
