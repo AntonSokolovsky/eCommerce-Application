@@ -47,13 +47,13 @@ export default class CarouselView extends View {
     const paramsArrowLeft = {
       tag: 'div',
       classNames: ['carousel__arrow', 'arrow_left'],
-      textContent: 'arrow left',
+      textContent: '<',
       callback: null,
     };
     const paramsArrowRight = {
       tag: 'div',
       classNames: ['carousel__arrow', 'arrow_right'],
-      textContent: 'arrow right',
+      textContent: '>',
       callback: null,
     };
     const creatorArrows = new ElementCreator(paramsArrows);

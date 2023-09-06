@@ -2,18 +2,35 @@ import './catalog.css';
 import View from '../view';
 import { ElementCreator } from '../../utilities/element-creator';
 import ItemView from '../first-page/popular/item/item-view';
+import Router from '../../app/router/router';
+import ItemDetailView from '../first-page/popular/item/item-detail/item-detail-view';
+import { Customer } from '../../app/loader/customer';
+// import { products } from '../../app/loader/products';
 
 export default class CatalogView extends View {
-  constructor() {
+  constructor(router: Router, id = '') {
     const params = {
       tag: 'section',
       classNames: ['section', 'section-catalog'],
     };
     super(params);
-    this.configureView();
+    this.configureView(router, id);
   }
 
-  configureView() {
+  configureView(router: Router, id = '') {
+    const loader = new Customer();
+    // loader.getProducts()
+    //   .then((data) => data.body.total);
+    
+
+    if (id) {
+      this.addLargeItemToView(router, loader, id);
+    } else {
+      this.addSmallItemsToView(router, loader);
+    }
+  }
+
+  addSmallItemsToView(router: Router, loader: Customer) {
     const paramsTitle = {
       tag: 'h2',
       classNames: ['section__title', 'catalog__title'],
@@ -39,11 +56,17 @@ export default class CatalogView extends View {
       callback: null,
     };
     const creatorItems = new ElementCreator(paramsItems);
-    for (let i = 0; i < 12; i += 1) {
-      const creatorItem = new ItemView();
-      creatorItems.addInsideElement(creatorItem.getHtmlElement());
-    }
     this.viewElementCreator.addInsideElement(creatorItems);
+
+    loader.getProducts()
+      .then((data) => {
+        if (data.body.total) {
+          for (let i = 0; i < data.body.total; i += 1) {
+            const creatorItem = new ItemView(router, data.body, i);
+            creatorItems.addInsideElement(creatorItem.getHtmlElement());
+          }
+        }
+      });
 
     const paramsBtns = {
       tag: 'div',
@@ -77,5 +100,19 @@ export default class CatalogView extends View {
     creatorBtns.addInsideElement(creatorBtnRight);
 
     this.viewElementCreator.addInsideElement(creatorBtns);
+  }
+
+  addLargeItemToView(router: Router, loader: Customer, id = '') {
+    // const selectedItem = cardsInfo.find((card) => card.id === id);
+    loader.getProducts()
+      .then((data) => {
+        if (data.body.results) {
+          const largeCardComponent = new ItemDetailView(router, data.body.results[+id].masterData);
+          this.viewElementCreator.addInsideElement(largeCardComponent.getHtmlElement());
+        }
+      });
+    // const selectedItem = cardsInfo.find((card) => card.id === id);
+    // const largeCardComponent = new ItemDetailView(router);
+    // this.viewElementCreator.addInsideElement(largeCardComponent.getHtmlElement());
   }
 }
