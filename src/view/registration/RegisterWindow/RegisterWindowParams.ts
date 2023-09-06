@@ -612,40 +612,4 @@ export const registerFormViewParams = {
     textContent: '',
     callback: null,
   },
-
-
-  shippingAdressContainer: {
-    tag: 'div',
-    classNames: ['shippingAdressContainer'],
-    textContent: '',
-    callback: null,
-  },
-  saveShippingAdressAsDefault:{
-    tag: 'input',
-    classNames: ['saveShippingAdressAsDefault'],
-    textContent: '',
-    value: '',
-    action: '',
-    type: 'checkbox',
-    disabled: false,
-    callback: null,
-  },
-  saveShippingAdressAsDefaultText:{
-    tag: 'p',
-    classNames: ['saveShippingAdressAsDefaultText'],
-    textContent: 'Save shipping adress as default',
-    callback: null,
-  },
-  saveShippingAdressAsDefaultContainer:{
-    tag: 'div',
-    classNames: ['saveShippingAdressAsDefaultContainer'],
-    textContent: '',
-    callback: null,
-  },
-  ShippingAdressMatchShippingContainer:{
-    tag: 'div',
-    classNames: ['ShippingAdressMatchShippingContainer'],
-    textContent: '',
-    callback: null,
-  },
 };

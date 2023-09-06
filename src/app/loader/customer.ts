@@ -90,4 +90,26 @@ export class Customer {
       })
       .execute();
   }
+
+  changeAdress(ver: number, actions: MyCustomerUpdateAction[]) {
+    return this.apiRoot
+      .me()
+      .post({
+        body: {
+          version: ver,
+          actions,
+          // actions: [{
+          //   action: "changeAddress",
+          //   addressId: "{{addressId}}",
+          //   address: {
+          //     streetName: "Example Street",
+          //     postalCode: "80933",
+          //     city: "Exemplary City",
+          //     country: "DE",
+          //   }
+          // }]
+        },
+      })
+      .execute();
+  }
 }
