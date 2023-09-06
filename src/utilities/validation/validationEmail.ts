@@ -11,6 +11,6 @@ export default function validationEmail(e: Event):void {
     check(rules, regExpression, val, targetInput);
   });
   targetInput.addEventListener('blur', () => rules.style.display = 'none');
-  targetInput.removeEventListener('input', () => rules.style.display = 'block');
-  targetInput.removeEventListener('blur', () => rules.style.display = 'none');
+  // targetInput.removeEventListener('input', () => rules.style.display = 'block');
+  // targetInput.removeEventListener('blur', () => rules.style.display = 'none');
 }

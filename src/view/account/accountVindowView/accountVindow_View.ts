@@ -24,7 +24,7 @@ export default class AccountVindowView extends View {
   configureView() {
     let customerName = '';
     let customerBillingSurname = '';
-    // const dateOfBirthField = '';
+    let dateOfBirthField = '';
 
     if (isUserLogin()) {
       const customer = new Customer();
@@ -32,10 +32,11 @@ export default class AccountVindowView extends View {
       if (mail) {
         customer.getCustomerByEmail(mail)
           .then((res) => {
-            if (res.body.results[0].firstName && res.body.results[0].lastName) {
+            if (res.body.results[0].firstName && res.body.results[0].lastName && res.body.results[0].dateOfBirth) {
               customerName = res.body.results[0].firstName;
               customerBillingSurname = res.body.results[0].lastName;
-              
+              dateOfBirthField = res.body.results[0].dateOfBirth;
+
               const paramsAccountPhotoContainer = {
                 tag: 'div',
                 classNames: ['accountPhotoContainer'],
@@ -186,7 +187,7 @@ export default class AccountVindowView extends View {
           
               const dateOfBirthFieldContainerParams = {
                 tag: 'div',
-                classNames: ['dateOfBirthField'],
+                classNames: ['nameField', 'dateOfBirthField'],
                 textContent: '',
                 callback: null,
               };
@@ -207,13 +208,13 @@ export default class AccountVindowView extends View {
               const fieldDateOfBirthDateOfBirthParams = {
                 tag: 'span',
                 classNames: ['accountText', 'text'],
-                textContent: '',
+                textContent: dateOfBirthField,
                 callback: null,
               };
         
               const fieldDateOfBirthDateOfBirth = new ElementCreator(fieldDateOfBirthDateOfBirthParams);
           
-              surnameFieldContainer.addInsideElement(fieldDateOfBirthDateOfBirth);
+              dateOfBirthFieldContainer.addInsideElement(fieldDateOfBirthDateOfBirth);
         
               const fieldInputDateOfBirthParams = {
                 tag: 'input',
@@ -234,7 +235,7 @@ export default class AccountVindowView extends View {
           
               dateOfBirthFieldContainer.addInsideElement(editModeBtnDateOfBirth);
         
-              this.viewElementCreator.addInsideElement(surnameFieldContainer);
+              this.viewElementCreator.addInsideElement(dateOfBirthFieldContainer);
         
         
               const billingAdressVindow = new BillingAdressVindowView();

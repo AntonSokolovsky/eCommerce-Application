@@ -28,11 +28,19 @@ export default class ShippingAdressVindowView extends View {
       if (mail) {
         customer.getCustomerByEmail(mail)
           .then((res) => {
-            if (res && res.body && res.body.results) {
-              customerShippingCountry = '';
-              customerShippingStreet = '';
-              customerShippingCity = '';
-              customerShippingPostalCode = '';
+            if (res && res.body && res.body.results[0].addresses[1]) {
+              if (res.body.results[0].addresses[1].country) {
+                customerShippingCountry = res.body.results[0].addresses[1].country;
+              }
+              if (res.body.results[0].addresses[1].streetName) {
+                customerShippingStreet = res.body.results[0].addresses[1].streetName;
+              }
+              if (res.body.results[0].addresses[1].city) {
+                customerShippingCity = res.body.results[0].addresses[1].city;
+              }
+              if (res.body.results[0].addresses[1].postalCode) {
+                customerShippingPostalCode = res.body.results[0].addresses[1].postalCode;
+              }
 
               const shippingAdressContainerNameParams = {
                 tag: 'p',

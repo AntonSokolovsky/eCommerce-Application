@@ -7,7 +7,7 @@ import { Pages } from '../../../../app/router/pages';
 import { countryList } from '../../../../utilities/validation/countryList/CountryList';
 import { Customer } from '../../../../app/loader/customer';
 import { getInputValue } from '../../../../utilities/function-utils';
-import { CustomerDraft, MyCustomerSignin } from '@commercetools/platform-sdk';
+import { BaseAddress, CustomerDraft, MyCustomerSignin } from '@commercetools/platform-sdk';
 import { getCountryCode } from '../../../../utilities/get-country-code';
 import { Mediator } from '../../../../app/controller/mediator';
 import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
@@ -324,7 +324,7 @@ export default class RegisterFormView extends View {
 
     billingAdressContainer.addInsideElement(PostalCodeContainerHtmlElement);
 
-    const BillingAdressMatchShippingContainer = new ElementCreator(registerFormViewParams.saveBillingAdressAsDefaultContainer);
+    const BillingAdressMatchShippingContainer = new ElementCreator(registerFormViewParams.MyBillingAdressMatchesShippingContainer);
 
     const BillingAdressMatchShippingCheckboks = new InputElementCreator(registerFormViewParams.BillingAdressMatchShipping);
     BillingAdressMatchShippingContainer.addInsideElement(BillingAdressMatchShippingCheckboks);
@@ -354,7 +354,7 @@ export default class RegisterFormView extends View {
     const StreetInputShippingContainer = new View(registerFormViewParams.paramsStreetInContainer);
     const StreetShippingContainerHtmlElement = StreetInputShippingContainer.getHtmlElement();
 
-    const StreetShippingInput = new InputElementCreator(registerFormViewParams.paramsStreetInput);
+    const StreetShippingInput = new InputElementCreator(registerFormViewParams.paramsShippingStreetInput);
     StreetShippingContainerHtmlElement.append(StreetShippingInput.getInputElement());
 
     const RequirementsToShippingStreetText = new ElementCreator(registerFormViewParams.RequirementsToStreet);
@@ -377,7 +377,7 @@ export default class RegisterFormView extends View {
     const CityShippingInputContainer = new View(registerFormViewParams.paramsCityInContainer);
     const CityShippingContainerHtmlElement = CityShippingInputContainer.getHtmlElement();
 
-    const CityShippingInput = new InputElementCreator(registerFormViewParams.paramsCityInput);
+    const CityShippingInput = new InputElementCreator(registerFormViewParams.paramsShippingCityInput);
     CityShippingContainerHtmlElement.append(CityShippingInput.getInputElement());
 
     const RequirementsShippingToCityText = new ElementCreator(registerFormViewParams.RequirementsToCity);
@@ -398,7 +398,7 @@ export default class RegisterFormView extends View {
     const CountryShippingInputContainer = new View(registerFormViewParams.paramsCountryInContainer);
     const CountryShippingContainerHtmlElement = CountryShippingInputContainer.getHtmlElement();
 
-    const CountryShippingInput = new InputElementCreator(registerFormViewParams.paramsCountryInput);
+    const CountryShippingInput = new InputElementCreator(registerFormViewParams.paramsShippingCountryInput);
     CountryShippingContainerHtmlElement.append(CountryShippingInput.getInputElement());
 
     const RequirementsToShippingCountryText = new ElementCreator(registerFormViewParams.RequirementsToCountry);
@@ -419,7 +419,7 @@ export default class RegisterFormView extends View {
     const PostalCodeShippingInputContainer = new View(registerFormViewParams.paramsPostalCodeInContainer);
     const PostalCodeShippingContainerHtmlElement = PostalCodeShippingInputContainer.getHtmlElement();
 
-    const PostalCodeShippingInput = new InputElementCreator(registerFormViewParams.paramsPostalCodeInput);
+    const PostalCodeShippingInput = new InputElementCreator(registerFormViewParams.paramsShippingPostalCodeInput);
     PostalCodeShippingContainerHtmlElement.append(PostalCodeShippingInput.getInputElement());
 
     const RequirementsToShippingPostalCodeText = new ElementCreator(registerFormViewParams.RequirementsToPostalCode);
@@ -484,21 +484,40 @@ export default class RegisterFormView extends View {
 
   //ToDo find another way to get the input value. Without use querySelector
   getDataForm(): CustomerDraft {
-    const dataForm = {
-      email: getInputValue(registerFormViewParams.paramsTelOrEmailInput.classNames[0]),
-      firstName: getInputValue(registerFormViewParams.paramsFirstNameInput.classNames[0]),
-      lastName: getInputValue(registerFormViewParams.paramsLastNameInput.classNames[0]),
-      dateOfBirth: getInputValue(registerFormViewParams.paramsDateOfBirthInput.classNames[0]),
-      password: getInputValue(registerFormViewParams.paramsPasswordInput.classNames[0]),
-      addresses: [
-        {
-          country: getCountryCode(getInputValue(registerFormViewParams.paramsCountryInput.classNames[1])),
-          streetName: getInputValue(registerFormViewParams.paramsStreetInput.classNames[1]),
-          postalCode: getInputValue(registerFormViewParams.paramsPostalCodeInput.classNames[1]),
-          city: getInputValue(registerFormViewParams.paramsCityInput.classNames[1]),
-
-        },
-      ],
+    const saveBillingAdressAsDefaultCheckBox: HTMLInputElement | null = document.querySelector('.BillingAdressMatchShipping');
+    let saveBillingAdressAsDefaultCheckBoxValue = false;
+    if (saveBillingAdressAsDefaultCheckBox) {
+      saveBillingAdressAsDefaultCheckBoxValue = saveBillingAdressAsDefaultCheckBox.checked;
+      console.log(saveBillingAdressAsDefaultCheckBoxValue);
+    }
+    const Addresses: BaseAddress[] = [];
+    const billingAdress = [{
+      country: getCountryCode(getInputValue(registerFormViewParams.paramsCountryInput.classNames[1])),
+      streetName: getInputValue(registerFormViewParams.paramsStreetInput.classNames[1]),
+      postalCode: getInputValue(registerFormViewParams.paramsPostalCodeInput.classNames[1]),
+      city: getInputValue(registerFormViewParams.paramsCityInput.classNames[1]),
+    }];
+    const shippingAdress = [];
+    if (saveBillingAdressAsDefaultCheckBoxValue) {
+      shippingAdress.push(billingAdress[0]);
+      Addresses.push(billingAdress[0], billingAdress[0]);
+    } else {
+      const shippingCredentials = {
+        country: getCountryCode(getInputValue(registerFormViewParams.paramsShippingCountryInput.classNames[1])),
+        streetName: getInputValue(registerFormViewParams.paramsShippingStreetInput.classNames[1]),
+        postalCode: getInputValue(registerFormViewParams.paramsShippingPostalCodeInput.classNames[1]),
+        city: getInputValue(registerFormViewParams.paramsShippingCityInput.classNames[1]),
+      };
+      shippingAdress.push(shippingCredentials);
+      Addresses.push(billingAdress[0], shippingAdress[0]);
+    }
+    const dataForm: CustomerDraft = {
+      email: getInputValue(registerFormViewParams.paramsTelOrEmailInput.classNames[1]),
+      firstName: getInputValue(registerFormViewParams.paramsFirstNameInput.classNames[1]),
+      lastName: getInputValue(registerFormViewParams.paramsLastNameInput.classNames[1]),
+      dateOfBirth: getInputValue(registerFormViewParams.paramsDateOfBirthInput.classNames[1]),
+      password: getInputValue(registerFormViewParams.paramsPasswordInput.classNames[1]),
+      addresses: Addresses,
     };
     return dataForm;
   }
