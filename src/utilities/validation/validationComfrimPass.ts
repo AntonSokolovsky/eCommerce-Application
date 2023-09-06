@@ -6,7 +6,6 @@ export default function validationComfrimPassword(e: Event):void {
   const targetInput = (e.target as HTMLElement);
   const password = (document.querySelector('.password_input') as HTMLInputElement).value;
   const rules = targetInput.parentElement?.querySelector('.Requirements') as HTMLElement;
-  console.log(targetInput);
   targetInput.addEventListener('keyup', () => {
     const val = (targetInput as HTMLInputElement).value;
     rules.style.display = 'block';

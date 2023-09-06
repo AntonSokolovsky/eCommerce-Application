@@ -492,7 +492,6 @@ export default class RegisterFormView extends View {
     let saveBillingAdressAsDefaultCheckBoxValue = false;
     if (saveBillingAdressAsDefaultCheckBox) {
       saveBillingAdressAsDefaultCheckBoxValue = saveBillingAdressAsDefaultCheckBox.checked;
-      console.log(saveBillingAdressAsDefaultCheckBoxValue);
     }
     const Addresses: BaseAddress[] = [];
     const billingAdress = [{
