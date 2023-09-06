@@ -9,14 +9,22 @@
   height: 200px;
   margin: 0 auto;
 
-  background-color: grey;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .item_detail__name {
+  margin: 20px 0;
+
+  font-size: 32px;
+  font-weight: bold;
   text-align: center;
 }
 
 .item_detail__desc{
+  margin: 20px 0;
+
   text-align: center;
 }
 

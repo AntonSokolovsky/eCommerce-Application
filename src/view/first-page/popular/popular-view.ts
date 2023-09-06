@@ -3,6 +3,7 @@ import View from '../../view';
 import { ElementCreator } from '../../../utilities/element-creator';
 import ItemView from './item/item-view';
 import Router from '../../../app/router/router';
+import { Customer } from '../../../app/loader/customer';
 
 
 
@@ -17,6 +18,7 @@ export default class PopularView extends View {
   }
 
   configureView(router: Router) {
+    const loader = new Customer();
     const paramsTitle = {
       tag: 'h2',
       classNames: ['section__title', 'popular__title'],
@@ -33,12 +35,18 @@ export default class PopularView extends View {
       callback: null,
     };
     const creatorItems = new ElementCreator(paramsItems);
-    for (let i = 0; i < 8; i += 1) {
-      const creatorItem = new ItemView(router);
-      creatorItems.addInsideElement(creatorItem.getHtmlElement());
-    }
     this.viewElementCreator.addInsideElement(creatorItems);
 
+    loader.getProducts()
+      .then((data) => {
+        if (data.body.total) {
+          for (let i = 0; i < 8; i += 1) {
+            const creatorItem = new ItemView(router, data.body, i);
+            creatorItems.addInsideElement(creatorItem.getHtmlElement());
+          }
+        }
+      });
+      
     const paramsLink = {
       tag: 'div',
       classNames: ['popular__link'],

@@ -11,16 +11,16 @@ const CssClasses = {
 };
 
 export default class ItemPopUp extends View {
-  constructor() {
+  constructor(paramItem: any) {
     const params = {
       tag: 'div',
       classNames: [CssClasses.OVERLAY],
     };
     super(params);
-    this.configureView();
+    this.configureView(paramItem);
   }
 
-  configureView() {
+  configureView(paramItem: any) {
     const contParams = {
       tag: 'div',
       classNames: [CssClasses.CONTAINER],
@@ -63,8 +63,10 @@ export default class ItemPopUp extends View {
       textContent: '',
       callback: null,
     };
-    for (let i = 0; i < 3; i += 1) {
+    for (let i = 0; i < paramItem.staged.masterVariant.images.length; i += 1) {
       const creatorImg = new ElementCreator(imgParams);
+      creatorImg.setAttributeElement({ style: `background-image: url('${paramItem.staged.masterVariant.images[i].url}')` });
+
       creatorLine.addInsideElement(creatorImg);
     }
 

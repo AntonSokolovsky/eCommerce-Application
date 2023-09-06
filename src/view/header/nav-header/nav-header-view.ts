@@ -10,6 +10,7 @@ import { CustomEventNames } from '../../../type/mediator-type';
 import { TokenNames } from '../../../type/enum-token';
 
 const NamePages = {
+  CATALOG: 'Catalog',
   LOGIN: 'Log in',
   REGISTER: 'Register',
   BASKET: 'Basket',
@@ -35,14 +36,14 @@ export default class NavHeaderView extends View {
   }
 
   configureView(router: Router) {
-    const paramsSearch = {
-      tag: 'div',
-      classNames: ['search'],
-      textContent: 'search',
-      callback: null,
-    };
-    const creatorSearch = new ElementCreator(paramsSearch);
-    this.viewElementCreator.addInsideElement(creatorSearch);
+    // const paramsSearch = {
+    //   tag: 'div',
+    //   classNames: ['search'],
+    //   textContent: 'search',
+    //   callback: null,
+    // };
+    // const creatorSearch = new ElementCreator(paramsSearch);
+    // this.viewElementCreator.addInsideElement(creatorSearch);
 
     const arrayNamePages = isUserLogin() 
       ? (Object.entries(NamePages) as Array<Array<keyof typeof NamePages>>).filter((namePage) => {

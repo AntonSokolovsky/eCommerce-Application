@@ -8,25 +8,26 @@ import { Pages } from '../../../../app/router/pages';
 export default class ItemView extends View {
   router: Router;
 
-  constructor(router: Router) {
+  constructor(router: Router, paramItem: any, id: number) {
     const params = {
       tag: 'div',
       classNames: ['item'],
     };
     super(params);
-    this.configureView();
+    this.configureView(paramItem, id);
     this.router = router;
   }
 
-  configureView() {
+  configureView(paramItem: any, id: number) {
     this.viewElementCreator.setElementClass(['item-small']);
     const paramsContImg = {
       tag: 'div',
       classNames: ['item__cont-img'],
       textContent: '',
-      callback: this.buttonClickHandler.bind(this, `${Pages.CATALOG}/${1}`),
+      callback: this.buttonClickHandler.bind(this, `${Pages.CATALOG}/${id}`),
     };
     const creatorContImg = new ElementCreator(paramsContImg);
+    creatorContImg.setAttributeElement({ style: `background-image: url('${paramItem.results[id].masterData.current.masterVariant.images[0].url}')` });
     this.viewElementCreator.addInsideElement(creatorContImg);
 
     const paramsToolbar = {
@@ -38,7 +39,7 @@ export default class ItemView extends View {
     const paramsPrice = {
       tag: 'div',
       classNames: ['item__price'],
-      textContent: '0.00$',
+      textContent: `${paramItem.results[id].masterData.current.masterVariant.prices[0].value.centAmount / 100}$`,
       callback: null,
     };
     const paramsBasket = {
