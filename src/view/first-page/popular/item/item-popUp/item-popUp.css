@@ -74,4 +74,5 @@
   color: #fff;
   background-color: #000;
   transform: rotate(45deg);
+  cursor: pointer;
 }
