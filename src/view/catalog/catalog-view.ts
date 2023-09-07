@@ -6,27 +6,62 @@ import Router from '../../app/router/router';
 import ItemDetailView from '../first-page/popular/item/item-detail/item-detail-view';
 import { Customer } from '../../app/loader/customer';
 
+import { FilterView } from './filter/filter-view';
+import { Mediator } from '../../app/controller/mediator';
+import { CustomEventNames } from '../../type/mediator-type';
+// import { products } from '../../app/loader/products';
+
 export default class CatalogView extends View {
+  private loader;
+  
+  private router;
+  
+  private id;
+  
+  private listProducts: HTMLElement | null;
+
+  private mediator = Mediator.getInstance();
+  
   constructor(router: Router, id = '') {
     const params = {
       tag: 'section',
       classNames: ['section', 'section-catalog'],
     };
     super(params);
-    this.configureView(router, id);
+    this.router = router;
+    this.loader = new Customer();
+    this.id = id;
+    this.configureView();
+    this.listProducts = null;
+    this.mediator.subscribe(CustomEventNames.PRODUCTS_FILTER, this.handleFilter.bind(this));
   }
 
-  configureView(router: Router, id = '') {
-    const loader = new Customer();
+  configureView() {
+    // loader.getProducts()
+    //   .then((data) => data.body.total);
+    const filter = new FilterView();
+    this.viewElementCreator.addInsideElement(filter.getHtmlElement());
 
-    if (id) {
-      this.addLargeItemToView(router, loader, id);
+    if (this.id) {
+      this.addLargeItemToView(this.router, this.id);
     } else {
-      this.addSmallItemsToView(router, loader);
+      this.addSmallItemsToView(this.router);
     }
   }
 
-  addSmallItemsToView(router: Router, loader: Customer) {
+  // handleFilter(params?: ParamsCustomEvent) {
+  handleFilter() {
+    if (this.listProducts) {
+      this.listProducts.remove();
+    }
+    if (this.id) {
+      this.addLargeItemToView(this.router, this.id);
+    } else {
+      this.addSmallItemsToView(this.router);
+    }
+  }
+
+  addSmallItemsToView(router: Router) {
     const paramsTitle = {
       tag: 'h2',
       classNames: ['section__title', 'catalog__title'],
@@ -52,9 +87,10 @@ export default class CatalogView extends View {
       callback: null,
     };
     const creatorItems = new ElementCreator(paramsItems);
+    this.listProducts = creatorItems.getElement();
     this.viewElementCreator.addInsideElement(creatorItems);
 
-    loader.getProducts()
+    this.loader.getProducts()
       .then((data) => {
         if (data.body.total) {
           for (let i = 0; i < data.body.total; i += 1) {
@@ -98,9 +134,9 @@ export default class CatalogView extends View {
     this.viewElementCreator.addInsideElement(creatorBtns);
   }
 
-  addLargeItemToView(router: Router, loader: Customer, id = '') {
+  addLargeItemToView(router: Router, id = '') {
     // const selectedItem = cardsInfo.find((card) => card.id === id);
-    loader.getProducts()
+    this.loader.getProducts()
       .then((data) => {
         if (data.body.results) {
           const largeCardComponent = new ItemDetailView(router, data.body.results[+id].masterData);

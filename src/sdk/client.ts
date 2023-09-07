@@ -9,6 +9,7 @@ import {
 } from '@commercetools/sdk-client-v2';
 import { TokenStorage } from '../app/loader/token';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { TokenNames } from '../type/enum-token';
 
 const clientId = process.env.CTP_CLIENT_ID || '';
 const clientSecret = process.env.CTP_CLIENT_SECRET || '';
@@ -65,25 +66,26 @@ export function getCtpClientAnonFlow() {
     ? new ClientBuilder()
       .withExistingTokenFlow(currentToken, existingAuthMiddlewareOptions)
       .withHttpMiddleware(httpMiddlewareOptions)
-      .withLoggerMiddleware()
+      // .withLoggerMiddleware() // uncomment if you need to see the request logs
       .build()
     : new ClientBuilder()
       .withClientCredentialsFlow(authMiddlewareOptions)
       .withHttpMiddleware(httpMiddlewareOptions)
-      .withLoggerMiddleware()
+      // .withLoggerMiddleware() // uncomment if you need to see the request logs
       .build();
   return createApiBuilderFromCtpClient(ctpClient)
     .withProjectKey({ projectKey: projectKey });
 }
 
 export function getCtpClientPasswordFlow(userAuth: UserAuthOptions) {
-  localStorage.clear();
+  localStorage.removeItem(TokenNames.TOKEN_CUSTOMER);
+  localStorage.removeItem(TokenNames.TOKEN_ANONIM);
   const optionsPasswordFlow = { ...options };
   optionsPasswordFlow.credentials.user = { ...userAuth };
   const ctpClientPasswordFlow = new ClientBuilder()
     .withPasswordFlow(optionsPasswordFlow)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
+    // .withLoggerMiddleware() //uncomment if you need to see the request logs
     .build();
   return createApiBuilderFromCtpClient(ctpClientPasswordFlow)
     .withProjectKey({ projectKey: projectKey });

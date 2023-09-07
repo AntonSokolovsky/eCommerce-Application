@@ -1,3 +1,4 @@
+import { AttributeEnumType } from '@commercetools/platform-sdk';
 import { QueryParam } from '@commercetools/sdk-client-v2';
 
 export type ProductsQueryArgs = {
@@ -14,3 +15,5 @@ export type ProductsQueryArgs = {
   withTotal?: boolean;
   [key: string]: QueryParam;
 };
+
+export type MyAttributeType = AttributeEnumType;
