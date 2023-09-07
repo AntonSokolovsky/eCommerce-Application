@@ -291,9 +291,9 @@ export default class ShippingAdressVindowView extends View {
 
               const defAdressId = res.body.results[0].defaultShippingAddressId;
 
-                if (defAdressId === res.body.results[0].addresses[1].id) {
-                  inputCheckboxBilling.setChecked();
-                }
+              if (defAdressId === res.body.results[0].addresses[1].id) {
+                inputCheckboxBilling.setChecked();
+              }
               
               const fieldCheckboxNameParams = {
                 tag: 'p',

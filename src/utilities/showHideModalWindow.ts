@@ -39,7 +39,7 @@ export default function showHideModalWindow(mode: string):void {
             congradulationsWindow?.classList.add('hide');
           }, 2000);
         })
-          .catch((err) => {
+          .catch(() => {
           
           });
       }
