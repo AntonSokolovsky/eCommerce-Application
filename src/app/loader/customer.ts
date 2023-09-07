@@ -66,6 +66,13 @@ export class Customer {
       .execute();
   }
 
+  getAttributes() {
+    return this.apiRoot
+      .productTypes()
+      .get()
+      .execute();
+  }
+
   updatePass(version: number, currentPassword: string, newPassword: string) {
     return this.apiRoot
       .me()

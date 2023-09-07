@@ -7,6 +7,7 @@ export const enum CustomEventNames {
   CUSTOMER_REGISTER = 'register',
   PRODUCT_ADD = 'product-add',
   PRODUCT_REMOVE = 'product-remove',
+  PRODUCTS_FILTER = 'products-filter',
 }
 
 export type ListenerMethod = (param?: ParamsCustomEvent) => void; 

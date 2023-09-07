@@ -1,0 +1,25 @@
+.section-filter {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter__title {
+    font-family: var(--main-font-family);
+}
+
+.filter__list {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter__item {
+    display: flex;
+}
+
+.filter__label {
+    display: block;
+}
+
+.filter__checkbox {
+    display: inline-block;
+}
