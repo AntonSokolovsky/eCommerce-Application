@@ -12,12 +12,21 @@ const CssClasses = {
 };
 
 export default class ItemPopUp extends View {
+  carouselLine: ElementCreator | null;
+
+  carouselArrowLeft: ElementCreator | null;
+
+  carouselArrowRight: ElementCreator | null;
+
   constructor(paramItem: ProductCatalogData) {
     const params = {
       tag: 'div',
       classNames: [CssClasses.OVERLAY],
     };
     super(params);
+    this.carouselLine = null;
+    this.carouselArrowLeft = null;
+    this.carouselArrowRight = null;
     this.configureView(paramItem);
   }
 
@@ -55,8 +64,8 @@ export default class ItemPopUp extends View {
       textContent: '',
       callback: null,
     };
-    const creatorLine = new ElementCreator(lineParams);
-    creatorFrame.addInsideElement(creatorLine);
+    this.carouselLine = new ElementCreator(lineParams);
+    creatorFrame.addInsideElement(this.carouselLine);
 
     const imgParams = {
       tag: 'div',
@@ -68,7 +77,7 @@ export default class ItemPopUp extends View {
       for (let i = 0; i < paramItem.staged.masterVariant.images.length; i += 1) {
         const creatorImg = new ElementCreator(imgParams);
         creatorImg.setAttributeElement({ style: `background-image: url('${paramItem.staged.masterVariant.images[i].url}')` });
-        creatorLine.addInsideElement(creatorImg);
+        this.carouselLine.addInsideElement(creatorImg);
       }
     }
 
@@ -82,23 +91,45 @@ export default class ItemPopUp extends View {
       tag: 'div',
       classNames: ['carousel__arrow', 'arrow_left'],
       textContent: '<',
-      callback: null,
+      callback: this.moveLeft.bind(this),
     };
     const paramsArrowRight = {
       tag: 'div',
       classNames: ['carousel__arrow', 'arrow_right'],
       textContent: '>',
-      callback: null,
+      callback: this.moveRight.bind(this),
     };
     const creatorArrows = new ElementCreator(paramsArrows);
-    const carouselArrowLeft = new ElementCreator(paramsArrowLeft);
-    const carouselArrowRight = new ElementCreator(paramsArrowRight);
-    creatorArrows.addInsideElement(carouselArrowLeft);
-    creatorArrows.addInsideElement(carouselArrowRight);
+    this.carouselArrowLeft = new ElementCreator(paramsArrowLeft);
+    this.carouselArrowRight = new ElementCreator(paramsArrowRight);
+    creatorArrows.addInsideElement(this.carouselArrowLeft);
+    creatorArrows.addInsideElement(this.carouselArrowRight);
     creatorCont.addInsideElement(creatorArrows);
   }
 
   closePopUp() {
     this.viewElementCreator.getElement().remove();
+  }
+
+  moveRight() {
+    if (this.carouselLine) {
+      const position = parseInt( window.getComputedStyle(this.carouselLine.getElement()).left );
+      if (position === 0 && this.carouselArrowRight && this.carouselArrowLeft) {
+        this.carouselArrowLeft.setAttributeElement({ style: 'opacity: 1;' });
+        this.carouselLine.setAttributeElement({ style: `left: ${position - 300}px;` });
+        this.carouselArrowRight.setAttributeElement({ style: 'opacity: 0.5;' });
+      }
+    }
+  }
+
+  moveLeft() {
+    if (this.carouselLine) {
+      const position = parseInt(window.getComputedStyle(this.carouselLine.getElement()).left);
+      if (position === -300 && this.carouselArrowRight && this.carouselArrowLeft) {
+        this.carouselArrowRight.setAttributeElement({ style: 'opacity: 1;' });
+        this.carouselArrowLeft.setAttributeElement({ style: 'opacity: 0.5;' });
+        this.carouselLine.setAttributeElement({ style: `left: ${position + 300}px;` });
+      }
+    }
   }
 }
