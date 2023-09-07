@@ -3,12 +3,13 @@ import View from '../../../view';
 import { ElementCreator } from '../../../../utilities/element-creator';
 import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
+import { ProductCatalogData } from '@commercetools/platform-sdk';
 
 
 export default class ItemView extends View {
   router: Router;
 
-  constructor(router: Router, paramItem: any, id: number) {
+  constructor(router: Router, paramItem: ProductCatalogData, id: number) {
     const params = {
       tag: 'div',
       classNames: ['item'],
@@ -18,8 +19,9 @@ export default class ItemView extends View {
     this.router = router;
   }
 
-  configureView(paramItem: any, id: number) {
+  configureView(paramItem: ProductCatalogData, id: number) {
     this.viewElementCreator.setElementClass(['item-small']);
+
     const paramsContImg = {
       tag: 'div',
       classNames: ['item__cont-img'],
@@ -27,7 +29,9 @@ export default class ItemView extends View {
       callback: this.buttonClickHandler.bind(this, `${Pages.CATALOG}/${id}`),
     };
     const creatorContImg = new ElementCreator(paramsContImg);
-    creatorContImg.setAttributeElement({ style: `background-image: url('${paramItem.results[id].masterData.current.masterVariant.images[0].url}')` });
+    if (paramItem.current.masterVariant.images) {
+      creatorContImg.setAttributeElement({ style: `background-image: url('${paramItem.current.masterVariant.images[0].url}')` });
+    }
     this.viewElementCreator.addInsideElement(creatorContImg);
 
     const paramsToolbar = {
@@ -36,26 +40,37 @@ export default class ItemView extends View {
       textContent: '',
       callback: null,
     };
-    const paramsPrice = {
-      tag: 'div',
-      classNames: ['item__price'],
-      textContent: `${paramItem.results[id].masterData.current.masterVariant.prices[0].value.centAmount / 100}$`,
-      callback: null,
-    };
+    const creatorToolbar = new ElementCreator(paramsToolbar);
+    this.viewElementCreator.addInsideElement(creatorToolbar);
+
+    let paramsPrice;
+    if (paramItem.current.masterVariant.prices) {
+      paramsPrice = {
+        tag: 'div',
+        classNames: ['item__price'],
+        textContent: `${paramItem.current.masterVariant.prices[0].value.centAmount / 100}$`,
+        callback: null,
+      };
+    } else {
+      paramsPrice = {
+        tag: 'div',
+        classNames: ['item__price'],
+        textContent: '',
+        callback: null,
+      };
+    }
+    const creatorPrice = new ElementCreator(paramsPrice);
+    creatorToolbar.addInsideElement(creatorPrice);
+
     const paramsBasket = {
       tag: 'div',
       classNames: ['item__basket'],
       textContent: '',
       callback: null,
     };
-    const creatorToolbar = new ElementCreator(paramsToolbar);
 
-    const creatorPrice = new ElementCreator(paramsPrice);
-    creatorToolbar.addInsideElement(creatorPrice);
     const creatorBasket = new ElementCreator(paramsBasket);
     creatorToolbar.addInsideElement(creatorBasket);
-
-    this.viewElementCreator.addInsideElement(creatorToolbar);
   }
 
   buttonClickHandler(url: string) {

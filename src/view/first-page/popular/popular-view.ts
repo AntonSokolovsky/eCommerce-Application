@@ -41,7 +41,7 @@ export default class PopularView extends View {
       .then((data) => {
         if (data.body.total) {
           for (let i = 0; i < 8; i += 1) {
-            const creatorItem = new ItemView(router, data.body, i);
+            const creatorItem = new ItemView(router, data.body.results[i].masterData, i);
             creatorItems.addInsideElement(creatorItem.getHtmlElement());
           }
         }

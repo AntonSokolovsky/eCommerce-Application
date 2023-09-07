@@ -52,7 +52,7 @@
 }
 
 .carousel__arrow {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 

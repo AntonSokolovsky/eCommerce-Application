@@ -5,6 +5,7 @@ import { ElementCreator } from '../../../../../utilities/element-creator';
 import ItemPopUp from '../item-popUp/item-popUp-view';
 import View from '../../../../view';
 import Router from '../../../../../app/router/router';
+import { ProductCatalogData } from '@commercetools/platform-sdk';
 
 const CssClasses = {
   CONTAINER: 'item',
@@ -19,7 +20,7 @@ const ITEM_TEXT_BACK = 'Назад...';
 export default class ItemDetailView extends View {
   router: Router;
 
-  constructor(router: Router, paramItem: any) {
+  constructor(router: Router, paramItem: ProductCatalogData) {
     const params = {
       tag: 'div',
       classNames: [CssClasses.CONTAINER, CssClasses.CONTAINER_DETAIL],
@@ -29,9 +30,7 @@ export default class ItemDetailView extends View {
     this.router = router;
   }
 
-  configureView(paramItem: any) {
-    // this.viewElementCreator.setElementClass([CssClasses.CONTAINER, CssClasses.CONTAINER_DETAIL]);
-
+  configureView(paramItem: ProductCatalogData) {
     const imgParams = {
       tag: 'div',
       classNames: [CssClasses.DETAIL_IMG],
@@ -39,7 +38,9 @@ export default class ItemDetailView extends View {
       callback: this.showPopUp.bind(this, new ItemPopUp(paramItem)),
     };
     const creatorImg = new ElementCreator(imgParams);
-    creatorImg.setAttributeElement({ style: `background-image: url('${paramItem.current.masterVariant.images[0].url}')` });
+    if (paramItem.current.masterVariant.images) {
+      creatorImg.setAttributeElement({ style: `background-image: url('${paramItem.current.masterVariant.images[0].url}')` });
+    }
     this.viewElementCreator.addInsideElement(creatorImg);
 
     const nameItemParams = {
@@ -51,12 +52,22 @@ export default class ItemDetailView extends View {
     const creatorNameItem = new ElementCreator(nameItemParams);
     this.viewElementCreator.addInsideElement(creatorNameItem);
 
-    const descParams = {
-      tag: 'p',
-      classNames: [CssClasses.DETAIL_DESC],
-      textContent: paramItem.current.description['en-US'],
-      callback: null,
-    };
+    let descParams;
+    if (paramItem.current.description) {
+      descParams = {
+        tag: 'p',
+        classNames: [CssClasses.DETAIL_DESC],
+        textContent: paramItem.current.description['en-US'],
+        callback: null,
+      };
+    } else {
+      descParams = {
+        tag: 'p',
+        classNames: [CssClasses.DETAIL_DESC],
+        textContent: '',
+        callback: null,
+      };
+    }
     const creatorDesc = new ElementCreator(descParams);
     this.viewElementCreator.addInsideElement(creatorDesc);
 
@@ -66,26 +77,37 @@ export default class ItemDetailView extends View {
       textContent: '',
       callback: null,
     };
-    const paramsPrice = {
-      tag: 'div',
-      classNames: ['item__price'],
-      textContent: `${paramItem.current.masterVariant.prices[0].value.centAmount / 100}$`,
-      callback: null,
-    };
+    const creatorToolbar = new ElementCreator(paramsToolbar);
+    this.viewElementCreator.addInsideElement(creatorToolbar);
+
+
+    let paramsPrice;
+    if (paramItem.current.masterVariant.prices) {
+      paramsPrice = {
+        tag: 'div',
+        classNames: ['item__price'],
+        textContent: `${paramItem.current.masterVariant.prices[0].value.centAmount / 100}$`,
+        callback: null,
+      };
+    } else {
+      paramsPrice = {
+        tag: 'div',
+        classNames: ['item__price'],
+        textContent: '',
+        callback: null,
+      };
+    } 
+    const creatorPrice = new ElementCreator(paramsPrice);
+    creatorToolbar.addInsideElement(creatorPrice);
+
     const paramsBasket = {
       tag: 'div',
       classNames: ['item__basket'],
       textContent: '',
       callback: null,
     };
-    const creatorToolbar = new ElementCreator(paramsToolbar);
-
-    const creatorPrice = new ElementCreator(paramsPrice);
-    creatorToolbar.addInsideElement(creatorPrice);
     const creatorBasket = new ElementCreator(paramsBasket);
     creatorToolbar.addInsideElement(creatorBasket);
-
-    this.viewElementCreator.addInsideElement(creatorToolbar);
 
     const buttonParams = {
       tag: 'button',

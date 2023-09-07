@@ -101,7 +101,8 @@ export default class App {
   }
 
   setContent(pageName: string, view: View) {
-    if (this.main) {
+    if (this.header && this.main) {
+      this.header.setSelectedItem(pageName);
       this.main.setContent(view);
     }
   }

@@ -5,7 +5,6 @@ import ItemView from '../first-page/popular/item/item-view';
 import Router from '../../app/router/router';
 import ItemDetailView from '../first-page/popular/item/item-detail/item-detail-view';
 import { Customer } from '../../app/loader/customer';
-// import { products } from '../../app/loader/products';
 
 export default class CatalogView extends View {
   constructor(router: Router, id = '') {
@@ -19,9 +18,6 @@ export default class CatalogView extends View {
 
   configureView(router: Router, id = '') {
     const loader = new Customer();
-    // loader.getProducts()
-    //   .then((data) => data.body.total);
-    
 
     if (id) {
       this.addLargeItemToView(router, loader, id);
@@ -62,7 +58,7 @@ export default class CatalogView extends View {
       .then((data) => {
         if (data.body.total) {
           for (let i = 0; i < data.body.total; i += 1) {
-            const creatorItem = new ItemView(router, data.body, i);
+            const creatorItem = new ItemView(router, data.body.results[i].masterData, i);
             creatorItems.addInsideElement(creatorItem.getHtmlElement());
           }
         }
