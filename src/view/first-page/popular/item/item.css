@@ -29,17 +29,28 @@
 
   height: 40px;
 
-  padding: 0 4px 0 15px;
+  padding: 0 4px 0 8px;
 
   background-color: #bbb;
+}
+
+.item__prices-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .item__price {
   font-size: 20px;
 }
 
+.item__discount {
+  font-size: 20px;
+  color: #ce0000;
+}
+
 .item__basket {
-  width: 50px;
+  width: 30px;
   height: 31px;
   background-color: aquamarine;
 }

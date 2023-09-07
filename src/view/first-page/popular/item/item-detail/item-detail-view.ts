@@ -80,6 +80,14 @@ export default class ItemDetailView extends View {
     const creatorToolbar = new ElementCreator(paramsToolbar);
     this.viewElementCreator.addInsideElement(creatorToolbar);
 
+    const paramsPricesCont = {
+      tag: 'div',
+      classNames: ['item__prices-container'],
+      textContent: '',
+      callback: null,
+    };
+    const creatorPricesCont = new ElementCreator(paramsPricesCont);
+    creatorToolbar.addInsideElement(creatorPricesCont);
 
     let paramsPrice;
     if (paramItem.current.masterVariant.prices) {
@@ -98,7 +106,20 @@ export default class ItemDetailView extends View {
       };
     } 
     const creatorPrice = new ElementCreator(paramsPrice);
-    creatorToolbar.addInsideElement(creatorPrice);
+    creatorPricesCont.addInsideElement(creatorPrice);
+
+    if (paramItem.current.masterVariant.prices && paramItem.current.masterVariant.prices[0].discounted) {
+      const paramsDiscount = {
+        tag: 'div',
+        classNames: ['item__discount'],
+        textContent: `${paramItem.current.masterVariant.prices[0].discounted.value.centAmount / 100}$`,
+        callback: null,
+      };
+      const creatorDiscount = new ElementCreator(paramsDiscount);
+      creatorPricesCont.addInsideElement(creatorDiscount);
+      
+      creatorPrice.setAttributeElement({ style: 'text-decoration: line-through; font-size: 16px;' });
+    }
 
     const paramsBasket = {
       tag: 'div',
