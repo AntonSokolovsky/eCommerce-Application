@@ -7,7 +7,7 @@ import { Pages } from '../../../../app/router/pages';
 import { countryList } from '../../../../utilities/validation/countryList/CountryList';
 import { Customer } from '../../../../app/loader/customer';
 import { getInputValue } from '../../../../utilities/function-utils';
-import { BaseAddress, CustomerDraft, MyCustomerSignin, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
+import { BaseAddress, CustomerDraft, MyCustomerSignin } from '@commercetools/platform-sdk';
 import { getCountryCode } from '../../../../utilities/get-country-code';
 import { Mediator } from '../../../../app/controller/mediator';
 import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
@@ -446,41 +446,10 @@ export default class RegisterFormView extends View {
     const customer = new Customer();
     const response = customer.createCustomer(dataForm);
     response
-    // .then(() => {
-    //   const userMail = localStorage.getItem('userMail');
-    //   if (userMail) {
-    //     customer.getCustomerByEmail(userMail)
-    //     .then((res) => {
-    //       const billingId = res.body.results[0].addresses[0].id;
-    //       const shippingId = res.body.results[0].addresses[1].id;
-    //       const billingCheckBox: HTMLInputElement | null = document.querySelector(registerFormViewParams.saveBillingAdressAsDefault.classNames[1]);
-    //       const shippingCheckBox: HTMLInputElement | null = document.querySelector(registerFormViewParams.saveShippingAdressAsDefault.classNames[1]);
-    //       const ver = res.body.results[0].version;
-    //       if (billingCheckBox && billingCheckBox.checked) {
-    //         const actions: MyCustomerUpdateAction[] = [
-    //           {
-    //             action: 'setDefaultShippingAddress',
-    //             addressId: billingId,
-    //           }
-    //         ];
-    //         customer.changeData (ver, actions);
-    //       }
-    //       if (shippingCheckBox && shippingCheckBox.checked) {
-    //         const actions: MyCustomerUpdateAction[] = [
-    //           {
-    //             action: 'setDefaultShippingAddress',
-    //             addressId: shippingId,
-    //           }
-    //         ];
-    //         customer.changeData (ver, actions);
-    //       }
-    //     })
-    //   }
-    // })
-    .then(() => {
-      localStorage.setItem('userMail', dataForm.email);
-      this.handleSuccessResponse(dataForm, router);
-    })
+      .then(() => {
+        // localStorage.setItem('userMail', dataForm.email);
+        this.handleSuccessResponse(dataForm, router);
+      })
       .catch(() => this.handleErrorResponse);
   }
 

@@ -20,6 +20,8 @@ export default class LogInFormView extends View {
 
   router: Router;
 
+  private dataForm: MyCustomerSignin;
+
   constructor(router: Router) {
 
     const params = {
@@ -27,6 +29,10 @@ export default class LogInFormView extends View {
       classNames: ['logInFormView'],
     };
     super(params);
+    this.dataForm = {
+      email: '',
+      password: '',
+    };
     this.router = router;
     this.configureView();
     this.mediator.subscribe(CustomEventNames.CUSTOMER_REGISTER, this.authHandler.bind(this));
@@ -125,11 +131,10 @@ export default class LogInFormView extends View {
   }
 
   sendForm(customerAuthParams: MyCustomerSignin) {
-    const dataForm = this.getDataForm();
+    this.dataForm = customerAuthParams;
     const customer = new Customer(customerAuthParams);
     const response = customer.loginCustomer(customerAuthParams);
     response.then((data) => {
-      localStorage.setItem('userMail', dataForm.email);
       this.handleSuccessResponse(data.body.customer.firstName);
     })
       .catch(() => this.handleErrorResponse());
@@ -144,6 +149,7 @@ export default class LogInFormView extends View {
   }
 
   handleSuccessResponse(message: string | undefined) {
+    localStorage.setItem('userMail', this.dataForm.email);
     const greetingMessage = `${MessagesModalWindow.AUTH_SUCCESS_MESSAGE} ${message}`;
     this.showModalWindow(greetingMessage);
     this.mediator.loginLogoutCustomer(CustomEventNames.CUSTOMER_LOGIN);
