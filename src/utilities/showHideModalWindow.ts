@@ -38,7 +38,10 @@ export default function showHideModalWindow(mode: string):void {
           setTimeout(() => {
             congradulationsWindow?.classList.add('hide');
           }, 2000);
-        });
+        })
+          .catch((err) => {
+          
+          });
       }
     });
     closeBtnPass?.addEventListener('click', () => {

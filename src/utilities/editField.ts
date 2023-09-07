@@ -2,6 +2,8 @@ import { Customer } from '../app/loader/customer';
 import {
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
+import { MessagesModalWindow } from '../type/messages-modal';
+import { ModalWindowRequest } from '../view/modal-window-response-view/modal-window-request';
 
 export default function editFields(e: Event) {
   const customer = new Customer();
@@ -30,7 +32,6 @@ export default function editFields(e: Event) {
               const billingAdressId = res.body.results[0].addresses[0].id;
               const shippingAdressId = res.body.results[0].addresses[1].id;
               const ver = res.body.results[0].version;
-              console.log(res.body.results[0]);
               if (inputElem) {
                 if (targetParentElem?.classList.contains('firstName')) {
                   const actions: MyCustomerUpdateAction[] = [{
@@ -198,6 +199,11 @@ export default function editFields(e: Event) {
                   }, 2000);
                 }
               }
+            })
+            .catch(() => {
+              const errorMessage = MessagesModalWindow.REGISTER_ERROR_MESSAGE;
+              const modalWindow = new ModalWindowRequest(errorMessage);
+              return modalWindow;
             });
           }
           elemToEdit.innerHTML = inputElem.value;
@@ -211,3 +217,5 @@ export default function editFields(e: Event) {
     }
   }
 }
+
+
