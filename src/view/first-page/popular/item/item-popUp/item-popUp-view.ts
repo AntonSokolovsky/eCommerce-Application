@@ -1,6 +1,7 @@
 import './item-popUp.css';
 import View from '../../../../view';
 import { ElementCreator } from '../../../../../utilities/element-creator';
+import { ProductCatalogData } from '@commercetools/platform-sdk';
 
 const CssClasses = {
   OVERLAY: 'popUp__overlay',
@@ -11,7 +12,7 @@ const CssClasses = {
 };
 
 export default class ItemPopUp extends View {
-  constructor(paramItem: any) {
+  constructor(paramItem: ProductCatalogData) {
     const params = {
       tag: 'div',
       classNames: [CssClasses.OVERLAY],
@@ -20,7 +21,7 @@ export default class ItemPopUp extends View {
     this.configureView(paramItem);
   }
 
-  configureView(paramItem: any) {
+  configureView(paramItem: ProductCatalogData) {
     const contParams = {
       tag: 'div',
       classNames: [CssClasses.CONTAINER],
@@ -63,11 +64,12 @@ export default class ItemPopUp extends View {
       textContent: '',
       callback: null,
     };
-    for (let i = 0; i < paramItem.staged.masterVariant.images.length; i += 1) {
-      const creatorImg = new ElementCreator(imgParams);
-      creatorImg.setAttributeElement({ style: `background-image: url('${paramItem.staged.masterVariant.images[i].url}')` });
-
-      creatorLine.addInsideElement(creatorImg);
+    if (paramItem.staged.masterVariant.images) {
+      for (let i = 0; i < paramItem.staged.masterVariant.images.length; i += 1) {
+        const creatorImg = new ElementCreator(imgParams);
+        creatorImg.setAttributeElement({ style: `background-image: url('${paramItem.staged.masterVariant.images[i].url}')` });
+        creatorLine.addInsideElement(creatorImg);
+      }
     }
 
     const paramsArrows = {

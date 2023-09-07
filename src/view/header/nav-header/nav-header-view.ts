@@ -10,6 +10,7 @@ import { CustomEventNames } from '../../../type/mediator-type';
 import { TokenNames } from '../../../type/enum-token';
 
 const NamePages = {
+  FIRSTPAGE: 'Main',
   CATALOG: 'Catalog',
   LOGIN: 'Log in',
   REGISTER: 'Register',
@@ -114,5 +115,4 @@ export default class NavHeaderView extends View {
       linkComponent.setSelectedStatus();
     }
   }
-
 }

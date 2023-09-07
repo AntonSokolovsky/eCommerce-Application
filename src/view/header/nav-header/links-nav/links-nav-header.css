@@ -21,7 +21,7 @@
     }
 }
 
-.nav__item_header .selected {
+.nav__item_header.selected {
     color: #fff;
-    background-color: #0000ff;
+    background-color:#696969;
 }

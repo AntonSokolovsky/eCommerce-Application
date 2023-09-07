@@ -7,12 +7,15 @@ import Router from '../../app/router/router';
 import { Pages } from '../../app/router/pages';
 
 export default class HeaderView extends View {
+  navHeaderView: NavHeaderView | null;
+
   constructor(router: Router) {
     const params = {
       tag: 'header',
       classNames: ['header'],
     };
     super(params);
+    this.navHeaderView = null;
     this.configureView(router);
   }
 
@@ -27,7 +30,13 @@ export default class HeaderView extends View {
     const logoView = new LogoView(linkParams);
     this.viewElementCreator.addInsideElement(logoView.getHtmlElement());
 
-    const navHeaderView = new NavHeaderView(router);
-    this.viewElementCreator.addInsideElement(navHeaderView.getHtmlElement());
+    this.navHeaderView = new NavHeaderView(router);
+    this.viewElementCreator.addInsideElement(this.navHeaderView.getHtmlElement());
+  }
+
+  setSelectedItem(pageName: string) {
+    if (this.navHeaderView) {
+      this.navHeaderView.setSelectedItem(pageName);
+    }
   }
 }

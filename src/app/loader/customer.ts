@@ -6,6 +6,7 @@ import {
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
 // import { ProductsQueryArgs } from '../../type/products-type';
+
 export class Customer {
   protected apiRoot;
 
