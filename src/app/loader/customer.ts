@@ -6,12 +6,6 @@ import {
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
 // import { ProductsQueryArgs } from '../../type/products-type';
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 30ee1638c51f494bcf806c86ad017cd2469b9e58
 export class Customer {
   protected apiRoot;
 
@@ -53,6 +47,7 @@ export class Customer {
           body: customerParams,
         })
       .execute();
+      
   }
 
   loginCustomer(userAuthOptions: MyCustomerSignin) {

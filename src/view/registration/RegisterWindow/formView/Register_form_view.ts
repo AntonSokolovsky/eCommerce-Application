@@ -7,12 +7,13 @@ import { Pages } from '../../../../app/router/pages';
 import { countryList } from '../../../../utilities/validation/countryList/CountryList';
 import { Customer } from '../../../../app/loader/customer';
 import { getInputValue } from '../../../../utilities/function-utils';
-import { BaseAddress, CustomerDraft, MyCustomerSignin } from '@commercetools/platform-sdk';
+import { BaseAddress, CustomerDraft, MyCustomerSignin, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 import { getCountryCode } from '../../../../utilities/get-country-code';
 import { Mediator } from '../../../../app/controller/mediator';
 import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
 import { MessagesModalWindow } from '../../../../type/messages-modal';
 import { CustomEventNames } from '../../../../type/mediator-type';
+import formValidation from '../../../../utilities/validation/vlidationForm';
 
 export default class RegisterFormView extends View {
 
@@ -318,9 +319,11 @@ export default class RegisterFormView extends View {
     const BillingAdressMatchShippingContainer = new ElementCreator(registerFormViewParams.MyBillingAdressMatchesShippingContainer);
 
     const BillingAdressMatchShippingCheckboks = new InputElementCreator(registerFormViewParams.BillingAdressMatchShipping);
+    BillingAdressMatchShippingCheckboks.setCallback(formValidation);
     BillingAdressMatchShippingContainer.addInsideElement(BillingAdressMatchShippingCheckboks);
     const BillingAdressMatchShippingText = new ElementCreator(registerFormViewParams.BillingAdressMatchShippingText);
     BillingAdressMatchShippingContainer.addInsideElement(BillingAdressMatchShippingText);
+
 
     billingAdressContainer.addInsideElement(BillingAdressMatchShippingContainer);
 
@@ -425,7 +428,7 @@ export default class RegisterFormView extends View {
     this.viewElementCreator.addInsideElement(shippingAdressContainer);
 
     const RegButton = new InputElementCreator(registerFormViewParams.paramsRegisterButton);
-    RegButton.setCallback(() => this.sendForm(router));
+    RegButton.setCallback(this.sendForm.bind(this, router));
     this.viewElementCreator.addInsideElement(RegButton);
     this.viewElementCreator.addInsideElement(RegButton);
 
@@ -439,10 +442,45 @@ export default class RegisterFormView extends View {
   }
 
   async sendForm(router: Router) {
-    const customer = new Customer();
     const dataForm = this.getDataForm();
+    const customer = new Customer();
     const response = customer.createCustomer(dataForm);
-    await response.then(() => this.handleSuccessResponse(dataForm, router))
+    response
+    // .then(() => {
+    //   const userMail = localStorage.getItem('userMail');
+    //   if (userMail) {
+    //     customer.getCustomerByEmail(userMail)
+    //     .then((res) => {
+    //       const billingId = res.body.results[0].addresses[0].id;
+    //       const shippingId = res.body.results[0].addresses[1].id;
+    //       const billingCheckBox: HTMLInputElement | null = document.querySelector(registerFormViewParams.saveBillingAdressAsDefault.classNames[1]);
+    //       const shippingCheckBox: HTMLInputElement | null = document.querySelector(registerFormViewParams.saveShippingAdressAsDefault.classNames[1]);
+    //       const ver = res.body.results[0].version;
+    //       if (billingCheckBox && billingCheckBox.checked) {
+    //         const actions: MyCustomerUpdateAction[] = [
+    //           {
+    //             action: 'setDefaultShippingAddress',
+    //             addressId: billingId,
+    //           }
+    //         ];
+    //         customer.changeData (ver, actions);
+    //       }
+    //       if (shippingCheckBox && shippingCheckBox.checked) {
+    //         const actions: MyCustomerUpdateAction[] = [
+    //           {
+    //             action: 'setDefaultShippingAddress',
+    //             addressId: shippingId,
+    //           }
+    //         ];
+    //         customer.changeData (ver, actions);
+    //       }
+    //     })
+    //   }
+    // })
+    .then(() => {
+      localStorage.setItem('userMail', dataForm.email);
+      this.handleSuccessResponse(dataForm, router);
+    })
       .catch(() => this.handleErrorResponse);
   }
 
