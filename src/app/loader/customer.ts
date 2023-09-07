@@ -48,6 +48,7 @@ export class Customer {
           body: customerParams,
         })
       .execute();
+      
   }
 
   loginCustomer(userAuthOptions: MyCustomerSignin) {

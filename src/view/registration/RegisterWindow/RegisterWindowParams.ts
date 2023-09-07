@@ -9,6 +9,7 @@ import checkCountry from '../../../../src/utilities/validation/checkCountry';
 import validationPostalCode from '../../../../src/utilities/validation/validationPostalCode';
 import showHidePass from '../../../../src/utilities/showHidePass';
 import registerCheckBoxStatus from '../../../../src/utilities/checkBoxStatus';
+import checkBoxes from '../../../utilities/checkBoxes';
 
 export const registerFormViewParams = {
   paramsTelOrEmail: {
@@ -483,13 +484,13 @@ export const registerFormViewParams = {
   },
   saveBillingAdressAsDefault:{
     tag: 'input',
-    classNames: ['saveBillingAdressAsDefault'],
+    classNames: ['saveBillingAdressAsDefault', 'BillingCheckbox'],
     textContent: '',
     value: '',
     action: '',
     type: 'checkbox',
     disabled: false,
-    callback: null,
+    callback: checkBoxes,
   },
   saveBillingAdressAsDefaultText:{
     tag: 'p',
@@ -535,13 +536,13 @@ export const registerFormViewParams = {
   },
   saveShippingAdressAsDefault:{
     tag: 'input',
-    classNames: ['saveShippingAdressAsDefault'],
+    classNames: ['saveShippingAdressAsDefault', 'ShippingCheckbox'],
     textContent: '',
     value: '',
     action: '',
     type: 'checkbox',
     disabled: false,
-    callback: registerCheckBoxStatus,
+    callback: checkBoxes,
   },
   saveShippingAdressAsDefaultText:{
     tag: 'p',

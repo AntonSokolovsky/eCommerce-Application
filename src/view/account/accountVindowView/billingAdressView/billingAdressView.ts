@@ -6,6 +6,7 @@ import { InputElementCreator } from '../../../../utilities/InputFieldsCreator/In
 import editFields from '../../../../utilities/editField';
 import { Customer } from '../../../../app/loader/customer';
 import { isUserLogin } from '../../../../utilities/is-user-login';
+import checkBoxes from '../../../../utilities/checkBoxes';
 
 export default class BillingAdressVindowView extends View {
   constructor() {
@@ -287,11 +288,17 @@ export default class BillingAdressVindowView extends View {
                   action: '',
                   type: 'checkbox',
                   disabled: false,
-                  callback: () => {},
+                  callback: null,
                 };
               
                 const inputCheckboxBilling = new InputElementCreator(inputCheckboxBillingParams);
-              
+                inputCheckboxBilling.Callback(checkBoxes, 'change');
+                
+                const defAdressId = res.body.results[0].defaultShippingAddressId;
+
+                if (defAdressId === res.body.results[0].addresses[0].id) {
+                  inputCheckboxBilling.setChecked();
+                }
                   
                 const fieldCheckboxNameParams = {
                   tag: 'p',
