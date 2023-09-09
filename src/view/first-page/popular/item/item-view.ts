@@ -3,23 +3,23 @@ import View from '../../../view';
 import { ElementCreator } from '../../../../utilities/element-creator';
 import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
-import { ProductCatalogData } from '@commercetools/platform-sdk';
+import { ProductProjection } from '@commercetools/platform-sdk';
 
 
 export default class ItemView extends View {
   router: Router;
 
-  constructor(router: Router, paramItem: ProductCatalogData, id: number) {
+  constructor(router: Router, product: ProductProjection, id: number) {
     const params = {
       tag: 'div',
       classNames: ['item'],
     };
     super(params);
-    this.configureView(paramItem, id);
+    this.configureView(product, id);
     this.router = router;
   }
 
-  configureView(paramItem: ProductCatalogData, id: number) {
+  configureView(product: ProductProjection, id: number) {
 
     this.viewElementCreator.setElementClass(['item-small']);
 
@@ -30,8 +30,8 @@ export default class ItemView extends View {
       callback: this.buttonClickHandler.bind(this, `${Pages.CATALOG}/${id}`),
     };
     const creatorContImg = new ElementCreator(paramsContImg);
-    if (paramItem.current.masterVariant.images) {
-      creatorContImg.setAttributeElement({ style: `background-image: url('${paramItem.current.masterVariant.images[0].url}')` });
+    if (product.masterVariant.images) {
+      creatorContImg.setAttributeElement({ style: `background-image: url('${product.masterVariant.images[0].url}')` });
     }
     this.viewElementCreator.addInsideElement(creatorContImg);
 
@@ -54,11 +54,11 @@ export default class ItemView extends View {
     creatorToolbar.addInsideElement(creatorPricesCont);
 
     let paramsPrice;
-    if (paramItem.current.masterVariant.prices) {
+    if (product.masterVariant.prices) {
       paramsPrice = {
         tag: 'div',
         classNames: ['item__price'],
-        textContent: `${paramItem.current.masterVariant.prices[0].value.centAmount / 100}$`,
+        textContent: `${product.masterVariant.prices[0].value.centAmount / 100}$`,
         callback: null,
       };
     } else {
@@ -72,11 +72,11 @@ export default class ItemView extends View {
     const creatorPrice = new ElementCreator(paramsPrice);
     creatorPricesCont.addInsideElement(creatorPrice);
 
-    if (paramItem.current.masterVariant.prices && paramItem.current.masterVariant.prices[0].discounted) {
+    if (product.masterVariant.prices && product.masterVariant.prices[0].discounted) {
       const paramsDiscount = {
         tag: 'div',
         classNames: ['item__discount'],
-        textContent: `${paramItem.current.masterVariant.prices[0].discounted.value.centAmount / 100}$`,
+        textContent: `${product.masterVariant.prices[0].discounted.value.centAmount / 100}$`,
         callback: null,
       };
       const creatorDiscount = new ElementCreator(paramsDiscount);

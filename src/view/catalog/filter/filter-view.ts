@@ -4,15 +4,22 @@ import { ElementParams, ViewParams } from '../../../type/params-element-type';
 import { Customer } from '../../../app/loader/customer';
 import { ElementCreator } from '../../../utilities/element-creator';
 import { Mediator } from '../../../app/controller/mediator';
-import { AttributeEnumType, ProductType } from '@commercetools/platform-sdk';
-import { MyAttributeType } from '../../../type/products-type';
+import { AttributeDefinition,
+  AttributeEnumType,
+  AttributePlainEnumValue,
+  ProductProjectionPagedSearchResponse,
+  ProductType } from '@commercetools/platform-sdk';
+import { CheckboxElementWithNameAttribute, MyAttributeType } from '../../../type/products-type';
+import { MessagesModalWindow } from '../../../type/messages-modal';
+import { ModalWindowRequest } from '../../modal-window-response-view/modal-window-request';
+import { CustomEventNames } from '../../../type/mediator-type';
 
 const TEXT = {
   title: 'Filter',
 };
 
 export class FilterView extends View {
-  private checkboxes;
+  private checkboxes: CheckboxElementWithNameAttribute[];
 
   private loader;
 
@@ -24,7 +31,7 @@ export class FilterView extends View {
       classNames: [styles['section-filter']],
     };
     super(params);
-    this.checkboxes = new Map<string, HTMLElement>();
+    this.checkboxes = [];
     this.loader = new Customer;
     this.configureView();
   }
@@ -58,34 +65,57 @@ export class FilterView extends View {
     const listItems = this.getListFilter();
     const productTypes: ProductType[] = (await this.loader.getAttributes()).body.results;
     productTypes.forEach((productType) => {
-      
       productType.attributes?.forEach((attribute) => {
-        const type: MyAttributeType = attribute.type as AttributeEnumType;
-        
-        type.values.forEach((value) => {
-          const attributeValue = value.label;
+        const subItemListParams: ElementParams = {
+          tag: 'li',
+          classNames: [styles.filter__subitem],
+          textContent: '',
+          callback: null,
+        };
+        const creatorSubItemList = new ElementCreator(subItemListParams);
+        listItems.addInsideElement(creatorSubItemList);
 
-          const elementFilter = this.getItemFilters(attributeValue);
-          elementFilter[1].addInsideElement(elementFilter[0].getElement());
-          elementFilter[2].addInsideElement(elementFilter[1].getElement());
-          listItems.addInsideElement(elementFilter[2]);
-          this.checkboxes.set(attribute.name, elementFilter[0].getElement());
+        const titleSubListParams: ElementParams = {
+          tag: 'h3',
+          classNames: [styles.filter__subtitle],
+          textContent: `${attribute.label['en-US']}`,
+          callback: null,
+        };
+        const creatorTitleSublist = new ElementCreator(titleSubListParams);
+        creatorSubItemList.addInsideElement(creatorTitleSublist);
+
+        const subListParams: ElementParams = {
+          tag: 'form',
+          classNames: [styles.filter__sublist],
+          textContent: '',
+          callback: null,
+        };
+        const creatorSubList = new ElementCreator(subListParams);
+        creatorSubItemList.addInsideElement(creatorSubList);
+        const type: MyAttributeType = attribute.type as AttributeEnumType;
+        type.values.forEach((value) => {
+          const elementFilter = this.getItemFilters(value, attribute);
+          elementFilter[1].addInsideElement(elementFilter[0]);
+          elementFilter[2].addInsideElement(elementFilter[1]);
+          creatorSubList.addInsideElement(elementFilter[2]);
+
+          this.checkboxes.push([attribute.name, elementFilter[0].getElement() as HTMLInputElement]);
         });
       });
     });
     this.viewElementCreator.addInsideElement(listItems.getElement());
   }
 
-  getItemFilters(attributeName: string): ElementCreator[] {
+  getItemFilters(value: AttributePlainEnumValue, attribute: AttributeDefinition): ElementCreator[] {
     const elementFilterParams: ElementParams = {
       tag: 'input',
       classNames: [styles.filter__checkbox],
       textContent: '',
-      callback: null,
+      callback: (event) => this.handleCheckbox(event),
     };
 
     const itemFilterParams: ElementParams = {
-      tag: 'li',
+      tag: 'div',
       classNames: [styles.filter__item],
       textContent: '',
       callback: null,
@@ -94,17 +124,52 @@ export class FilterView extends View {
     const labelFilterParams: ElementParams = {
       tag: 'label',
       classNames: [styles.filter__label],
-      textContent: `${attributeName}`,
+      textContent: `${value.label}`,
       callback: null,
     };
 
     const creatorLabelFilter = new ElementCreator(labelFilterParams);
     const creatorItemFilter = new ElementCreator(itemFilterParams);
     const creatorElementFilter = new ElementCreator(elementFilterParams);
-    creatorElementFilter.setAttributeElement({ 'type': 'checkbox' });
+    creatorElementFilter.setAttributeElement({
+      'type': 'checkbox',
+      'value': `${value.key}`,
+      'name': `${attribute.label['en-US']}`,
+    });
     return [creatorElementFilter, creatorLabelFilter, creatorItemFilter];
   }
 
-  handleCheckbox() {
+  async handleCheckbox(event: Event) {
+    if (event.target instanceof HTMLInputElement) {
+      const listFilterParams = new Map<string, Set<HTMLElement>>();
+      this.checkboxes.forEach((checkbox) => {
+        if (checkbox[1].checked) {
+          let  listValueAttributes = listFilterParams.get(checkbox[0]);
+          if (!listValueAttributes) {
+            listValueAttributes = new Set<HTMLElement>();
+      
+            listFilterParams.set(checkbox[0], listValueAttributes);
+          }
+          listValueAttributes.add(checkbox[1]);
+        }
+      });
+      this.loader.getProductsWithOptions(listFilterParams)
+        .then((data) => this.handleSuccessResponseFilter(data.body))
+        .catch(() => this.handleErrorResponse());
+    }
+  }
+
+  async handleSuccessResponseFilter(body: ProductProjectionPagedSearchResponse) {
+    this.mediator.showProductsByFilter(CustomEventNames.PRODUCTS_FILTER, { productsProjection: body });
+  }
+
+  handleErrorResponse() {
+    const errorMessage = MessagesModalWindow.PRODUCTS_FILTER_ERROR_MESSAGE;
+    this.showModalWindow(errorMessage);
+  }
+  
+  showModalWindow(message: string) {
+    const modalWindow = new ModalWindowRequest(message);
+    return modalWindow;
   }
 }

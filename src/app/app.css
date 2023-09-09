@@ -8,6 +8,7 @@
     --h2-font-size: 3rem;
 }
 body {
+    max-width: 1400px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,5 +16,5 @@ body {
 
     height: 100vh;
 
-    margin: 0;
+    margin: 0 auto;
 }
