@@ -35,6 +35,10 @@ export class Mediator {
     this.notify(nameEvent, params);
   }
 
+  showProductsByFilter(nameEvent: CustomEventNames, params: ParamsCustomEvent) {
+    this.notify(nameEvent, params);
+  }
+
   private notify(nameEvent: CustomEventNames, params: ParamsCustomEvent) {
     const arrayListeners = this.listeners.get(nameEvent);
     if (arrayListeners) {

@@ -103,7 +103,9 @@ export default class NavHeaderView extends View {
 
   authHandler(router: Router) {
     this.linkElements.forEach((linkElement) => {
-      if (linkElement.getHtmlElement().textContent !== NamePages.BASKET && linkElement.getHtmlElement().textContent !== NamePages.ACCOUNT)
+      if (linkElement.getHtmlElement().textContent !== NamePages.BASKET
+      && linkElement.getHtmlElement().textContent !== NamePages.ACCOUNT
+      && linkElement.getHtmlElement().textContent !== NamePages.CATALOG)
         linkElement.getHtmlElement().remove();
     });
     this.viewElementCreator.addInsideElement(this.addButtonLogout(router));

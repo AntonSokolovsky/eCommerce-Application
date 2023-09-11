@@ -1,0 +1,47 @@
+.section-filter {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--main-font-family);
+}
+
+.filter__title {
+    font-size: 2rem;
+}
+
+.filter__list {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter__subitem {
+    display: block;
+}
+
+.filter__subtitle {
+    display: block;
+}
+
+.filter__sublist {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter__item {
+    display: block;
+    margin: 0.5rem;
+}
+
+.filter__label {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem;
+    background-color: var(--main-bg-color-accent);
+    font-size: var(--text-font-size);
+    cursor: pointer;
+}
+
+.filter__checkbox {
+    display: inline-block;
+    padding-left: 1rem;
+    cursor: pointer;
+}

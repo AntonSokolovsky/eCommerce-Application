@@ -5,7 +5,7 @@ import {
   MyCustomerSignin,
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
-// import { ProductsQueryArgs } from '../../type/products-type';
+import { QueryParamsSearchProducts } from '../../type/products-type';
 
 export class Customer {
   protected apiRoot;
@@ -66,6 +66,59 @@ export class Customer {
       .execute();
   }
 
+  getAttributes() {
+    return this.apiRoot
+      .productTypes()
+      .get()
+      .execute();
+  }
+
+  getCategories() {
+    return this.apiRoot
+      .categories()
+      .get()
+      .execute();
+  }
+
+  getAllProducts() {
+    const params: QueryParamsSearchProducts = {
+      queryArgs: {
+      },
+    };
+    return this.apiRoot
+      .productProjections()
+      .search()
+      .get(params)
+      .execute();
+  }
+
+  getProductsWithOptions(arrayFilterParams: Map<string, Set<HTMLElement>>) {
+    const filter: string[] = [];
+    arrayFilterParams.forEach((listValueAttributes, myEnumName) => {
+      let filterString = `variants.attributes.${myEnumName}.key:`;
+      let countValues = listValueAttributes.size;
+      listValueAttributes.forEach((myEnumValue) => {
+        if (countValues === 1) {
+          filterString = filterString + '"' + (myEnumValue as HTMLInputElement).value + '"';
+        } else {
+          countValues -= 1;
+          filterString = filterString + '"' + (myEnumValue as HTMLInputElement).value + '", ';
+        }
+      });
+      filter.push(filterString);
+    });
+    const params: QueryParamsSearchProducts = {
+      queryArgs:{
+        filter: filter,
+      },
+    };
+    return this.apiRoot
+      .productProjections()
+      .search()
+      .get(params)
+      .execute();
+  }
+
   updatePass(version: number, currentPassword: string, newPassword: string) {
     return this.apiRoot
       .me()
@@ -99,16 +152,6 @@ export class Customer {
         body: {
           version: ver,
           actions,
-          // actions: [{
-          //   action: "changeAddress",
-          //   addressId: "{{addressId}}",
-          //   address: {
-          //     streetName: "Example Street",
-          //     postalCode: "80933",
-          //     city: "Exemplary City",
-          //     country: "DE",
-          //   }
-          // }]
         },
       })
       .execute();

@@ -200,11 +200,11 @@ export default function editFields(e: Event) {
                 }
               }
             })
-            .catch(() => {
-              const errorMessage = MessagesModalWindow.REGISTER_ERROR_MESSAGE;
-              const modalWindow = new ModalWindowRequest(errorMessage);
-              return modalWindow;
-            });
+              .catch(() => {
+                const errorMessage = MessagesModalWindow.REGISTER_ERROR_MESSAGE;
+                const modalWindow = new ModalWindowRequest(errorMessage);
+                return modalWindow;
+              });
           }
           elemToEdit.innerHTML = inputElem.value;
           target.innerHTML = 'Edit Mode';
