@@ -17,3 +17,10 @@
         padding: 28px 15px;
     }
 }
+
+@media (max-width: 550px) {
+    .header {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}

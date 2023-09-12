@@ -8,6 +8,8 @@ import validationCity from '../../../../src/utilities/validation/validationCity'
 import checkCountry from '../../../../src/utilities/validation/checkCountry';
 import validationPostalCode from '../../../../src/utilities/validation/validationPostalCode';
 import showHidePass from '../../../../src/utilities/showHidePass';
+import registerCheckBoxStatus from '../../../../src/utilities/checkBoxStatus';
+import checkBoxes from '../../../utilities/checkBoxes';
 
 export const registerFormViewParams = {
   paramsTelOrEmail: {
@@ -24,7 +26,7 @@ export const registerFormViewParams = {
   },
   paramsTelOrEmailInput:{
     tag: 'input',
-    classNames: ['input', 'Email_input'],
+    classNames: ['Email_input', 'input'],
     textContent: '',
     value: '',
     action: '',
@@ -219,7 +221,7 @@ export const registerFormViewParams = {
     textContent: 'Register',
     value: 'Register',
     action: '',
-    type: 'submit',
+    type: 'button',
     disabled: true,
     callback: null,
   },
@@ -318,7 +320,7 @@ export const registerFormViewParams = {
     textContent: '',
     value: '',
     action: '',
-    type: 'text',
+    type: 'date',
     disabled: false,
     callback: validationDateOfBirth,
   },
@@ -472,6 +474,143 @@ export const registerFormViewParams = {
     tag: 'p',
     classNames: ['Requirement'],
     textContent: 'Must be a valid country from a predefined list or autocomplete field.',
+    callback: null,
+  },
+  billingAdressContainer: {
+    tag: 'div',
+    classNames: ['billingAdressContainer', 'adressContainer'],
+    textContent: '',
+    callback: null,
+  },
+  saveBillingAdressAsDefault:{
+    tag: 'input',
+    classNames: ['saveBillingAdressAsDefault', 'BillingCheckbox'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'checkbox',
+    disabled: false,
+    callback: checkBoxes,
+  },
+  saveBillingAdressAsDefaultText:{
+    tag: 'p',
+    classNames: ['saveBillingAdressAsDefaultText'],
+    textContent: 'Save billing adress as default',
+    callback: null,
+  },
+  saveBillingAdressAsDefaultContainer:{
+    tag: 'div',
+    classNames: ['saveBillingAdressAsDefaultContainer'],
+    textContent: '',
+    callback: null,
+  },
+  BillingAdressMatchShippingContainer:{
+    tag: 'div',
+    classNames: ['BillingAdressMatchShippingContainer'],
+    textContent: '',
+    callback: null,
+  },
+  BillingAdressMatchShipping:{
+    tag: 'input',
+    classNames: ['BillingAdressMatchShipping'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'checkbox',
+    disabled: false,
+    callback: registerCheckBoxStatus,
+  },
+  BillingAdressMatchShippingText:{
+    tag: 'p',
+    classNames: ['BillingAdressMatchShippingText'],
+    textContent: 'My billing address matches shipping address',
+    callback: null,
+  },
+
+
+  shippingAdressContainer: {
+    tag: 'div',
+    classNames: ['shippingAdressContainer', 'adressContainer'],
+    textContent: '',
+    callback: null,
+  },
+  saveShippingAdressAsDefault:{
+    tag: 'input',
+    classNames: ['saveShippingAdressAsDefault', 'ShippingCheckbox'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'checkbox',
+    disabled: false,
+    callback: checkBoxes,
+  },
+  saveShippingAdressAsDefaultText:{
+    tag: 'p',
+    classNames: ['saveShippingAdressAsDefaultText'],
+    textContent: 'Save shipping adress as default',
+    callback: null,
+  },
+  saveShippingAdressAsDefaultContainer:{
+    tag: 'div',
+    classNames: ['saveShippingAdressAsDefaultContainer'],
+    textContent: '',
+    callback: null,
+  },
+  ShippingAdressMatchShippingContainer:{
+    tag: 'div',
+    classNames: ['ShippingAdressMatchShippingContainer'],
+    textContent: '',
+    callback: null,
+  },
+
+  paramsShippingCountryInput:{
+    tag: 'input',
+    classNames: ['input', 'Shipping_Country_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: checkCountry,
+  },
+
+  paramsShippingStreetInput:{
+    tag: 'input',
+    classNames: ['input', 'Shipping_Street_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationStreet,
+  },
+
+  paramsShippingPostalCodeInput:{
+    tag: 'input',
+    classNames: ['input', 'Shipping_PostalCode_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationPostalCode,
+  },
+
+  paramsShippingCityInput:{
+    tag: 'input',
+    classNames: ['input', 'Shipping_City_input'],
+    textContent: '',
+    value: '',
+    action: '',
+    type: 'text',
+    disabled: false,
+    callback: validationCity,
+  },
+
+  MyBillingAdressMatchesShippingContainer:{
+    tag: 'div',
+    classNames: ['MyBillingAdressMatchesShipping'],
+    textContent: '',
     callback: null,
   },
 };

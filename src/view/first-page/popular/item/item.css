@@ -1,9 +1,20 @@
 .item {
-  background-color: #fff;
+  transition: all 0.5s;
+}
+
+.item-small:hover {
+  box-shadow: 0px 0px 10px 5px #565656;
+  transform: scale(1.1, 1.1);
+  transition: all 0.5s;
+  cursor: pointer;
 }
 
 .item__cont-img {
   height: 190px;
+
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 @media (max-width: 1100px) {
@@ -19,17 +30,28 @@
 
   height: 40px;
 
-  padding: 4px 4px 4px 15px;
+  padding: 0 4px 0 8px;
 
   background-color: #bbb;
+}
+
+.item__prices-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .item__price {
   font-size: 20px;
 }
 
+.item__discount {
+  font-size: 20px;
+  color: #ce0000;
+}
+
 .item__basket {
-  width: 50px;
+  width: 30px;
   height: 31px;
   background-color: aquamarine;
 }

@@ -2,20 +2,23 @@ import './popular.css';
 import View from '../../view';
 import { ElementCreator } from '../../../utilities/element-creator';
 import ItemView from './item/item-view';
+import Router from '../../../app/router/router';
+import { Customer } from '../../../app/loader/customer';
 
 
 
 export default class PopularView extends View {
-  constructor() {
+  constructor(router: Router) {
     const params = {
       tag: 'section',
       classNames: ['section', 'section-popular'],
     };
     super(params);
-    this.configureView();
+    this.configureView(router);
   }
 
-  configureView() {
+  configureView(router: Router) {
+    const loader = new Customer();
     const paramsTitle = {
       tag: 'h2',
       classNames: ['section__title', 'popular__title'],
@@ -32,12 +35,18 @@ export default class PopularView extends View {
       callback: null,
     };
     const creatorItems = new ElementCreator(paramsItems);
-    for (let i = 0; i < 8; i += 1) {
-      const creatorItem = new ItemView();
-      creatorItems.addInsideElement(creatorItem.getHtmlElement());
-    }
     this.viewElementCreator.addInsideElement(creatorItems);
 
+    loader.getAllProducts()
+      .then((data) => {
+        if (data.body.total) {
+          for (let i = 0; i < 8; i += 1) {
+            const creatorItem = new ItemView(router, data.body.results[i], i);
+            creatorItems.addInsideElement(creatorItem.getHtmlElement());
+          }
+        }
+      });
+      
     const paramsLink = {
       tag: 'div',
       classNames: ['popular__link'],

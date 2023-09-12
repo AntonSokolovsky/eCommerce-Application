@@ -10,6 +10,7 @@ import Router from './router/router';
 import { ID_SELECTOR, Pages } from './../app/router/pages';
 import LogInView from '../view/log-in/log-in_view';
 import RegView from '../view/registration/reg-view';
+import AccountView from '../view/account/account_View';
 
 
 export default class App {
@@ -51,25 +52,25 @@ export default class App {
       {
         path: '',
         callback: () => {
-          this.setContent(Pages.FIRSTPAGE, new FirstPageView());
+          this.setContent(Pages.FIRSTPAGE, new FirstPageView(this.router));
         },
       },
       {
         path: `${Pages.FIRSTPAGE}`,
         callback: () => {
-          this.setContent(Pages.FIRSTPAGE, new FirstPageView());
+          this.setContent(Pages.FIRSTPAGE, new FirstPageView(this.router));
         },
       },
       {
         path: `${Pages.CATALOG}`,
         callback: () => {
-          this.setContent(Pages.FIRSTPAGE, new CatalogView());
+          this.setContent(Pages.FIRSTPAGE, new CatalogView(this.router));
         },
       },
       {
         path: `${Pages.CATALOG}/${ID_SELECTOR}`,
-        callback: () => {
-          this.setContent(Pages.FIRSTPAGE, new CatalogView());
+        callback: (id?: string) => {
+          this.setContent(Pages.FIRSTPAGE, new CatalogView(this.router, id));
         },
       },
       {
@@ -85,6 +86,12 @@ export default class App {
         },
       },
       {
+        path: `${Pages.ACCOUNT}`,
+        callback: () => {
+          this.setContent(Pages.ACCOUNT, new AccountView());
+        },
+      },
+      {
         path: `${Pages.NOT_FOUND}`,
         callback: () => {
           this.setContent(Pages.NOT_FOUND, new NotFoundView(this.router));
@@ -94,7 +101,8 @@ export default class App {
   }
 
   setContent(pageName: string, view: View) {
-    if (this.main) {
+    if (this.header && this.main) {
+      this.header.setSelectedItem(pageName);
       this.main.setContent(view);
     }
   }

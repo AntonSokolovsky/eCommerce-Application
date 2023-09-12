@@ -7,8 +7,9 @@ import {
   UserAuthOptions,
   ExistingTokenMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import { anonTokenCache, getCurrentToken, userTokenCache } from '../app/loader/token';
+import { TokenStorage } from '../app/loader/token';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { TokenNames } from '../type/enum-token';
 
 const clientId = process.env.CTP_CLIENT_ID || '';
 const clientSecret = process.env.CTP_CLIENT_SECRET || '';
@@ -16,6 +17,7 @@ const projectKey = process.env.CTP_PROJECT_KEY || '';
 const urlApi = process.env.CTP_API_URL || '';
 const urlAuth = process.env.CTP_AUTH_URL || '';
 const scopes = process.env.CTP_SCOPES || '';
+const tokenStorage = TokenStorage.getInstance(); 
 
 // Configure authMiddlewareOptions
 const authMiddlewareOptions: AuthMiddlewareOptions = {
@@ -27,7 +29,7 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
   },
   scopes: [scopes],
   fetch,
-  tokenCache: anonTokenCache,
+  tokenCache: tokenStorage.anonTokenCache,
 };
 
 // Configure httpMiddlewareOptions
@@ -50,7 +52,7 @@ const options: PasswordAuthMiddlewareOptions = {
   },
   scopes: [`manage_project:${projectKey}`],
   fetch,
-  tokenCache: userTokenCache,
+  tokenCache: tokenStorage.customerTokenCache,
 };
 // Export the ClientBuilder
 
@@ -59,30 +61,39 @@ const existingAuthMiddlewareOptions: ExistingTokenMiddlewareOptions = {
 };
 
 export function getCtpClientAnonFlow() {
-  const currentToken = getCurrentToken();
+  const currentToken = tokenStorage.getCurrentToken();
   const ctpClient = currentToken
     ? new ClientBuilder()
       .withExistingTokenFlow(currentToken, existingAuthMiddlewareOptions)
       .withHttpMiddleware(httpMiddlewareOptions)
-      .withLoggerMiddleware()
+      // .withLoggerMiddleware() // uncomment if you need to see the request logs
       .build()
     : new ClientBuilder()
       .withClientCredentialsFlow(authMiddlewareOptions)
       .withHttpMiddleware(httpMiddlewareOptions)
-      .withLoggerMiddleware()
+      // .withLoggerMiddleware() // uncomment if you need to see the request logs
       .build();
   return createApiBuilderFromCtpClient(ctpClient)
     .withProjectKey({ projectKey: projectKey });
 }
 
 export function getCtpClientPasswordFlow(userAuth: UserAuthOptions) {
+  localStorage.removeItem(TokenNames.TOKEN_CUSTOMER);
+  localStorage.removeItem(TokenNames.TOKEN_ANONIM);
   const optionsPasswordFlow = { ...options };
   optionsPasswordFlow.credentials.user = { ...userAuth };
   const ctpClientPasswordFlow = new ClientBuilder()
     .withPasswordFlow(optionsPasswordFlow)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
+    // .withLoggerMiddleware() //uncomment if you need to see the request logs
     .build();
   return createApiBuilderFromCtpClient(ctpClientPasswordFlow)
     .withProjectKey({ projectKey: projectKey });
+}
+
+export function createFlow(userAuth?: UserAuthOptions) {
+  if (userAuth) {
+    return getCtpClientPasswordFlow(userAuth);
+  }
+  return getCtpClientAnonFlow();
 }

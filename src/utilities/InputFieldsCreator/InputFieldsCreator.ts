@@ -9,6 +9,7 @@ export class InputElementCreator extends ElementCreator {
     super(params);
     this._InputElement = null;
     this.addValue(params.type, params.value, params.disabled);
+    this.Callback(params.callback);
   }
 
   addValue(type: string, value: string, disabled: boolean) {
@@ -25,12 +26,19 @@ export class InputElementCreator extends ElementCreator {
     return this._InputElement;
   }
 
-  Callback(callback: null | ((event: Event) => void)) {
+  Callback(callback: null | ((event: Event) => void), ev = 'focus') {
     if (!this._InputElement) {
       throw new Error('element does not exist');
     }
     if (typeof callback === 'function') {
-      this._InputElement.addEventListener('input', (event) => callback(event));
+      this._InputElement.addEventListener(ev, (event) => callback(event));
     }
+  }
+
+  setChecked() {
+    if (!this._InputElement) {
+      throw new Error('element does not exist');
+    }
+    this._InputElement.checked = true;
   }
 }
