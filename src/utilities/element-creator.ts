@@ -53,12 +53,12 @@ export class ElementCreator {
     }
   }
 
-  setCallback(callback: null | ((event: Event) => void)) {
+  setCallback(callback: null | ((event: Event) => void), ev = 'click') {
     if (!this._element) {
       throw new Error('element does not exist');
     }
     if (typeof callback === 'function') {
-      this._element.addEventListener('click', (event) => callback(event));
+      this._element.addEventListener(ev, (event) => callback(event));
     }
   }
 

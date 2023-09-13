@@ -85,3 +85,10 @@
     border-radius: 50px;
     font-size: 32px;
 }
+
+.button_right:hover, .button_left:hover {
+    cursor: pointer;
+    opacity: 0.5;
+    background-color: grey;
+    border-radius: 100%;
+}

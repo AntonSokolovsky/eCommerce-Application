@@ -9,15 +9,18 @@ import { FilterView } from './filter/filter-view';
 import { Mediator } from '../../app/controller/mediator';
 import { CustomEventNames, ParamsCustomEvent } from '../../type/mediator-type';
 import { ElementParams } from '../../type/params-element-type';
+import setItems from '../../utilities/set-items';
 
 export default class CatalogView extends View {
-  private loader;
+  public loader;
   
   private router;
   
   private id;
 
   private mediator = Mediator.getInstance();
+
+  private newPage;
   
   constructor(router: Router, id = '') {
     const params = {
@@ -28,6 +31,7 @@ export default class CatalogView extends View {
     this.router = router;
     this.loader = new Customer();
     this.id = id;
+    this.newPage = 1;
     this.configureView();
     this.mediator.subscribe(CustomEventNames.PRODUCTS_FILTER, this.handleFilter.bind(this));
   }
@@ -48,11 +52,11 @@ export default class CatalogView extends View {
     if (this.id) {
       this.addLargeItemToView(this.router, this.id, params);
     } else {
-      this.addSmallItemsToView(this.router, params);
+      this.addSmallItemsToView(this.router, 1, params);
     }
   }
 
-  addSmallItemsToView(router: Router, params?: ParamsCustomEvent) {
+  addSmallItemsToView(router: Router, page = 1, params?: ParamsCustomEvent) {
     const paramsCatalogContainer: ElementParams = {
       tag: 'div',
       classNames: ['catalog__container'],
@@ -78,26 +82,6 @@ export default class CatalogView extends View {
     };
     const creatorItems = new ElementCreator(paramsItems);
     creatorCatalogContainer.addInsideElement(creatorItems);
-    
-    if (params) {
-      const productsProjection = params.productsProjection;
-      if (productsProjection?.total) {
-        for (let i = 0; i < productsProjection.total; i += 1) {
-          const creatorItem = new ItemView(router, productsProjection.results[i], i);
-          creatorItems.addInsideElement(creatorItem.getHtmlElement());
-        }
-      }
-    } else {
-      this.loader.getAllProducts()
-        .then((data) => {
-          if (data.body.total) {
-            for (let i = 0; i < data.body.total; i += 1) {
-              const creatorItem = new ItemView(router, data.body.results[i], i);
-              creatorItems.addInsideElement(creatorItem.getHtmlElement());
-            }
-          }
-        });
-    }
 
     const paramsBtns = {
       tag: 'div',
@@ -109,29 +93,104 @@ export default class CatalogView extends View {
       tag: 'div',
       classNames: ['catalog__button', 'button_left'],
       textContent: '<',
-      callback: null,
-    }; const paramsBtnNumber = {
+      callback: () => (params) ? this.addSmallItemsToView(router, this.newPage -= 1, params) : this.addSmallItemsToView(router, this.newPage -= 1),
+    };
+    const paramsBtnNumber = {
       tag: 'div',
       classNames: ['catalog__button', 'button_number'],
-      textContent: '1',
+      textContent: `${String(this.newPage)}`,
       callback: null,
-    }; const paramsBtnRight = {
+    };
+    const paramsBtnRight = {
       tag: 'div',
       classNames: ['catalog__button', 'button_right'],
       textContent: '>',
-      callback: null,
+      callback: () => (params) ? this.addSmallItemsToView(router, this.newPage += 1, params) : this.addSmallItemsToView(router, this.newPage += 1),
     };
-    const creatorBtns = new ElementCreator(paramsBtns);
+    
+    if (params) {
+      const productsProjection = params.productsProjection;
+      if (productsProjection?.total) {
+        const countItems = setItems();
+        if (countItems) {
+          if (productsProjection.total) {
+            const maxPages = Math.ceil(productsProjection.total / countItems);
+            let startItem = 0;
+            if (page < 1) {
+              this.newPage = 1;
+              return;
+            } else if (page > maxPages) {
+              this.newPage = maxPages;
+              return;
+            } else if (page > 0) {
+              if (this.viewElementCreator.getElement().childNodes[1]) {
+                this.viewElementCreator.getElement().childNodes[1].remove();
+              }
+              startItem = (this.newPage - 1) * countItems;
+            }
+          for (let i = startItem; i < countItems + startItem; i += 1) {
+            if (productsProjection.results[i]) {
+              const creatorItem = new ItemView(router, productsProjection.results[i], i);
+              creatorItems.addInsideElement(creatorItem.getHtmlElement());
+            }
+          }
+          }
+        }
 
-    const creatorBtnLeft = new ElementCreator(paramsBtnLeft);
-    creatorBtns.addInsideElement(creatorBtnLeft);
-    const creatorBtnNumber = new ElementCreator(paramsBtnNumber);
-    creatorBtns.addInsideElement(creatorBtnNumber);
-    const creatorBtnRight = new ElementCreator(paramsBtnRight);
-    creatorBtns.addInsideElement(creatorBtnRight);
+        const creatorBtns = new ElementCreator(paramsBtns);
+        const creatorBtnLeft = new ElementCreator(paramsBtnLeft);
+        creatorBtns.addInsideElement(creatorBtnLeft);
+        const creatorBtnNumber = new ElementCreator(paramsBtnNumber);
+        creatorBtns.addInsideElement(creatorBtnNumber);
+        const creatorBtnRight = new ElementCreator(paramsBtnRight);
+        creatorBtns.addInsideElement(creatorBtnRight);
+        
+        creatorCatalogContainer.addInsideElement(creatorBtns);
+        this.viewElementCreator.addInsideElement(creatorCatalogContainer);
+      }
+    } else {
+      this.loader.getAllProducts()
+        .then((data) => {
+          const countItems = setItems();
+          if (countItems) {
+            if (data.body.total) {
+              const maxPages = Math.ceil(data.body.total / countItems);
+              let startItem = 0;
+              if (page < 1) {
+                this.newPage = 1;
+                return;
+              } else if (page > maxPages) {
+                this.newPage = maxPages;
+                return;
+              } else if (page > 0) {
+                if (this.viewElementCreator.getElement().childNodes[1]) {
+                  this.viewElementCreator.getElement().childNodes[1].remove();
+                }
+                startItem = (this.newPage - 1) * countItems;
+              }
 
-    creatorCatalogContainer.addInsideElement(creatorBtns);
-    this.viewElementCreator.addInsideElement(creatorCatalogContainer);
+            for (let i = startItem; i < countItems + startItem; i += 1) {
+              if (data.body.results[i]) {
+                const creatorItem = new ItemView(router, data.body.results[i], i);
+                creatorItems.addInsideElement(creatorItem.getHtmlElement());
+              }
+            }
+            }
+            const creatorBtns = new ElementCreator(paramsBtns);
+        
+            const creatorBtnLeft = new ElementCreator(paramsBtnLeft);
+            creatorBtns.addInsideElement(creatorBtnLeft);
+            const creatorBtnNumber = new ElementCreator(paramsBtnNumber);
+            creatorBtns.addInsideElement(creatorBtnNumber);
+            const creatorBtnRight = new ElementCreator(paramsBtnRight);
+            creatorBtns.addInsideElement(creatorBtnRight);
+        
+            creatorCatalogContainer.addInsideElement(creatorBtns);
+            this.viewElementCreator.addInsideElement(creatorCatalogContainer);
+          }
+        });
+        
+    }
   }
 
   addLargeItemToView(router: Router, id = '', params?: ParamsCustomEvent) {
