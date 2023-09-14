@@ -92,6 +92,20 @@ export class Customer {
       .execute();
   }
 
+  getCurrentProducts(start: number, countProducts: number) {
+    const params: QueryParamsSearchProducts = {
+      queryArgs: {
+        offset: start,
+        limit: countProducts,
+      },
+    };
+    return this.apiRoot
+      .productProjections()
+      .search()
+      .get(params)
+      .execute();
+  }
+
   getProductsWithOptions(arrayFilterParams: Map<string, Set<HTMLElement>>) {
     const filter: string[] = [];
     arrayFilterParams.forEach((listValueAttributes, myEnumName) => {

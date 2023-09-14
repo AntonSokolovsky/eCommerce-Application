@@ -136,7 +136,6 @@ export default class CatalogView extends View {
           }
           }
         }
-
         const creatorBtns = new ElementCreator(paramsBtns);
         const creatorBtnLeft = new ElementCreator(paramsBtnLeft);
         creatorBtns.addInsideElement(creatorBtnLeft);
@@ -149,47 +148,43 @@ export default class CatalogView extends View {
         this.viewElementCreator.addInsideElement(creatorCatalogContainer);
       }
     } else {
-      this.loader.getAllProducts()
-        .then((data) => {
-          const countItems = setItems();
-          if (countItems) {
+      const countItems = setItems();
+      if (countItems) {
+        this.loader.getCurrentProducts((page < 1) ? 0 : (page - 1) * countItems, countItems)
+          .then((data) => {
             if (data.body.total) {
               const maxPages = Math.ceil(data.body.total / countItems);
-              let startItem = 0;
               if (page < 1) {
                 this.newPage = 1;
                 return;
               } else if (page > maxPages) {
                 this.newPage = maxPages;
                 return;
-              } else if (page > 0) {
+              } else {
                 if (this.viewElementCreator.getElement().childNodes[1]) {
                   this.viewElementCreator.getElement().childNodes[1].remove();
                 }
-                startItem = (this.newPage - 1) * countItems;
-              }
-
-            for (let i = startItem; i < countItems + startItem; i += 1) {
-              if (data.body.results[i]) {
-                const creatorItem = new ItemView(router, data.body.results[i], i);
-                creatorItems.addInsideElement(creatorItem.getHtmlElement());
+                for (let i = 0; i < data.body.results.length ; i += 1) {
+                  if (data.body.results[i]) {
+                    const creatorItem = new ItemView(router, data.body.results[i], i);
+                    creatorItems.addInsideElement(creatorItem.getHtmlElement());
+                  }
+                }
+                const creatorBtns = new ElementCreator(paramsBtns);
+            
+                const creatorBtnLeft = new ElementCreator(paramsBtnLeft);
+                creatorBtns.addInsideElement(creatorBtnLeft);
+                const creatorBtnNumber = new ElementCreator(paramsBtnNumber);
+                creatorBtns.addInsideElement(creatorBtnNumber);
+                const creatorBtnRight = new ElementCreator(paramsBtnRight);
+                creatorBtns.addInsideElement(creatorBtnRight);
+            
+                creatorCatalogContainer.addInsideElement(creatorBtns);
+                this.viewElementCreator.addInsideElement(creatorCatalogContainer);
               }
             }
-            }
-            const creatorBtns = new ElementCreator(paramsBtns);
-        
-            const creatorBtnLeft = new ElementCreator(paramsBtnLeft);
-            creatorBtns.addInsideElement(creatorBtnLeft);
-            const creatorBtnNumber = new ElementCreator(paramsBtnNumber);
-            creatorBtns.addInsideElement(creatorBtnNumber);
-            const creatorBtnRight = new ElementCreator(paramsBtnRight);
-            creatorBtns.addInsideElement(creatorBtnRight);
-        
-            creatorCatalogContainer.addInsideElement(creatorBtns);
-            this.viewElementCreator.addInsideElement(creatorCatalogContainer);
-          }
-        });
-        
+          });
+      }
     }
   }
 
