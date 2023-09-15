@@ -10,6 +10,7 @@ import { Mediator } from '../../app/controller/mediator';
 import { CustomEventNames, ParamsCustomEvent } from '../../type/mediator-type';
 import { ElementParams } from '../../type/params-element-type';
 import setItems from '../../utilities/set-items';
+import { itemsMap } from '../../app/state/state';
 
 export default class CatalogView extends View {
   public loader;
@@ -128,12 +129,14 @@ export default class CatalogView extends View {
               }
               startItem = (this.newPage - 1) * countItems;
             }
-          for (let i = startItem; i < countItems + startItem; i += 1) {
-            if (productsProjection.results[i]) {
-              const creatorItem = new ItemView(router, productsProjection.results[i], i);
-              creatorItems.addInsideElement(creatorItem.getHtmlElement());
+            itemsMap.clear();
+            for (let i = startItem; i < countItems + startItem; i += 1) {
+              if (productsProjection.results[i]) {
+                const creatorItem = new ItemView(router, productsProjection.results[i], i);
+                itemsMap.set(i, productsProjection.results[i].id);
+                creatorItems.addInsideElement(creatorItem.getHtmlElement());
+              }
             }
-          }
           }
         }
         const creatorBtns = new ElementCreator(paramsBtns);
@@ -153,6 +156,7 @@ export default class CatalogView extends View {
         this.loader.getCurrentProducts((page < 1) ? 0 : (page - 1) * countItems, countItems)
           .then((data) => {
             if (data.body.total) {
+              // console.log(data);
               const maxPages = Math.ceil(data.body.total / countItems);
               if (page < 1) {
                 this.newPage = 1;
@@ -164,9 +168,11 @@ export default class CatalogView extends View {
                 if (this.viewElementCreator.getElement().childNodes[1]) {
                   this.viewElementCreator.getElement().childNodes[1].remove();
                 }
+                itemsMap.clear();
                 for (let i = 0; i < data.body.results.length ; i += 1) {
                   if (data.body.results[i]) {
                     const creatorItem = new ItemView(router, data.body.results[i], i);
+                    itemsMap.set(i, data.body.results[i].id);
                     creatorItems.addInsideElement(creatorItem.getHtmlElement());
                   }
                 }

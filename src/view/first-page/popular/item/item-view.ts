@@ -4,6 +4,10 @@ import { ElementCreator } from '../../../../utilities/element-creator';
 import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
 import { ProductProjection } from '@commercetools/platform-sdk';
+import { Customer } from '../../../../app/loader/customer';
+import { isUserLogin }  from '../../../../utilities/is-user-login';
+import { itemsMap } from '../../../../app/state/state';
+import { Body } from 'node-fetch';
 
 
 export default class ItemView extends View {
@@ -20,7 +24,7 @@ export default class ItemView extends View {
   }
 
   configureView(product: ProductProjection, id: number) {
-
+    const customer = new Customer();
     this.viewElementCreator.setElementClass(['item-small']);
 
     const paramsContImg = {
@@ -88,10 +92,45 @@ export default class ItemView extends View {
       tag: 'div',
       classNames: ['item__basket'],
       textContent: '',
-      callback: null,
+      callback: (e: Event) => {
+        const target = e.target;
+        if (isUserLogin()) {
+          customer.getUserCart()
+            .then((data) => {
+              if (data.body.results.length === 0) {
+                customer.createUserCart()
+                  .then(() => {
+                    alert('Создал!');
+                    customer.getUserCart()
+                      .then((d) => {
+                        if (target && target instanceof Element) {
+                          customer.addItemInCartByID(itemsMap.get(Number(target.id)), d.body.results[0].id, d.body.results[0].version)
+                            .then(() => {
+                              customer.getUserCart().then((a) => console.log(a));
+                              alert('Добавлено!');
+                            });
+                        }
+                      });
+                  });
+              } else {
+                if (target && target instanceof Element) {
+                  customer.addItemInCartByID(itemsMap.get(Number(target.id)), data.body.results[0].id, data.body.results[0].version)
+                    .then(() => {
+                      customer.getUserCart().then((a) => console.log(a));
+                      alert('Добавлено!');
+                    });
+                }
+              }
+            });
+        } else {
+        customer.createUserCart()
+        .then((data) => console.log(data));
+        }
+      },
     };
 
     const creatorBasket = new ElementCreator(paramsBasket);
+    creatorBasket.setAttributeElement({ id: String(id) });
     creatorToolbar.addInsideElement(creatorBasket);
   }
 
