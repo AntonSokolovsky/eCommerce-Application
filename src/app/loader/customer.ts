@@ -1,6 +1,7 @@
 import { UserAuthOptions } from '@commercetools/sdk-client-v2';
 import { createFlow } from '../../sdk/client';
 import {
+  Cart,
   CustomerDraft,
   MyCustomerSignin,
   MyCustomerUpdateAction,
@@ -83,6 +84,58 @@ export class Customer {
   getAllProducts() {
     const params: QueryParamsSearchProducts = {
       queryArgs: {
+      },
+    };
+    return this.apiRoot
+      .productProjections()
+      .search()
+      .get(params)
+      .execute();
+  }
+
+  createUserCart(anonymousId?: string) {
+    const params  = {
+      body: {
+        currency: 'EUR',
+      },
+    };
+    return this.apiRoot
+      .me()
+      .carts()
+      .post(params)
+      .execute();
+  }
+
+  getUserCart() {
+    return this.apiRoot
+      .me()
+      .carts()
+      .get()
+      .execute();
+  }
+
+  addItemInCartByID(id: string, cartID: string, ver: number) {
+    return this.apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartID })
+      .post({
+        body: {
+          version: ver,
+          actions: [{
+            action: 'addLineItem',
+            productId: id,
+          }],
+        },
+      })
+      .execute();
+  }
+
+  getCurrentProducts(start: number, countProducts: number) {
+    const params: QueryParamsSearchProducts = {
+      queryArgs: {
+        offset: start,
+        limit: countProducts,
       },
     };
     return this.apiRoot

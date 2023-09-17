@@ -44,4 +44,5 @@ export type Attributes = {
   value?: string;
   style?: string;
   for?: string;
+  id?: string;
 };

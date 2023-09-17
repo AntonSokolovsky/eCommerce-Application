@@ -54,4 +54,11 @@
   width: 30px;
   height: 31px;
   background-color: aquamarine;
+  background: url(../../../../assets/cart.png);
+  background-size: cover;
+}
+
+.item__basket:hover {
+  cursor: pointer;
+  opacity: 0.3;
 }

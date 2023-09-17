@@ -1,4 +1,4 @@
-import { CustomerDraft, MyCustomerSignin, ProductProjection, ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
+import { CustomerDraft, MyCustomerSignin, ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 import { TokenStore } from '@commercetools/sdk-client-v2';
 
 export const enum CustomEventNames {
