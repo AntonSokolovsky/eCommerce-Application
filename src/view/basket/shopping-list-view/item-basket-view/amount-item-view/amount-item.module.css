@@ -4,6 +4,7 @@
 
 .amount-item__button {
     display: block;
+    width: 1rem;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -14,4 +15,5 @@ input[type="number"]::-webkit-inner-spin-button {
 .amount-item__input {
     display: block;
     appearance: none;
+    text-align: center;
 }

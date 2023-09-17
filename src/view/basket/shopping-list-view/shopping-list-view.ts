@@ -1,13 +1,26 @@
 import { Cart } from '@commercetools/platform-sdk';
 import Router from '../../../app/router/router';
-import { ViewParams } from '../../../type/params-element-type';
+import { ElementParams, ViewParams } from '../../../type/params-element-type';
 import View from '../../view';
 import styles from './shopping-list-view.module.css';
 import { ItemBasketView } from './item-basket-view/item-basket-view';
+import { Customer } from '../../../app/loader/customer';
+import { ElementCreator } from '../../../utilities/element-creator';
+import { Mediator } from '../../../app/controller/mediator';
+
+const TEXT = {
+  empty: 'Empty shopping cart',
+};
 
 export class ShoppingListView extends View {
 
+  private mediator = Mediator.getInstance();
+
   private router: Router;
+
+  private loader = new Customer();
+
+  private cart: Cart;
   
   constructor(router: Router, cart: Cart) {
     const params: ViewParams = {
@@ -15,8 +28,9 @@ export class ShoppingListView extends View {
       classNames: [styles['shopping-list']],
     };
     super(params);
-    this.configureView(cart);
     this.router = router;
+    this.cart = cart;
+    this.configureView(cart);
   }
   
   configureView(cart: Cart) {
@@ -24,5 +38,19 @@ export class ShoppingListView extends View {
       const productBasket = new ItemBasketView(lineItem, cart);
       this.viewElementCreator.addInsideElement(productBasket.getHtmlElement());
     });
+
+    const buttonEmptyCartParams: ElementParams = {
+      tag: 'button',
+      classNames: [styles['shopping-list__button-erase']],
+      textContent: TEXT.empty,
+      callback: () => this.removeShoppingCart(),
+    };
+    const creatorButtonEmptyCart = new ElementCreator(buttonEmptyCartParams);
+    this.viewElementCreator.addInsideElement(creatorButtonEmptyCart);
+  }
+
+  async removeShoppingCart() {
+    await this.loader.deleteCartById(this.cart.id, this.cart.version)
+      .then(() => this.mediator.updateBasket());
   }
 }

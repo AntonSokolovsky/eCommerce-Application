@@ -1,5 +1,6 @@
 .empty__container {
     display: flex;
+    flex-direction: column;
 }
 
 .empty__title {
@@ -12,4 +13,10 @@
 
 .empty__link {
     display: block;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.empty__link:hover {
+    color: blue;
 }

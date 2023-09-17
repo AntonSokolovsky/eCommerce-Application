@@ -55,8 +55,8 @@ export class BasketView extends View {
   }
 
   async getProductToBuy() {
-    const response = (await this.loader.getShoppingList());
-    this.handleResponse(response.body.results[8]);
+    const response = (await this.loader.getUserCart());
+    this.handleResponse(response.body.results[0]);
   }
 
   handleResponse(cart: Cart) {
@@ -86,11 +86,11 @@ export class BasketView extends View {
     }
   }
 
-  updateBasketView() {
+  async updateBasketView() {
     while (this.viewElementCreator.getElement().childNodes.length) {
       this.viewElementCreator.getElement().childNodes[0].remove();
     }
-    this.configureView();
+    await this.configureView();
   }
 }
   

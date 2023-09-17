@@ -7,7 +7,6 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { Customer } from '../../../../app/loader/customer';
 import { isUserLogin }  from '../../../../utilities/is-user-login';
 import { itemsMap } from '../../../../app/state/state';
-import { Body } from 'node-fetch';
 
 
 export default class ItemView extends View {
@@ -104,11 +103,11 @@ export default class ItemView extends View {
                     customer.getUserCart()
                       .then((d) => {
                         if (target && target instanceof Element) {
-                          customer.addItemInCartByID(itemsMap.get(Number(target.id)), d.body.results[0].id, d.body.results[0].version)
-                            .then(() => {
-                              customer.getUserCart().then((a) => console.log(a));
-                              alert('Добавлено!');
-                            });
+                          customer.addItemInCartByID(itemsMap.get(Number(target.id)), d.body.results[0].id, d.body.results[0].version);
+                          // .then(() => {
+                          //   customer.getUserCart().then((a) => console.log(a));
+                          //   alert('Добавлено!');
+                          // });
                         }
                       });
                   });
@@ -116,15 +115,15 @@ export default class ItemView extends View {
                 if (target && target instanceof Element) {
                   customer.addItemInCartByID(itemsMap.get(Number(target.id)), data.body.results[0].id, data.body.results[0].version)
                     .then(() => {
-                      customer.getUserCart().then((a) => console.log(a));
-                      alert('Добавлено!');
+                      customer.getUserCart();
+                      // .then((a) => console.log(a));
+                      // alert('Добавлено!');
                     });
                 }
               }
             });
         } else {
-        customer.createUserCart()
-        .then((data) => console.log(data));
+          customer.createUserCart();
         }
       },
     };

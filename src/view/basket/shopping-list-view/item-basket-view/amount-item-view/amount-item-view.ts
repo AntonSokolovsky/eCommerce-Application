@@ -87,6 +87,11 @@ export class AmountItemView extends View {
     } else if (event?.target instanceof HTMLButtonElement) {
       if (event.target.textContent === TEXT.buttonDecrease) {
         this.amountItem -= 1; 
+        if (this.amountItem === 0 && this.cart.lineItems.length === 1) {
+          this.loader.deleteCartById(this.cart.id, this.cart.version)
+            .then(() => this.mediator.updateBasket());
+          return;
+        }
       } else if (event.target.textContent === TEXT.buttonIncrease) {
         this.amountItem += 1;
       }

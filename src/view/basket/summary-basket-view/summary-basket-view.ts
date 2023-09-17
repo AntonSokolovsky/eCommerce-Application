@@ -60,7 +60,7 @@ export class SummaryBasketView extends View {
     const totalSummaryParams: ElementParams = {
       tag: 'p',
       classNames: [styles.summary__total],
-      textContent: `${TEXT.total} ${this.listTotal.total}`,
+      textContent: `${TEXT.total} ${this.listTotal.total / 100}`,
       callback: null,
     };
     const creatorTotalSummary = new ElementCreator(totalSummaryParams);
