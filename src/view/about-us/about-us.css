@@ -1,0 +1,90 @@
+.section-about {
+  padding: 26px 35px 7px 35px;
+  font-size: 25px;
+  line-height: 1.5;
+}
+
+.about__title {
+  margin: 0 0 15px 0;
+}
+
+.about__items_subtitle {
+  margin: 20px 0;
+  font-size: 40px;
+  text-align: center;
+}
+
+.about__item:nth-child(3) {
+  margin: 70px 0;
+}
+
+.about__img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 15px auto;
+
+  width: 300px;
+  height: 300px;
+  border: 1px solid #000;
+  background-color: #dbdbdb;
+}
+
+.about__name {
+  font-weight: 700;
+}
+
+.about__desc {
+  margin: 15px 0;
+}
+
+.about__contribution-subtitle {
+  margin: 15px 0;
+  font-weight: 700;
+}
+
+.about__contribution-desc {
+  margin: 15px 0;
+}
+
+.about__collaboration {
+  background-color: #dbdbdb;
+}
+
+.about__collaboration-title {
+  margin: 20px 0;
+  font-size: 40px;
+  text-align: center;
+}
+
+.about__collaboration-desc {
+  margin: 15px 0;
+}
+
+.about__collaboration-subt {
+  font-weight: 700;
+}
+
+.about__collaboration-text {
+  margin: 15px 0;
+}
+
+.about__logo {
+  margin: 0 auto;
+  padding: 0 3px;
+  box-sizing: border-box;
+
+  display: block;
+
+  width: 142px;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid #000;
+
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+  font-size: 30px;
+  font-weight: 700;
+}
