@@ -16,6 +16,7 @@ const NamePages = {
   REGISTER: 'Register',
   BASKET: 'Basket',
   ACCOUNT: 'Account',
+  ABOUT_US: 'About us',
 };
 
 export default class NavHeaderView extends View {

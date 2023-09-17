@@ -29,6 +29,7 @@ export type Attributes = {
   capture?: string;
   checked?: string;
   disabled?: string;
+  href?: string;
   list?: string;
   max?: string;
   maxlength?: string;

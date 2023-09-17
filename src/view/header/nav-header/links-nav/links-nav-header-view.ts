@@ -30,7 +30,9 @@ export default class LinkNavHeaderView extends View {
   }
 
   configureView(pageParam: { name: string, callback: (event: Event) => void }) {
-    this.viewElementCreator.setTextContent(pageParam.name);
+    if (pageParam.name !== 'Basket') {
+      this.viewElementCreator.setTextContent(pageParam.name);
+    }
     this.viewElementCreator.setCallback(pageParam.callback);
 
     const element = this.viewElementCreator.getElement();
