@@ -1,0 +1,15 @@
+.item-basket__container {
+    display: flex;
+}
+
+.item-basket__title {
+    display: block;
+}
+
+.item-basket__image {
+    display: block;
+}
+
+.item-basket__amount {
+    display: block;
+}

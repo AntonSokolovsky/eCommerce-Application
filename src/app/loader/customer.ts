@@ -7,6 +7,7 @@ import {
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
 import { QueryParamsSearchProducts } from '../../type/products-type';
+import { UpdateQuantityParams } from '../../type/basket-type';
 
 export class Customer {
   protected apiRoot;
@@ -209,4 +210,70 @@ export class Customer {
       })
       .execute();
   }
+
+  getShoppingList() {
+    return this.apiRoot
+    // .me()
+      .carts()
+      .get()
+      .execute();
+  }
+
+  updateAmountItemBasket(params: UpdateQuantityParams, cartId: string) {
+    // const params: UpdateQuantityParams = {
+    //   body: {
+    //     version: 2,
+    //     actions: [{
+    //       action: 'changeLineItemQuantity',
+    //       lineItemId: lineItemId,
+    //       quantity: newAmount,
+    //     }],
+    //   },
+    // };
+    return this.apiRoot
+      // .me()
+      .carts()
+      .withId({ ID: cartId })
+      .post(params)
+      .execute();
+  }
+
+  //ToDo: remove before PR. from here until 205
+  // createUserCart(anonymousId?: string) {
+  //   const params  = {
+  //     body: {
+  //       currency: 'EUR',
+  //     },
+  //   };
+  //   return this.apiRoot
+  //     .me()
+  //     .carts()
+  //     .post(params)
+  //     .execute();
+  // }
+
+  getUserCart() {
+    return this.apiRoot
+      .me()
+      .carts()
+      .get()
+      .execute();
+  }
+
+  // addItemInCartByID(id: string, cartID: string, ver: number) {
+  //   return this.apiRoot
+  //     .me()
+  //     .carts()
+  //     // .withId({ ID: cartID })
+  //     .post({
+  //       body: {
+  //         version: ver,
+  //         actions: [{
+  //           action: 'addLineItem',
+  //           productId: id,
+  //         }],
+  //       },
+  //     })
+  //     .execute();
+  // }
 }

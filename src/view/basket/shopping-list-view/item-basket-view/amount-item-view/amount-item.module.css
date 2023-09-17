@@ -1,0 +1,17 @@
+.amount-item__container {
+    display: flex;
+}
+
+.amount-item__button {
+    display: block;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; 
+}
+
+.amount-item__input {
+    display: block;
+    appearance: none;
+}
