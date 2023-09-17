@@ -8,6 +8,9 @@ export const enum CustomEventNames {
   PRODUCT_ADD = 'product-add',
   PRODUCT_REMOVE = 'product-remove',
   PRODUCTS_FILTER = 'products-filter',
+  BASKET_CHECKOUT = 'basket-checkout',
+  BASKET_CLEAR = 'basket-clear',
+  BASKET_UPDATE = 'basket-update',
 }
 
 export type ListenerMethod = (param?: ParamsCustomEvent) => void; 

@@ -109,10 +109,10 @@
 }
 
 .logInLink {
-    position: relative;
+    /* position: relative; */
     max-width: 270px;
     font-size: 35px;
-    top: 63px;
+    /* top: 63px; */
     color: white;
 }
 

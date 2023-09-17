@@ -1,12 +1,13 @@
 .logInregView {
-    height: 2500px;
+    min-height: 80vh;
 }
 @media (min-width: 751px) {
     .RgVindow {
-        position: relative;
+        /* position: relative;
         top: 57px;
-        left: 55px;
+        left: 55px; */
         
+        padding: 5rem;
         margin: 0;
         max-width: 585px;
     }

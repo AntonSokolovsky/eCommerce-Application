@@ -11,6 +11,7 @@ import { ID_SELECTOR, Pages } from './../app/router/pages';
 import LogInView from '../view/log-in/log-in_view';
 import RegView from '../view/registration/reg-view';
 import AccountView from '../view/account/account_View';
+import { BasketView } from '../view/basket/basket-view';
 
 
 export default class App {
@@ -95,6 +96,12 @@ export default class App {
         path: `${Pages.NOT_FOUND}`,
         callback: () => {
           this.setContent(Pages.NOT_FOUND, new NotFoundView(this.router));
+        },
+      },
+      {
+        path: `${Pages.BASKET}`,
+        callback: () => {
+          this.setContent(Pages.BASKET, new BasketView(this.router));
         },
       },
     ];

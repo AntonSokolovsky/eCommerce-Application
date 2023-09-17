@@ -1,0 +1,27 @@
+.section-basket {
+    display: flex;
+    flex-direction: column;
+}
+
+.basket__title {
+    display: block;
+}
+
+.basket__empty-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.basket__wrapper-cart {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.basket__list {
+    display: flex;
+    flex-direction: column;
+}
+
+.basket__summary {
+    display: flex;
+}

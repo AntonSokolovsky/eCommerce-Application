@@ -1,0 +1,15 @@
+.empty__container {
+    display: flex;
+}
+
+.empty__title {
+    display: block;
+}
+
+.empty__subtitle {
+    display: block;
+}
+
+.empty__link {
+    display: block;
+}

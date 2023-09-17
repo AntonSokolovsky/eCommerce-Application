@@ -1,0 +1,24 @@
+.summary__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.summary__title {
+    display: block;
+}
+
+.summary__subtotal {
+    display: block;
+}
+
+.summary__discounts {
+    display: block;
+}
+
+.summary__total {
+    display: block;
+}
+
+.summary__button-checkout {
+    display: block;
+}
