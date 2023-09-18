@@ -1,13 +1,14 @@
 import './nav-footer.css';
 import View from '../../view';
 import LinkNavFooterView from './links-nav/links-nav-footer-view';
-import { ElementCreator } from '../../../utilities/element-creator';
+// import { ElementCreator } from '../../../utilities/element-creator';
 import Router from '../../../app/router/router';
 import { Pages } from '../../../app/router/pages';
 
 const NamePages = {
   FIRSTPAGE: 'Main',
   CATALOG: 'Catalog',
+  ABOUT_US: 'About us',
 };
 
 export default class NavFooterView extends View {
@@ -36,15 +37,6 @@ export default class NavFooterView extends View {
 
       this.linkElements.set(Pages[key], linkElement);
     });
-
-    const paramsItemBottom = {
-      tag: 'div',
-      classNames: ['itemBottom'],
-      textContent: 'About Us',
-      callback: null,
-    };
-    const creatorItemBottom = new ElementCreator(paramsItemBottom);
-    this.viewElementCreator.addInsideElement(creatorItemBottom);
   }
 
   setSelectedItem(namePage: string) {

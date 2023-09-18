@@ -65,13 +65,13 @@ export default class App {
       {
         path: `${Pages.CATALOG}`,
         callback: () => {
-          this.setContent(Pages.FIRSTPAGE, new CatalogView(this.router));
+          this.setContent(Pages.CATALOG, new CatalogView(this.router));
         },
       },
       {
         path: `${Pages.CATALOG}/${ID_SELECTOR}`,
         callback: (id?: string) => {
-          this.setContent(Pages.FIRSTPAGE, new CatalogView(this.router, id));
+          this.setContent(Pages.CATALOG, new CatalogView(this.router, id));
         },
       },
       {

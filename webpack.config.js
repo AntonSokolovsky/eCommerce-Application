@@ -15,6 +15,7 @@ const baseConfig = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
     assetModuleFilename: 'assets/[hash][ext]',
+    publicPath: '/',
   },
   devServer: {
     open: true,
@@ -71,10 +72,10 @@ const baseConfig = {
   resolve: {
     extensions: ['.ts', '.js'],
   },
-  output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, '../dist'),
-},
+//   output: {
+//     filename: 'index.js',
+//     path: path.resolve(__dirname, '../dist'),
+// },
 };
 
 module.exports = ({ mode }) => {

@@ -2,6 +2,7 @@
     margin: 0;
     font-size: 80px;
     font-weight: normal;
+    cursor: pointer;
 }
 
 @media (max-width: 800px) {

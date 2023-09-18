@@ -55,10 +55,11 @@ export default class AboutUsView extends View {
       const paramsItemImg = {
         tag: 'div',
         classNames: ['about__img'],
-        textContent: `${i}`,
+        textContent: '',
         callback: null,
       };
       const creatorItemImg = new ElementCreator(paramsItemImg);
+      creatorItemImg.getElement().classList.add(`img${i}`);
       creatorItem.addInsideElement(creatorItemImg);
 
       const paramsItemNames = {
