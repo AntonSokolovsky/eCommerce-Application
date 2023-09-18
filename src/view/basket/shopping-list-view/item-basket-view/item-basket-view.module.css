@@ -32,3 +32,8 @@
     width: 9rem;
     text-align: center;
 }
+
+.item-basket__delete {
+    display: block;
+    cursor: pointer;
+}
