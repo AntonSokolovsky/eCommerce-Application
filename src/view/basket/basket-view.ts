@@ -9,7 +9,6 @@ import { Customer } from '../../app/loader/customer';
 import { Mediator } from '../../app/controller/mediator';
 import { ShoppingListView } from './shopping-list-view/shopping-list-view';
 import { SummaryBasketView } from './summary-basket-view/summary-basket-view';
-import { SummaryBasketParams } from '../../type/basket-type';
 import { CustomEventNames } from '../../type/mediator-type';
 
 const TEXT = {
@@ -74,14 +73,10 @@ export class BasketView extends View {
 
       const shoppingListView = new ShoppingListView(this.router, cart);
       creatorWrapCart.addInsideElement(shoppingListView.getHtmlElement());
-      const listSummary: SummaryBasketParams = {
-        total: cart.totalPrice.centAmount,
-        count: cart.lineItems.length,
-        discount: 13, //ToDo implement right income params of discount
-        //   subtotalBasket: cart.totalPrice.centAmount + cart.directDiscounts[0].value,
-      };
-      const summary = new SummaryBasketView(listSummary);
+
+      const summary = new SummaryBasketView(cart);
       creatorWrapCart.addInsideElement(summary.getHtmlElement());
+      
       this.viewElementCreator.addInsideElement(creatorWrapCart);
     }
   }

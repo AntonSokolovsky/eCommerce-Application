@@ -3,7 +3,9 @@ import { Mediator } from '../../../app/controller/mediator';
 import { ElementParams, ViewParams } from '../../../type/params-element-type';
 import { ElementCreator } from '../../../utilities/element-creator';
 import View from '../../view';
-import { SummaryBasketParams } from '../../../type/basket-type';
+import { PromoCodeEnteringView } from './entering-promo-code-view/entering-promo-code-view';
+import { Cart } from '@commercetools/platform-sdk';
+import { CurrencySymbols } from '../../../type/enum-currencies';
 
 const TEXT = {
   title: 'Order summary',
@@ -17,15 +19,15 @@ export class SummaryBasketView extends View {
 
   private mediator = Mediator.getInstance();
 
-  private listTotal;
+  private cart;
   
-  constructor(listTotal: SummaryBasketParams) {//ToDo
+  constructor(cart: Cart) {
     const params: ViewParams = {
       tag: 'div',
       classNames: [styles.summary__container],
     };
     super(params);
-    this.listTotal = listTotal;
+    this.cart = cart;
     this.configureView();
   }
   
@@ -39,10 +41,30 @@ export class SummaryBasketView extends View {
     const creatorTitleSummary = new ElementCreator(titleSummaryParams);
     this.viewElementCreator.addInsideElement(creatorTitleSummary);
 
+    let subTotalValue = 0;
+    let discountValue = 0;
+    this.cart.lineItems.forEach((lineItem) => {
+      subTotalValue = subTotalValue + (lineItem.price.value.centAmount * lineItem.quantity);
+      if (lineItem.price.discounted && lineItem.discountedPricePerQuantity.length) {
+        discountValue = discountValue
+        + ((lineItem.discountedPricePerQuantity[0].discountedPrice.value.centAmount
+        + (lineItem.price.value.centAmount - lineItem.price.discounted?.value.centAmount))
+        * lineItem.quantity);
+      } else if (lineItem.discountedPricePerQuantity.length && !lineItem.price.discounted) {
+        discountValue = discountValue
+        + (lineItem.discountedPricePerQuantity[0].discountedPrice.value.centAmount
+        * lineItem.quantity);
+      } else if (!lineItem.discountedPricePerQuantity.length && lineItem.price.discounted) {
+        discountValue = discountValue
+        + ((lineItem.price.value.centAmount - lineItem.price.discounted?.value.centAmount)
+        * lineItem.quantity);
+      }
+    });
+    
     const subtotalSummaryParams: ElementParams = {
       tag: 'p',
       classNames: [styles.summary__subtotal],
-      textContent: TEXT.subtotal,
+      textContent: `${TEXT.subtotal} ${subTotalValue / 100} ${CurrencySymbols.EUR}`,
       callback: null,
     };
     const creatorSubtotalSummary = new ElementCreator(subtotalSummaryParams);
@@ -51,7 +73,7 @@ export class SummaryBasketView extends View {
     const discountsSummaryParams: ElementParams = {
       tag: 'p',
       classNames: [styles.summary__discounts],
-      textContent: `${TEXT.discounts} ${this.listTotal.discount}`,
+      textContent: `${TEXT.discounts} -${discountValue / 100} ${CurrencySymbols.EUR}`,
       callback: null,
     };
     const creatorDiscountsSummary = new ElementCreator(discountsSummaryParams);
@@ -60,11 +82,14 @@ export class SummaryBasketView extends View {
     const totalSummaryParams: ElementParams = {
       tag: 'p',
       classNames: [styles.summary__total],
-      textContent: `${TEXT.total} ${this.listTotal.total / 100}`,
+      textContent: `${TEXT.total} ${this.cart.totalPrice.centAmount / 100} ${CurrencySymbols.EUR}`,
       callback: null,
     };
     const creatorTotalSummary = new ElementCreator(totalSummaryParams);
     this.viewElementCreator.addInsideElement(creatorTotalSummary);
+
+    const promoCodeBlock = new PromoCodeEnteringView(this.cart);
+    this.viewElementCreator.addInsideElement(promoCodeBlock.getHtmlElement());
 
     const buttonCheckoutSummaryParams: ElementParams = {
       tag: 'button',

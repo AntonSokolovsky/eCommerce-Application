@@ -93,7 +93,9 @@ export class Customer {
       .execute();
   }
 
-  createUserCart(anonymousId?: string) {
+  //ToDo: implement create cart anonim token 
+  // createUserCart(anonymousId?: string) {
+  createUserCart() {
     const params  = {
       body: {
         currency: 'EUR',
@@ -210,15 +212,16 @@ export class Customer {
       .execute();
   }
 
-  getShoppingList() {
+  updateAmountItemBasket(params: UpdateQuantityParams, cartId: string) {
     return this.apiRoot
-    // .me()
+      .me()
       .carts()
-      .get()
+      .withId({ ID: cartId })
+      .post(params)
       .execute();
   }
 
-  updateAmountItemBasket(params: UpdateQuantityParams, cartId: string) {
+  addDiscountCode(params: UpdateQuantityParams, cartId: string) {
     return this.apiRoot
       .me()
       .carts()
@@ -238,6 +241,20 @@ export class Customer {
       .carts()
       .withId({ ID: cartId })
       .delete(params)
+      .execute();
+  }
+
+  getPromoCodeById() {
+    return this.apiRoot
+      .discountCodes()
+      .get()
+      .execute();
+  }
+
+  getDiscount() {
+    return this.apiRoot
+      .cartDiscounts()
+      .get()
       .execute();
   }
 }
