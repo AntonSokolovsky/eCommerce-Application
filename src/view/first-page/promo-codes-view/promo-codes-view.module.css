@@ -1,0 +1,20 @@
+.promocodes__container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.promocodes__title {
+    display: block;
+}
+
+.promocodes__subtitle {
+    display: block;
+}
+
+.promocodes__list {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
