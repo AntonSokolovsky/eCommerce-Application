@@ -4,6 +4,10 @@
   background-color: #a6d84b;
 } */
 
+.nav__item {
+  cursor: pointer;
+}
+
 .nav__item .selected {
   color: #0000ff;
 }
