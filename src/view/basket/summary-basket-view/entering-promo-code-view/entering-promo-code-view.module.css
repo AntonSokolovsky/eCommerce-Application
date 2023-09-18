@@ -1,0 +1,40 @@
+.promo-code__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.promo-code__title {
+    display: block;
+}
+
+.promo-code__form {
+    display: flex;
+    margin: 0.2rem 0 1rem 0;
+}
+
+.promo-code__input {
+    display: block;
+}
+
+.promo-code__button {
+    display: block;
+    cursor: pointer;
+    background-color: var(--main-bg-color-accent);
+}
+
+.promo-code__info {
+    width: 10rem;
+    display: block;
+    background-color: var(--main-bg-color);
+    border: 0.05rem solid var(--border-color);
+    text-align: center;
+}
+
+.promo-code__remove {
+    width: 1rem;
+    display: block;
+    text-align: center;
+    background-color: var(--main-bg-color-accent);
+    border: 0.1rem solid var(--border-color);
+    cursor: pointer;
+}

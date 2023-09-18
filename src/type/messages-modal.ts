@@ -4,4 +4,6 @@ export const enum MessagesModalWindow {
   REGISTER_SUCCESS_MESSAGE = 'you have successfully registered',
   REGISTER_ERROR_MESSAGE = 'user with such credentials already exists',
   PRODUCTS_FILTER_ERROR_MESSAGE = 'No such products found. Change your search options',
+  PROMOCODE_ADD_SUCCESS = 'You have successfully applied the promo code',
+  PROMOCODE_ADD_ERROR = 'You are using an invalid promotional code. Try another one',
 }

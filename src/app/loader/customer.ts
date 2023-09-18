@@ -1,12 +1,12 @@
 import { UserAuthOptions } from '@commercetools/sdk-client-v2';
 import { createFlow } from '../../sdk/client';
 import {
-  Cart,
   CustomerDraft,
   MyCustomerSignin,
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
 import { QueryParamsSearchProducts } from '../../type/products-type';
+import { UpdateQuantityParams } from '../../type/basket-type';
 
 export class Customer {
   protected apiRoot;
@@ -93,7 +93,9 @@ export class Customer {
       .execute();
   }
 
-  createUserCart(anonymousId?: string) {
+  //ToDo: implement create cart anonim token 
+  // createUserCart(anonymousId?: string) {
+  createUserCart() {
     const params  = {
       body: {
         currency: 'EUR',
@@ -207,6 +209,52 @@ export class Customer {
           actions,
         },
       })
+      .execute();
+  }
+
+  updateAmountItemBasket(params: UpdateQuantityParams, cartId: string) {
+    return this.apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .post(params)
+      .execute();
+  }
+
+  addDiscountCode(params: UpdateQuantityParams, cartId: string) {
+    return this.apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .post(params)
+      .execute();
+  }
+
+  async deleteCartById(cartId: string, versionCart: number) {
+    const params = {
+      queryArgs: {
+        version: versionCart,
+      },
+    };
+    return this.apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .delete(params)
+      .execute();
+  }
+
+  getPromoCodeById() {
+    return this.apiRoot
+      .discountCodes()
+      .get()
+      .execute();
+  }
+
+  getDiscount() {
+    return this.apiRoot
+      .cartDiscounts()
+      .get()
       .execute();
   }
 }
