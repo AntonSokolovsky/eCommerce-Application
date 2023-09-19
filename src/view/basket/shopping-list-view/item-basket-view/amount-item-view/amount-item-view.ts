@@ -51,6 +51,9 @@ export class AmountItemView extends View {
     };
 
     const creatorButtonDecrease = new ElementCreator(buttonChangeCountParams);
+    if (this.amountItem === limitAmountProduct.min + 1) {
+      creatorButtonDecrease.getElement().classList.add(styles['amount-item__button_remove']);
+    }
     creatorButtonDecrease.setTextContent(TEXT.buttonDecrease);
     creatorButtonDecrease.setAttributeElement({ 'type': 'button' });
     this.viewElementCreator.addInsideElement(creatorButtonDecrease);
@@ -85,7 +88,7 @@ export class AmountItemView extends View {
         await this.updateBasket();
       }
     } else if (event?.target instanceof HTMLButtonElement) {
-      if (event.target.textContent === TEXT.buttonDecrease) {
+      if (event.target.textContent !== TEXT.buttonIncrease) {
         this.amountItem -= 1; 
         if (this.amountItem === 0 && this.cart.lineItems.length === 1) {
           this.loader.deleteCartById(this.cart.id, this.cart.version)
