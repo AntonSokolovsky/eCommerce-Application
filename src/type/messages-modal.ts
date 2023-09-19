@@ -6,4 +6,6 @@ export const enum MessagesModalWindow {
   PRODUCTS_FILTER_ERROR_MESSAGE = 'No such products found. Change your search options',
   PROMOCODE_ADD_SUCCESS = 'You have successfully applied the promo code',
   PROMOCODE_ADD_ERROR = 'You are using an invalid promotional code. Try another one',
+  PROMOCODE_COPY_SUCCESS = 'was successfully copied',
+  PROMOCODE_COPY_ERROR = 'Promocode was not copied. Try again',
 }
