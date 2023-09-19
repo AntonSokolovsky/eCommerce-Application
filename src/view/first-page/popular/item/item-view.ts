@@ -5,8 +5,9 @@ import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { Customer } from '../../../../app/loader/customer';
-import { isUserLogin }  from '../../../../utilities/is-user-login';
 import { itemsMap } from '../../../../app/state/state';
+import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
+import { MessagesModalWindow } from '../../../../type/messages-modal';
 
 
 export default class ItemView extends View {
@@ -93,38 +94,34 @@ export default class ItemView extends View {
       textContent: '',
       callback: (e: Event) => {
         const target = e.target;
-        if (isUserLogin()) {
-          customer.getUserCart()
-            .then((data) => {
-              if (data.body.results.length === 0) {
-                customer.createUserCart()
-                  .then(() => {
-                    alert('Создал!');
-                    customer.getUserCart()
-                      .then((d) => {
-                        if (target && target instanceof Element) {
-                          customer.addItemInCartByID(itemsMap.get(Number(target.id)), d.body.results[0].id, d.body.results[0].version);
-                          // .then(() => {
-                          //   customer.getUserCart().then((a) => console.log(a));
-                          //   alert('Добавлено!');
-                          // });
-                        }
-                      });
-                  });
-              } else {
-                if (target && target instanceof Element) {
-                  customer.addItemInCartByID(itemsMap.get(Number(target.id)), data.body.results[0].id, data.body.results[0].version)
-                    .then(() => {
-                      customer.getUserCart();
-                      // .then((a) => console.log(a));
-                      // alert('Добавлено!');
+        customer.getUserCart()
+          .then((data) => {
+            if (data.body.results.length === 0) {
+              customer.createUserCart()
+                .then(() => {
+                  // alert('Создал!');
+                  customer.getUserCart()
+                    .then((d) => {
+                      if (target && target instanceof Element) {
+                        customer.addItemInCartByID(itemsMap.get(Number(target.id)), d.body.results[0].id, d.body.results[0].version)
+                          .then(() => {
+                            const message = `${product.name['en-US']} ${MessagesModalWindow.PRODUCT_ADD_CART_SUCCESS}`;
+                            this.showModalWindow(message);
+                          });
+                      }
                     });
-                }
+                });
+            } else {
+              if (target && target instanceof Element) {
+                customer.addItemInCartByID(itemsMap.get(Number(target.id)), data.body.results[0].id, data.body.results[0].version)
+                  .then(() => {
+                    const message = `${product.name['en-US']} ${MessagesModalWindow.PRODUCT_ADD_CART_SUCCESS}`;
+                    this.showModalWindow(message);
+                    customer.getUserCart();
+                  });
               }
-            });
-        } else {
-          customer.createUserCart();
-        }
+            }
+          });
       },
     };
 
@@ -135,5 +132,10 @@ export default class ItemView extends View {
 
   buttonClickHandler(url: string) {
     this.router.navigate(url);
+  }
+
+  showModalWindow(message: string) {
+    const modalWindow = new ModalWindowRequest(message);
+    return modalWindow;
   }
 }
