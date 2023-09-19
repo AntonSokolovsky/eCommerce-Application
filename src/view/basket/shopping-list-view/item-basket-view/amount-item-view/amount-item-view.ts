@@ -88,6 +88,7 @@ export class AmountItemView extends View {
         await this.updateBasket();
       }
     } else if (event?.target instanceof HTMLButtonElement) {
+      event.target.setAttribute('disabled', '');
       if (event.target.textContent !== TEXT.buttonIncrease) {
         this.amountItem -= 1; 
         if (this.amountItem === 0 && this.cart.lineItems.length === 1) {
