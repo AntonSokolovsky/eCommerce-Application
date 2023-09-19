@@ -6,12 +6,10 @@ import View from '../../../../view';
 import styles from './amount-item.module.css';
 import { MyEnumCartAction, UpdateQuantityParams } from '../../../../../type/basket-type';
 import { Customer } from '../../../../../app/loader/customer';
-import { trashBag } from '../../../../../utilities/trash-bag';
 
 const TEXT = {
   buttonIncrease: '+',
   buttonDecrease: '-',
-  buttonDelete: '&#128465',
 };
 
 const limitAmountProduct = {
@@ -54,10 +52,9 @@ export class AmountItemView extends View {
 
     const creatorButtonDecrease = new ElementCreator(buttonChangeCountParams);
     if (this.amountItem === limitAmountProduct.min + 1) {
-      creatorButtonDecrease.setInnerHtml(trashBag);
-    } else {
-      creatorButtonDecrease.setTextContent(TEXT.buttonDecrease);
+      creatorButtonDecrease.getElement().classList.add(styles['amount-item__button_remove']);
     }
+    creatorButtonDecrease.setTextContent(TEXT.buttonDecrease);
     creatorButtonDecrease.setAttributeElement({ 'type': 'button' });
     this.viewElementCreator.addInsideElement(creatorButtonDecrease);
 
@@ -91,7 +88,7 @@ export class AmountItemView extends View {
         await this.updateBasket();
       }
     } else if (event?.target instanceof HTMLButtonElement) {
-      if (event.target.textContent === TEXT.buttonDecrease || event.target.textContent === TEXT.buttonDelete) {
+      if (event.target.textContent !== TEXT.buttonIncrease) {
         this.amountItem -= 1; 
         if (this.amountItem === 0 && this.cart.lineItems.length === 1) {
           this.loader.deleteCartById(this.cart.id, this.cart.version)

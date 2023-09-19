@@ -17,3 +17,18 @@ input[type="number"]::-webkit-inner-spin-button {
     appearance: none;
     text-align: center;
 }
+
+.amount-item__button_remove {
+    background-image: url(../../../../../assets/trash-bag.png);
+    background-size: 11px;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-position: center;
+    border: 0.01rem solid;
+    border-radius: 10%;
+    font-size: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: help;
+
+}
