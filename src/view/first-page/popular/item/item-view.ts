@@ -8,10 +8,13 @@ import { Customer } from '../../../../app/loader/customer';
 import { itemsMap } from '../../../../app/state/state';
 import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
 import { MessagesModalWindow } from '../../../../type/messages-modal';
+import { Mediator } from '../../../../app/controller/mediator';
 
 
 export default class ItemView extends View {
   router: Router;
+
+  private mediator = Mediator.getInstance();
 
   constructor(router: Router, product: ProductProjection, id: number) {
     const params = {
@@ -106,6 +109,7 @@ export default class ItemView extends View {
                         customer.addItemInCartByID(itemsMap.get(Number(target.id)), d.body.results[0].id, d.body.results[0].version)
                           .then(() => {
                             const message = `${product.name['en-US']} ${MessagesModalWindow.PRODUCT_ADD_CART_SUCCESS}`;
+                            this.mediator.updateBasket();
                             this.showModalWindow(message);
                           });
                       }
@@ -116,6 +120,7 @@ export default class ItemView extends View {
                 customer.addItemInCartByID(itemsMap.get(Number(target.id)), data.body.results[0].id, data.body.results[0].version)
                   .then(() => {
                     const message = `${product.name['en-US']} ${MessagesModalWindow.PRODUCT_ADD_CART_SUCCESS}`;
+                    this.mediator.updateBasket();
                     this.showModalWindow(message);
                     customer.getUserCart();
                   });
