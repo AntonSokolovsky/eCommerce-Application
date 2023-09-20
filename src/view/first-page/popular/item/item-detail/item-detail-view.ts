@@ -4,7 +4,13 @@ import { ElementCreator } from '../../../../../utilities/element-creator';
 import ItemPopUp from '../item-popUp/item-popUp-view';
 import View from '../../../../view';
 import Router from '../../../../../app/router/router';
-import { ProductProjection } from '@commercetools/platform-sdk';
+import { MyCartChangeLineItemQuantityAction, ProductProjection } from '@commercetools/platform-sdk';
+import { Customer } from '../../../../../app/loader/customer';
+import { itemsMap } from '../../../../../app/state/state';
+import { ModalWindowRequest } from '../../../../modal-window-response-view/modal-window-request';
+import { MessagesModalWindow } from '../../../../../type/messages-modal';
+import { Mediator } from '../../../../../app/controller/mediator';
+import { MyEnumCartAction, UpdateQuantityParams } from '../../../../../type/basket-type';
 
 
 const CssClasses = {
@@ -20,17 +26,21 @@ const ITEM_TEXT_BACK = 'Назад...';
 export default class ItemDetailView extends View {
   router: Router;
 
-  constructor(router: Router, paramItem: ProductProjection) {
+  private mediator = Mediator.getInstance();
+
+  constructor(router: Router, paramItem: ProductProjection, id: number) {
     const params = {
       tag: 'div',
       classNames: [CssClasses.CONTAINER, CssClasses.CONTAINER_DETAIL],
     };
     super(params);
-    this.configureView(paramItem);
+    this.configureView(paramItem, id);
     this.router = router;
   }
 
-  configureView(paramItem: ProductProjection) {
+  configureView(paramItem: ProductProjection, id: number) {
+    const customer = new Customer();
+
     const imgParams = {
       tag: 'div',
       classNames: [CssClasses.DETAIL_IMG],
@@ -125,9 +135,81 @@ export default class ItemDetailView extends View {
       tag: 'div',
       classNames: ['item__basket'],
       textContent: '',
-      callback: null,
+      callback: (e: Event) => {
+        const target = e.target;
+        if (target && target instanceof Element) {
+          if (target.classList.contains('basket_selected')) {
+            target.classList.remove('basket_selected');
+            customer.getUserCart()
+              .then((data) => {
+                data.body.results[0].lineItems.forEach(item => {
+                  if (item.name['en-US'] === paramItem.name['en-US']) {
+                    const paramsAmountUpdate: UpdateQuantityParams = {
+                      body: {
+                        version: data.body.results[0].version,
+                        actions: [<MyCartChangeLineItemQuantityAction>{
+                          action: MyEnumCartAction.MyCartChangeLineItemQuantityAction,
+                          lineItemId: item.id,
+                          quantity: 0,
+                        }],
+                      },
+                    };
+                    customer.updateAmountItemBasket(paramsAmountUpdate, data.body.results[0].id)
+                      .then(() => {
+                        const message = `${paramItem.name['en-US']} ${MessagesModalWindow.PRODUCT_DELETE_CART_SUCCESS}`;
+                        this.mediator.updateBasket();
+                        this.showModalWindow(message);
+                        customer.getUserCart();
+                      });
+                  }
+                });
+              });
+          } else {
+            target.classList.add('basket_selected');
+            customer.getUserCart()
+              .then((data) => {
+                if (data.body.results.length === 0) {
+                  customer.createUserCart()
+                    .then(() => {
+                      // alert('Создал!');
+                      customer.getUserCart()
+                        .then((d) => {
+                          if (target && target instanceof Element) {
+                            customer.addItemInCartByID(itemsMap.get(Number(target.id)), d.body.results[0].id, d.body.results[0].version)
+                              .then(() => {
+                                const message = `${paramItem.name['en-US']} ${MessagesModalWindow.PRODUCT_ADD_CART_SUCCESS}`;
+                                this.mediator.updateBasket();
+                                this.showModalWindow(message);
+                              });
+                          }
+                        });
+                    });
+                } else {
+                  if (target && target instanceof Element) {
+                    customer.addItemInCartByID(itemsMap.get(Number(target.id)), data.body.results[0].id, data.body.results[0].version)
+                      .then(() => {
+                        const message = `${paramItem.name['en-US']} ${MessagesModalWindow.PRODUCT_ADD_CART_SUCCESS}`;
+                        this.mediator.updateBasket();
+                        this.showModalWindow(message);
+                        customer.getUserCart();
+                      });
+                  }
+                }
+              });
+          }
+        }
+      },
     };
     const creatorBasket = new ElementCreator(paramsBasket);
+    creatorBasket.setAttributeElement({ id: String(id) });
+    customer.getUserCart()
+      .then((data) => {
+        data.body.results[0].lineItems.forEach(item => {
+          if (item.name['en-US'] === paramItem.name['en-US']) {
+            creatorBasket.setElementClass(['basket_selected']);
+          }
+        });
+      });
     creatorToolbar.addInsideElement(creatorBasket);
 
     const buttonParams = {
@@ -147,5 +229,10 @@ export default class ItemDetailView extends View {
 
   buttonClickHandler(url: string) {
     this.router.navigate(url);
+  }
+
+  showModalWindow(message: string) {
+    const modalWindow = new ModalWindowRequest(message);
+    return modalWindow;
   }
 }

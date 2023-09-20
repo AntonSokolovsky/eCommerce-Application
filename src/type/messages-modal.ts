@@ -9,4 +9,5 @@ export const enum MessagesModalWindow {
   PROMOCODE_COPY_SUCCESS = 'was successfully copied',
   PROMOCODE_COPY_ERROR = 'Promocode was not copied. Try again',
   PRODUCT_ADD_CART_SUCCESS = 'was successfully added to your basket',
+  PRODUCT_DELETE_CART_SUCCESS = 'was successfully deleted to your basket',
 }

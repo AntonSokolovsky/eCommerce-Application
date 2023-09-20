@@ -198,13 +198,13 @@ export default class CatalogView extends View {
     if (params) {
       if (params.productsProjection?.results) {
         const productsProjection = params.productsProjection;
-        const largeCardComponent = new ItemDetailView(router, productsProjection?.results[+id]);
+        const largeCardComponent = new ItemDetailView(router, productsProjection?.results[+id], +id);
         this.viewElementCreator.addInsideElement(largeCardComponent.getHtmlElement());
       }
     } else {
       this.loader.getAllProducts()
         .then((data) => {
-          const largeCardComponent = new ItemDetailView(router, data.body.results[+id]);
+          const largeCardComponent = new ItemDetailView(router, data.body.results[+id], +id);
           this.viewElementCreator.addInsideElement(largeCardComponent.getHtmlElement());
         });
     }
