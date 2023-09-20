@@ -8,6 +8,8 @@ import { Pages } from '../../../app/router/pages';
 import { isUserLogin } from '../../../utilities/is-user-login';
 import { CustomEventNames } from '../../../type/mediator-type';
 import { TokenNames } from '../../../type/enum-token';
+import { ElementParams } from '../../../type/params-element-type';
+import { Customer } from '../../../app/loader/customer';
 
 const NamePages = {
   FIRSTPAGE: 'Main',
@@ -24,6 +26,10 @@ export default class NavHeaderView extends View {
   
   logoutButton: HTMLElement[] = [];
 
+  private loader = new Customer();
+
+  private basketButton: LinkNavHeaderView | null;
+
   private mediator = Mediator.getInstance();
 
   constructor(router: Router) {
@@ -33,8 +39,10 @@ export default class NavHeaderView extends View {
     };
     super(params);
     this.linkElements = new Map();
+    this.basketButton = null;
     this.configureView(router);
     this.mediator.subscribe(CustomEventNames.CUSTOMER_LOGIN, this.authHandler.bind(this, router));
+    this.mediator.subscribe(CustomEventNames.BASKET_UPDATE, this.addCountBasket.bind(this));
   }
 
   configureView(router: Router) {
@@ -61,6 +69,9 @@ export default class NavHeaderView extends View {
         callback: () => router.navigate(Pages[page[0]]),
       };
       const linkElement = new LinkNavHeaderView(linkParams, this.linkElements);
+      if (page[0].toLowerCase() === Pages.BASKET.toLowerCase()) {
+        this.basketButton = linkElement;
+      }
       linkElement.getHtmlElement().classList.add(`nav__${page[0].toLowerCase()}`);
       this.viewElementCreator.addInsideElement(linkElement.getHtmlElement());
       this.linkElements.set(Pages[page[0]], linkElement);
@@ -77,6 +88,7 @@ export default class NavHeaderView extends View {
       this.logoutButton.push(creatorLogoutButton.getElement());
       this.viewElementCreator.addInsideElement(creatorLogoutButton);
     }
+    this.addCountBasket();
   }
 
   logoutCustomer(router: Router) {
@@ -104,9 +116,8 @@ export default class NavHeaderView extends View {
 
   authHandler(router: Router) {
     this.linkElements.forEach((linkElement) => {
-      if (linkElement.getHtmlElement().textContent !== NamePages.BASKET
-      && linkElement.getHtmlElement().textContent !== NamePages.ACCOUNT
-      && linkElement.getHtmlElement().textContent !== NamePages.CATALOG)
+      if (linkElement.getHtmlElement().textContent === NamePages.LOGIN
+      || linkElement.getHtmlElement().textContent === NamePages.REGISTER)
         linkElement.getHtmlElement().remove();
     });
     this.viewElementCreator.addInsideElement(this.addButtonLogout(router));
@@ -116,6 +127,28 @@ export default class NavHeaderView extends View {
     const linkComponent = this.linkElements.get(namePage);
     if (linkComponent instanceof LinkNavHeaderView) {
       linkComponent.setSelectedStatus();
+    }
+  }
+
+  async addCountBasket() {
+    this.basketButton?.getHtmlElement().firstChild?.remove();
+    const response = (await this.loader.getUserCart());
+    let amount = 0;
+    if (response.body.results.length) {
+      amount = response.body.results[0].lineItems.length;
+    }
+    const countBasketParams: ElementParams = {
+      tag: 'span',
+      classNames: ['basket__count'],
+      textContent: '',
+      callback: null,
+    };
+    const creatorCountBasket = new ElementCreator(countBasketParams);
+    if (amount) {
+      creatorCountBasket.setTextContent(amount.toString());
+      if (this.basketButton) {
+        this.basketButton.getHtmlElement().append(creatorCountBasket.getElement());
+      }
     }
   }
 }
