@@ -8,4 +8,5 @@ export const enum MessagesModalWindow {
   PROMOCODE_ADD_ERROR = 'You are using an invalid promotional code. Try another one',
   PROMOCODE_COPY_SUCCESS = 'was successfully copied',
   PROMOCODE_COPY_ERROR = 'Promocode was not copied. Try again',
+  PRODUCT_ADD_CART_SUCCESS = 'was successfully added to your basket',
 }

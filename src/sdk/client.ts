@@ -66,12 +66,10 @@ export function getCtpClientAnonFlow() {
     ? new ClientBuilder()
       .withExistingTokenFlow(currentToken, existingAuthMiddlewareOptions)
       .withHttpMiddleware(httpMiddlewareOptions)
-      // .withLoggerMiddleware() // uncomment if you need to see the request logs
       .build()
     : new ClientBuilder()
-      .withClientCredentialsFlow(authMiddlewareOptions)
+      .withAnonymousSessionFlow(authMiddlewareOptions)
       .withHttpMiddleware(httpMiddlewareOptions)
-      // .withLoggerMiddleware() // uncomment if you need to see the request logs
       .build();
   return createApiBuilderFromCtpClient(ctpClient)
     .withProjectKey({ projectKey: projectKey });
@@ -85,7 +83,6 @@ export function getCtpClientPasswordFlow(userAuth: UserAuthOptions) {
   const ctpClientPasswordFlow = new ClientBuilder()
     .withPasswordFlow(optionsPasswordFlow)
     .withHttpMiddleware(httpMiddlewareOptions)
-    // .withLoggerMiddleware() //uncomment if you need to see the request logs
     .build();
   return createApiBuilderFromCtpClient(ctpClientPasswordFlow)
     .withProjectKey({ projectKey: projectKey });
