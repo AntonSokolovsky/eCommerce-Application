@@ -4,6 +4,12 @@
   max-width: 600px;
 }
 
+@media (max-width: 550px) {
+  .item_detail {
+    padding: 10px;
+  }
+}
+
 .item_detail__img {
   max-width: 200px;
   height: 200px;

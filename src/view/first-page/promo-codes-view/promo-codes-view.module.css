@@ -1,7 +1,14 @@
 .promocodes__container {
+    padding: 26px 35px 7px 35px;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+}
+
+@media (max-width: 800px) {
+    .promocodes__container {
+        padding: 26px 15px 7px 15px;
+}
 }
 
 .promocodes__title {
@@ -15,6 +22,13 @@
 .promocodes__list {
     display: flex;
     justify-content: space-evenly;
+}
+
+@media (max-width: 500px) {
+    .promocodes__list {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 
