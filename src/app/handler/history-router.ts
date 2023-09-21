@@ -16,7 +16,7 @@ export default class HistoryRouterHandler {
     window.addEventListener('popstate', this.handler);
   }
 
-  navigate(url: PopStateEvent | string) {
+  navigate(url: PopStateEvent | string | null) {
     if (typeof url === 'string') {
       this.setHistory(url);
     }

@@ -39,6 +39,14 @@ export class Mediator {
     this.notify(nameEvent, params);
   }
 
+  checkout() {
+    this.notify(CustomEventNames.BASKET_CHECKOUT, {});
+  }
+
+  updateBasket() {
+    this.notify(CustomEventNames.BASKET_UPDATE, {});
+  }
+
   private notify(nameEvent: CustomEventNames, params: ParamsCustomEvent) {
     const arrayListeners = this.listeners.get(nameEvent);
     if (arrayListeners) {

@@ -4,7 +4,7 @@ import { ElementCreator } from '../../../utilities/element-creator';
 import ItemView from './item/item-view';
 import Router from '../../../app/router/router';
 import { Customer } from '../../../app/loader/customer';
-
+import { itemsMap } from '../../../app/state/state';
 
 
 export default class PopularView extends View {
@@ -40,8 +40,10 @@ export default class PopularView extends View {
     loader.getAllProducts()
       .then((data) => {
         if (data.body.total) {
+          itemsMap.clear();
           for (let i = 0; i < 8; i += 1) {
             const creatorItem = new ItemView(router, data.body.results[i], i);
+            itemsMap.set(i, data.body.results[i].id);
             creatorItems.addInsideElement(creatorItem.getHtmlElement());
           }
         }

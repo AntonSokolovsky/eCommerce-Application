@@ -6,6 +6,7 @@ import {
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
 import { QueryParamsSearchProducts } from '../../type/products-type';
+import { UpdateQuantityParams } from '../../type/basket-type';
 
 export class Customer {
   protected apiRoot;
@@ -92,6 +93,60 @@ export class Customer {
       .execute();
   }
 
+  //ToDo: implement create cart anonim token 
+  // createUserCart(anonymousId?: string) {
+  createUserCart() {
+    const params  = {
+      body: {
+        currency: 'EUR',
+      },
+    };
+    return this.apiRoot
+      .me()
+      .carts()
+      .post(params)
+      .execute();
+  }
+
+  getUserCart() {
+    return this.apiRoot
+      .me()
+      .carts()
+      .get()
+      .execute();
+  }
+
+  addItemInCartByID(id: string, cartID: string, ver: number) {
+    return this.apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartID })
+      .post({
+        body: {
+          version: ver,
+          actions: [{
+            action: 'addLineItem',
+            productId: id,
+          }],
+        },
+      })
+      .execute();
+  }
+
+  getCurrentProducts(start: number, countProducts: number) {
+    const params: QueryParamsSearchProducts = {
+      queryArgs: {
+        offset: start,
+        limit: countProducts,
+      },
+    };
+    return this.apiRoot
+      .productProjections()
+      .search()
+      .get(params)
+      .execute();
+  }
+
   getProductsWithOptions(arrayFilterParams: Map<string, Set<HTMLElement>>) {
     const filter: string[] = [];
     arrayFilterParams.forEach((listValueAttributes, myEnumName) => {
@@ -154,6 +209,52 @@ export class Customer {
           actions,
         },
       })
+      .execute();
+  }
+
+  updateAmountItemBasket(params: UpdateQuantityParams, cartId: string) {
+    return this.apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .post(params)
+      .execute();
+  }
+
+  addDiscountCode(params: UpdateQuantityParams, cartId: string) {
+    return this.apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .post(params)
+      .execute();
+  }
+
+  async deleteCartById(cartId: string, versionCart: number) {
+    const params = {
+      queryArgs: {
+        version: versionCart,
+      },
+    };
+    return this.apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .delete(params)
+      .execute();
+  }
+
+  getPromoCodeById() {
+    return this.apiRoot
+      .discountCodes()
+      .get()
+      .execute();
+  }
+
+  getDiscount() {
+    return this.apiRoot
+      .cartDiscounts()
+      .get()
       .execute();
   }
 }

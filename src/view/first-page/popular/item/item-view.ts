@@ -4,10 +4,17 @@ import { ElementCreator } from '../../../../utilities/element-creator';
 import Router from '../../../../app/router/router';
 import { Pages } from '../../../../app/router/pages';
 import { ProductProjection } from '@commercetools/platform-sdk';
+import { Customer } from '../../../../app/loader/customer';
+import { itemsMap } from '../../../../app/state/state';
+import { ModalWindowRequest } from '../../../modal-window-response-view/modal-window-request';
+import { MessagesModalWindow } from '../../../../type/messages-modal';
+import { Mediator } from '../../../../app/controller/mediator';
 
 
 export default class ItemView extends View {
   router: Router;
+
+  private mediator = Mediator.getInstance();
 
   constructor(router: Router, product: ProductProjection, id: number) {
     const params = {
@@ -20,7 +27,7 @@ export default class ItemView extends View {
   }
 
   configureView(product: ProductProjection, id: number) {
-
+    const customer = new Customer();
     this.viewElementCreator.setElementClass(['item-small']);
 
     const paramsContImg = {
@@ -88,14 +95,52 @@ export default class ItemView extends View {
       tag: 'div',
       classNames: ['item__basket'],
       textContent: '',
-      callback: null,
+      callback: (e: Event) => {
+        const target = e.target;
+        customer.getUserCart()
+          .then((data) => {
+            if (data.body.results.length === 0) {
+              customer.createUserCart()
+                .then(() => {
+                  // alert('Создал!');
+                  customer.getUserCart()
+                    .then((d) => {
+                      if (target && target instanceof Element) {
+                        customer.addItemInCartByID(itemsMap.get(Number(target.id)), d.body.results[0].id, d.body.results[0].version)
+                          .then(() => {
+                            const message = `${product.name['en-US']} ${MessagesModalWindow.PRODUCT_ADD_CART_SUCCESS}`;
+                            this.mediator.updateBasket();
+                            this.showModalWindow(message);
+                          });
+                      }
+                    });
+                });
+            } else {
+              if (target && target instanceof Element) {
+                customer.addItemInCartByID(itemsMap.get(Number(target.id)), data.body.results[0].id, data.body.results[0].version)
+                  .then(() => {
+                    const message = `${product.name['en-US']} ${MessagesModalWindow.PRODUCT_ADD_CART_SUCCESS}`;
+                    this.mediator.updateBasket();
+                    this.showModalWindow(message);
+                    customer.getUserCart();
+                  });
+              }
+            }
+          });
+      },
     };
 
     const creatorBasket = new ElementCreator(paramsBasket);
+    creatorBasket.setAttributeElement({ id: String(id) });
     creatorToolbar.addInsideElement(creatorBasket);
   }
 
   buttonClickHandler(url: string) {
     this.router.navigate(url);
+  }
+
+  showModalWindow(message: string) {
+    const modalWindow = new ModalWindowRequest(message);
+    return modalWindow;
   }
 }

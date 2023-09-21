@@ -5,7 +5,17 @@
     gap: 20px;
 }
 
-@media (max-width: 870px) {
+.basket__count {
+    position: relative;
+    bottom: 2rem;
+    background-color: var(--main-bg-color);
+    color: var(--main-font-color);
+    border: 0.05rem var(--border-color) solid;
+    border-radius: 50%;
+    padding: 0.5rem;
+}
+
+@media (max-width: 980px) {
     .nav_header {
         gap: 5px;
     }
@@ -14,6 +24,7 @@
 @media (max-width: 550px) {
     .nav_header {
         flex-wrap: wrap;
+        justify-content: center;
     }
 }
 

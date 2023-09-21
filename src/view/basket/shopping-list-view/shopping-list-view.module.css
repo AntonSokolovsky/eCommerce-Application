@@ -1,0 +1,8 @@
+.shopping-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.shopping-list__button-erase {
+    display: block;
+}
