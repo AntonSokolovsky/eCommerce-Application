@@ -204,11 +204,13 @@ export default class ItemDetailView extends View {
     creatorBasket.setAttributeElement({ id: String(id) });
     customer.getUserCart()
       .then((data) => {
-        data.body.results[0].lineItems.forEach(item => {
-          if (item.name['en-US'] === paramItem.name['en-US']) {
-            creatorBasket.setElementClass(['basket_selected']);
-          }
-        });
+        if (data.body.results.length) {
+          data.body.results[0].lineItems.forEach(item => {
+            if (item.name['en-US'] === paramItem.name['en-US']) {
+              creatorBasket.setElementClass(['basket_selected']);
+            }
+          });
+        }
       });
     creatorToolbar.addInsideElement(creatorBasket);
 

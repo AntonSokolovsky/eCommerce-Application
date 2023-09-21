@@ -109,6 +109,7 @@
 }
 
 .logInLink {
+    margin-top: 20px;
     /* position: relative; */
     max-width: 270px;
     font-size: 35px;

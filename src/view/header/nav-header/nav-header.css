@@ -24,6 +24,7 @@
 @media (max-width: 550px) {
     .nav_header {
         flex-wrap: wrap;
+        justify-content: center;
     }
 }
 

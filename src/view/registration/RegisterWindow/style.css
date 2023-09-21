@@ -32,9 +32,9 @@
     .RgVindow {
         position: relative;
         margin: auto;
-        padding: 0 15px;
+        padding: 26px 15px;
         
-        top: 57px;
+        /* top: 57px; */
         max-width: 585px;
     }
 

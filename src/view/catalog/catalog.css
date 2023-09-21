@@ -36,7 +36,7 @@
     grid-template-columns: repeat(4, minmax(160px, 230px));
     grid-template-rows: minmax(160px, 230px) minmax(160px, 230px) minmax(160px, 230px);
     justify-content: space-between;
-    gap: 78px 0;
+    gap: 78px 20px;
 }
 
 
@@ -49,11 +49,11 @@
         grid-template-rows: repeat(3, 160px);
         grid-auto-rows: 0;
         overflow: hidden;
-        gap: 78px 0;
+        gap: 78px 15px;
     }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 920px) {
     .catalog__items {
         position: relative;
         height: 636px;
@@ -61,16 +61,28 @@
         grid-template-rows: repeat(3, 160px);
         grid-auto-rows: 0;
         overflow: hidden;
-        gap: 78px 0;
+        gap: 78px 10px;
     }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 730px) {
     .catalog__items {
         position: relative;
         height: 636px;
         grid-template-columns: repeat(2, 160px);
         grid-template-rows: repeat(3, 160px);
+        grid-auto-rows: 0;
+        overflow: hidden;
+        gap: 78px 30px;
+    }
+}
+
+@media (max-width: 580px) {
+    .catalog__items {
+        position: relative;
+        height: 636px;
+        grid-template-columns: repeat(1, 160px);
+        grid-template-rows: repeat(4, 160px);
         grid-auto-rows: 0;
         overflow: hidden;
         gap: 78px 0;
@@ -85,6 +97,12 @@
     margin: 49px 0 32px 0;
 }
 
+@media (max-width: 580px) {
+    .catalog__buttons {
+        gap: 20px;
+    }
+}
+
 .catalog__button {
     display: flex;
     align-items: center;
@@ -95,6 +113,13 @@
 
     border-radius: 50px;
     font-size: 32px;
+}
+
+@media (max-width: 580px) {
+    .catalog__button {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 .button_right:hover, .button_left:hover {

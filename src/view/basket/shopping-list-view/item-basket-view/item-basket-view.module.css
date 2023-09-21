@@ -4,6 +4,14 @@
     align-items: center;
 }
 
+@media (max-width: 560px) {
+    .item-basket__container {
+        flex-wrap: wrap;
+        justify-content: center;
+        /* flex-direction: column; */
+    }
+}
+
 .item-basket__title {
     display: block;
     width: 10rem;
