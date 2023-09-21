@@ -46,6 +46,7 @@ export default class NavHeaderView extends View {
   }
 
   configureView(router: Router) {
+    //ToDo: implement search service
     // const paramsSearch = {
     //   tag: 'div',
     //   classNames: ['search'],
@@ -115,12 +116,10 @@ export default class NavHeaderView extends View {
   }
 
   authHandler(router: Router) {
-    this.linkElements.forEach((linkElement) => {
-      if (linkElement.getHtmlElement().textContent === NamePages.LOGIN
-      || linkElement.getHtmlElement().textContent === NamePages.REGISTER)
-        linkElement.getHtmlElement().remove();
-    });
-    this.viewElementCreator.addInsideElement(this.addButtonLogout(router));
+    while (this.viewElementCreator.getElement().firstChild) {
+      this.viewElementCreator.getElement().firstChild?.remove();
+    }
+    this.configureView(router);
   }
 
   setSelectedItem(namePage: string) {
@@ -131,8 +130,9 @@ export default class NavHeaderView extends View {
   }
 
   async addCountBasket() {
+    const loader = new Customer();
     this.basketButton?.getHtmlElement().firstChild?.remove();
-    const response = (await this.loader.getUserCart());
+    const response = (await loader.getUserCart());
     let amount = 0;
     if (response.body.results.length) {
       amount = response.body.results[0].lineItems.length;
