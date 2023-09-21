@@ -38,4 +38,12 @@ export class TokenStorage {
 
     return token;
   }
+
+  getRefreshToken() {
+    const cache = 
+           localStorage.getItem(TokenNames.TOKEN_CUSTOMER) || localStorage.getItem(TokenNames.TOKEN_ANONIM);
+    const refreshToken = cache ?  JSON.parse(cache).refreshToken : '';
+
+    return refreshToken;
+  }
 }
