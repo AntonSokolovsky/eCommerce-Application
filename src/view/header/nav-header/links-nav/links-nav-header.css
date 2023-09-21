@@ -1,0 +1,32 @@
+.nav__item_header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 90px;
+    height: 70px;
+
+    box-sizing: border-box;
+    border: 1px solid;
+    font-size: 16px;
+    font-weight: 700;
+
+    background-color: #fff;
+    cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    .nav__item_header {
+        width: 70px;
+        height: 60px;
+    }
+}
+
+.nav__item_header.selected {
+    color: #fff;
+    background-color:#696969;
+}
+
+.nav__basket {
+    background: #fff url("../../../../assets/cart.png") center/60px 60px no-repeat;
+}

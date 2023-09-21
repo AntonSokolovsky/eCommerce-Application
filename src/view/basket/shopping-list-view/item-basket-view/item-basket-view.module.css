@@ -1,0 +1,47 @@
+.item-basket__container {
+    display: flex;
+    border: 0.1rem var(--border-color) solid;
+    align-items: center;
+}
+
+@media (max-width: 560px) {
+    .item-basket__container {
+        flex-wrap: wrap;
+        justify-content: center;
+        /* flex-direction: column; */
+    }
+}
+
+.item-basket__title {
+    display: block;
+    width: 10rem;
+    text-align: center;
+}
+
+.item-basket__image {
+    display: block;
+    width: 6rem;
+    height: 4rem;
+    object-fit: cover;
+}
+
+.item-basket__price {
+    display: block;
+    text-align: center;
+    width: 5rem;
+}
+
+.item-basket__amount {
+    display: block;
+}
+
+.item-basket__total-price {
+    display: block;
+    width: 9rem;
+    text-align: center;
+}
+
+.item-basket__delete {
+    display: block;
+    cursor: pointer;
+}

@@ -1,0 +1,15 @@
+.nav_footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100%;
+  font-size: 40px;
+  font-weight: normal;
+}
+
+@media (max-width: 800px) {
+  .nav_footer {
+    display: none;
+  }
+}
